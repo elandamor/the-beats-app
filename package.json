@@ -1,0 +1,13 @@
+{
+  "name": "the-beats-app",
+  "private": true,
+  "scripts": {
+    "start": "lerna run --parallel start"
+  },
+  "devDependencies": {
+    "lerna": "^3.15.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "description": "Backend for the-beats-app",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elandamor/the-beats-app.git"
+  },
+  "keywords": [
+    "music",
+    "streaming",
+    "pwa"
+  ],
+  "author": "Thandolwethu Mpofu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elandamor/the-beats-app/issues"
+  },
+  "homepage": "https://github.com/elandamor/the-beats-app#readme"
+}
