@@ -1,0 +1,6 @@
+# import Playlist, PlaylistConnection from "../../generated/prisma.graphql"
+
+type Query {
+  playlist(id: ID!): Playlist
+  playlists: PlaylistConnection
+}

@@ -1,0 +1,16 @@
+# import Query from "./schema/Album/schema.graphql"
+# import Query from "./schema/Artist/schema.graphql"
+# import Query from "./schema/Playlist/schema.graphql"
+# import Query from "./schema/Track/schema.graphql"
+
+enum ReleaseType {
+  ALBUM
+  EP
+  LP
+  PODCAST
+  SINGLE
+}
+
+type Node {
+  id: ID!
+}

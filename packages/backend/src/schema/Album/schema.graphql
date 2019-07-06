@@ -1,0 +1,6 @@
+# import Album, AlbumConnection from "../../generated/prisma.graphql"
+
+type Query {
+  album(id: ID!): Album
+  albums: AlbumConnection
+}
