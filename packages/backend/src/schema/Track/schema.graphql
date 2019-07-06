@@ -1,0 +1,6 @@
+# import Track, TrackConnection from "../../generated/prisma.graphql"
+
+type Query {
+  track(id: ID!): Track
+  tracks: TrackConnection
+}

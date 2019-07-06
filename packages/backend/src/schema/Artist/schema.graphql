@@ -1,0 +1,6 @@
+# import Artist, ArtistConnection from "../../generated/prisma.graphql"
+
+type Query {
+  artist(id: ID!): Artist
+  artists: ArtistConnection
+}
