@@ -4,3 +4,12 @@ type Query {
   artist(id: ID!): Artist
   artists: ArtistConnection
 }
+
+type Mutation {
+  createArtist(input: ArtistCreatePayload!): Artist
+}
+
+input ArtistCreatePayload {
+  alias: String!
+  name: String!
+}
