@@ -1,10 +1,15 @@
 import { Context } from "../../utils";
+import * as service from "./Track.service";
 
 /**
  * Resolvers for Track
  */
 
 export default {
+  Mutation: {
+    createTrack: (_, { input }, context: Context) =>
+      service.createTrack(input, context)
+  },
   Query: {
     track: (_, { id }, { prisma }: Context) => prisma.track({ id }),
     tracks: (_, __, { prisma }: Context) =>

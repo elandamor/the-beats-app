@@ -4,3 +4,15 @@ type Query {
   track(id: ID!): Track
   tracks: TrackConnection
 }
+
+type Mutation {
+  createTrack(input: TrackCreatePayload!): Track
+}
+
+input TrackCreatePayload {
+  artists: [ArtistPayload!]!
+  duration: Duration!
+  featuring: [ArtistPayload!]
+  name: NonEmptyString!
+  trackNumber: Int!
+}
