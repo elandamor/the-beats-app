@@ -2,6 +2,7 @@
 # import Query, Mutation from "./schema/Artist/schema.graphql"
 # import Query from "./schema/Playlist/schema.graphql"
 # import Query, Mutation from "./schema/Track/schema.graphql"
+# import Query, Mutation from "./schema/User/schema.graphql"
 
 scalar Duration
 scalar NonEmptyString

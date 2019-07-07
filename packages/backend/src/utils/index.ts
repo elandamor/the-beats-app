@@ -4,6 +4,8 @@ export interface Context {
   prisma: Prisma;
 }
 
+export const APP_SECRET = process.env.APP_SECRET;
+
 /**
  * getDuration
  * @param media - Track or Tracks
