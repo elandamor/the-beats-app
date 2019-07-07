@@ -1,0 +1,49 @@
+import { Context, getDuration } from "../../utils";
+import { AlbumCreateInput } from "../../generated/prisma-client";
+import { createArtists } from "../Artist/Artist.service";
+import { createTracks } from "../Track/Track.service";
+import { UnknownError, AlbumExistsError } from "../../utils/errors";
+
+/**
+ * Creates an album
+ * @param album - An input object
+ * @param context - Exposes prisma
+ */
+export const createAlbum = async (album, context: Context) => {
+  const { prisma } = context;
+  const albumExists = await prisma.$exists.album({ alias: album.alias });
+
+  if (albumExists) {
+    throw new AlbumExistsError();
+  }
+
+  const { alias, artists, name, releaseDate, releaseType, tracks } = album;
+  const numTracks = tracks ? tracks.length : 0;
+  const duration = tracks ? getDuration(tracks) : 0;
+
+  const artistsToConnect = await createArtists(artists, context);
+
+  const payload: AlbumCreateInput = {
+    alias,
+    name,
+    releaseDate,
+    releaseType,
+    numTracks,
+    duration,
+    artists: {
+      connect: artistsToConnect
+    }
+  };
+
+  try {
+    const createdAlbum = await prisma.createAlbum({ ...payload });
+    // Create tracks and connect them to 'createdAlbum'
+    await createTracks(tracks, context, createdAlbum);
+
+    return createdAlbum;
+  } catch (error) {
+    throw new UnknownError({
+      message: error.message
+    });
+  }
+};

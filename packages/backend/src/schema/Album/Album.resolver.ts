@@ -1,10 +1,14 @@
 import { Context } from "../../utils";
-
+import * as service from "./Album.service";
 /**
  * Resolvers for Album
  */
 
 export default {
+  Mutation: {
+    createAlbum: (_, { input }, context: Context) =>
+      service.createAlbum(input, context)
+  },
   Query: {
     album: (_, { id }, { prisma }: Context) => prisma.album({ id }),
     albums: (_, __, { prisma }: Context) =>
