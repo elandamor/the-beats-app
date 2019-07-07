@@ -3,7 +3,6 @@ import { prisma } from "./generated/prisma-client";
 import * as schema from "./schema";
 
 const server = new GraphQLServer({
-  typeDefs: "./src/schema.graphql",
   ...schema,
   context: {
     prisma

@@ -22,6 +22,10 @@ type AggregatePlaylist {
   count: Int!
 }
 
+type AggregatePlaylistTrack {
+  count: Int!
+}
+
 type AggregateTrack {
   count: Int!
 }
@@ -1332,6 +1336,12 @@ type Mutation {
   upsertPlaylist(where: PlaylistWhereUniqueInput!, create: PlaylistCreateInput!, update: PlaylistUpdateInput!): Playlist!
   deletePlaylist(where: PlaylistWhereUniqueInput!): Playlist
   deleteManyPlaylists(where: PlaylistWhereInput): BatchPayload!
+  createPlaylistTrack(data: PlaylistTrackCreateInput!): PlaylistTrack!
+  updatePlaylistTrack(data: PlaylistTrackUpdateInput!, where: PlaylistTrackWhereUniqueInput!): PlaylistTrack
+  updateManyPlaylistTracks(data: PlaylistTrackUpdateManyMutationInput!, where: PlaylistTrackWhereInput): BatchPayload!
+  upsertPlaylistTrack(where: PlaylistTrackWhereUniqueInput!, create: PlaylistTrackCreateInput!, update: PlaylistTrackUpdateInput!): PlaylistTrack!
+  deletePlaylistTrack(where: PlaylistTrackWhereUniqueInput!): PlaylistTrack
+  deleteManyPlaylistTracks(where: PlaylistTrackWhereInput): BatchPayload!
   createTrack(data: TrackCreateInput!): Track!
   updateTrack(data: TrackUpdateInput!, where: TrackWhereUniqueInput!): Track
   updateManyTracks(data: TrackUpdateManyMutationInput!, where: TrackWhereInput): BatchPayload!
@@ -1375,6 +1385,7 @@ type Playlist {
   numTracks: Int!
   privacy: Privacy!
   tracks(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Track!]
+  collaborativeTracks(where: PlaylistTrackWhereInput, orderBy: PlaylistTrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlaylistTrack!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1397,6 +1408,12 @@ input PlaylistCreateInput {
   numTracks: Int!
   privacy: Privacy
   tracks: TrackCreateManyWithoutPlaylistsInput
+  collaborativeTracks: PlaylistTrackCreateManyWithoutPlaylistsInput
+}
+
+input PlaylistCreateManyWithoutCollaborativeTracksInput {
+  create: [PlaylistCreateWithoutCollaborativeTracksInput!]
+  connect: [PlaylistWhereUniqueInput!]
 }
 
 input PlaylistCreateManyWithoutCreatorInput {
@@ -1407,6 +1424,20 @@ input PlaylistCreateManyWithoutCreatorInput {
 input PlaylistCreateManyWithoutTracksInput {
   create: [PlaylistCreateWithoutTracksInput!]
   connect: [PlaylistWhereUniqueInput!]
+}
+
+input PlaylistCreateWithoutCollaborativeTracksInput {
+  id: ID
+  alias: String!
+  artwork: ImageCreateManyInput
+  collaborative: Boolean
+  creator: UserCreateOneWithoutPlaylistsInput!
+  description: String
+  duration: Int!
+  name: String!
+  numTracks: Int!
+  privacy: Privacy
+  tracks: TrackCreateManyWithoutPlaylistsInput
 }
 
 input PlaylistCreateWithoutCreatorInput {
@@ -1420,6 +1451,7 @@ input PlaylistCreateWithoutCreatorInput {
   numTracks: Int!
   privacy: Privacy
   tracks: TrackCreateManyWithoutPlaylistsInput
+  collaborativeTracks: PlaylistTrackCreateManyWithoutPlaylistsInput
 }
 
 input PlaylistCreateWithoutTracksInput {
@@ -1433,6 +1465,7 @@ input PlaylistCreateWithoutTracksInput {
   name: String!
   numTracks: Int!
   privacy: Privacy
+  collaborativeTracks: PlaylistTrackCreateManyWithoutPlaylistsInput
 }
 
 type PlaylistEdge {
@@ -1594,6 +1627,189 @@ input PlaylistSubscriptionWhereInput {
   NOT: [PlaylistSubscriptionWhereInput!]
 }
 
+type PlaylistTrack {
+  id: ID!
+  addedAt: DateTime!
+  addedBy: User!
+  playlists(where: PlaylistWhereInput, orderBy: PlaylistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Playlist!]
+  track: Track!
+}
+
+type PlaylistTrackConnection {
+  pageInfo: PageInfo!
+  edges: [PlaylistTrackEdge]!
+  aggregate: AggregatePlaylistTrack!
+}
+
+input PlaylistTrackCreateInput {
+  id: ID
+  addedAt: DateTime!
+  addedBy: UserCreateOneInput!
+  playlists: PlaylistCreateManyWithoutCollaborativeTracksInput
+  track: TrackCreateOneInput!
+}
+
+input PlaylistTrackCreateManyWithoutPlaylistsInput {
+  create: [PlaylistTrackCreateWithoutPlaylistsInput!]
+  connect: [PlaylistTrackWhereUniqueInput!]
+}
+
+input PlaylistTrackCreateWithoutPlaylistsInput {
+  id: ID
+  addedAt: DateTime!
+  addedBy: UserCreateOneInput!
+  track: TrackCreateOneInput!
+}
+
+type PlaylistTrackEdge {
+  node: PlaylistTrack!
+  cursor: String!
+}
+
+enum PlaylistTrackOrderByInput {
+  id_ASC
+  id_DESC
+  addedAt_ASC
+  addedAt_DESC
+}
+
+type PlaylistTrackPreviousValues {
+  id: ID!
+  addedAt: DateTime!
+}
+
+input PlaylistTrackScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  addedAt: DateTime
+  addedAt_not: DateTime
+  addedAt_in: [DateTime!]
+  addedAt_not_in: [DateTime!]
+  addedAt_lt: DateTime
+  addedAt_lte: DateTime
+  addedAt_gt: DateTime
+  addedAt_gte: DateTime
+  AND: [PlaylistTrackScalarWhereInput!]
+  OR: [PlaylistTrackScalarWhereInput!]
+  NOT: [PlaylistTrackScalarWhereInput!]
+}
+
+type PlaylistTrackSubscriptionPayload {
+  mutation: MutationType!
+  node: PlaylistTrack
+  updatedFields: [String!]
+  previousValues: PlaylistTrackPreviousValues
+}
+
+input PlaylistTrackSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PlaylistTrackWhereInput
+  AND: [PlaylistTrackSubscriptionWhereInput!]
+  OR: [PlaylistTrackSubscriptionWhereInput!]
+  NOT: [PlaylistTrackSubscriptionWhereInput!]
+}
+
+input PlaylistTrackUpdateInput {
+  addedAt: DateTime
+  addedBy: UserUpdateOneRequiredInput
+  playlists: PlaylistUpdateManyWithoutCollaborativeTracksInput
+  track: TrackUpdateOneRequiredInput
+}
+
+input PlaylistTrackUpdateManyDataInput {
+  addedAt: DateTime
+}
+
+input PlaylistTrackUpdateManyMutationInput {
+  addedAt: DateTime
+}
+
+input PlaylistTrackUpdateManyWithoutPlaylistsInput {
+  create: [PlaylistTrackCreateWithoutPlaylistsInput!]
+  delete: [PlaylistTrackWhereUniqueInput!]
+  connect: [PlaylistTrackWhereUniqueInput!]
+  set: [PlaylistTrackWhereUniqueInput!]
+  disconnect: [PlaylistTrackWhereUniqueInput!]
+  update: [PlaylistTrackUpdateWithWhereUniqueWithoutPlaylistsInput!]
+  upsert: [PlaylistTrackUpsertWithWhereUniqueWithoutPlaylistsInput!]
+  deleteMany: [PlaylistTrackScalarWhereInput!]
+  updateMany: [PlaylistTrackUpdateManyWithWhereNestedInput!]
+}
+
+input PlaylistTrackUpdateManyWithWhereNestedInput {
+  where: PlaylistTrackScalarWhereInput!
+  data: PlaylistTrackUpdateManyDataInput!
+}
+
+input PlaylistTrackUpdateWithoutPlaylistsDataInput {
+  addedAt: DateTime
+  addedBy: UserUpdateOneRequiredInput
+  track: TrackUpdateOneRequiredInput
+}
+
+input PlaylistTrackUpdateWithWhereUniqueWithoutPlaylistsInput {
+  where: PlaylistTrackWhereUniqueInput!
+  data: PlaylistTrackUpdateWithoutPlaylistsDataInput!
+}
+
+input PlaylistTrackUpsertWithWhereUniqueWithoutPlaylistsInput {
+  where: PlaylistTrackWhereUniqueInput!
+  update: PlaylistTrackUpdateWithoutPlaylistsDataInput!
+  create: PlaylistTrackCreateWithoutPlaylistsInput!
+}
+
+input PlaylistTrackWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  addedAt: DateTime
+  addedAt_not: DateTime
+  addedAt_in: [DateTime!]
+  addedAt_not_in: [DateTime!]
+  addedAt_lt: DateTime
+  addedAt_lte: DateTime
+  addedAt_gt: DateTime
+  addedAt_gte: DateTime
+  addedBy: UserWhereInput
+  playlists_every: PlaylistWhereInput
+  playlists_some: PlaylistWhereInput
+  playlists_none: PlaylistWhereInput
+  track: TrackWhereInput
+  AND: [PlaylistTrackWhereInput!]
+  OR: [PlaylistTrackWhereInput!]
+  NOT: [PlaylistTrackWhereInput!]
+}
+
+input PlaylistTrackWhereUniqueInput {
+  id: ID
+}
+
 input PlaylistUpdateInput {
   alias: String
   artwork: ImageUpdateManyInput
@@ -1605,6 +1821,7 @@ input PlaylistUpdateInput {
   numTracks: Int
   privacy: Privacy
   tracks: TrackUpdateManyWithoutPlaylistsInput
+  collaborativeTracks: PlaylistTrackUpdateManyWithoutPlaylistsInput
 }
 
 input PlaylistUpdateManyDataInput {
@@ -1625,6 +1842,18 @@ input PlaylistUpdateManyMutationInput {
   name: String
   numTracks: Int
   privacy: Privacy
+}
+
+input PlaylistUpdateManyWithoutCollaborativeTracksInput {
+  create: [PlaylistCreateWithoutCollaborativeTracksInput!]
+  delete: [PlaylistWhereUniqueInput!]
+  connect: [PlaylistWhereUniqueInput!]
+  set: [PlaylistWhereUniqueInput!]
+  disconnect: [PlaylistWhereUniqueInput!]
+  update: [PlaylistUpdateWithWhereUniqueWithoutCollaborativeTracksInput!]
+  upsert: [PlaylistUpsertWithWhereUniqueWithoutCollaborativeTracksInput!]
+  deleteMany: [PlaylistScalarWhereInput!]
+  updateMany: [PlaylistUpdateManyWithWhereNestedInput!]
 }
 
 input PlaylistUpdateManyWithoutCreatorInput {
@@ -1656,6 +1885,19 @@ input PlaylistUpdateManyWithWhereNestedInput {
   data: PlaylistUpdateManyDataInput!
 }
 
+input PlaylistUpdateWithoutCollaborativeTracksDataInput {
+  alias: String
+  artwork: ImageUpdateManyInput
+  collaborative: Boolean
+  creator: UserUpdateOneRequiredWithoutPlaylistsInput
+  description: String
+  duration: Int
+  name: String
+  numTracks: Int
+  privacy: Privacy
+  tracks: TrackUpdateManyWithoutPlaylistsInput
+}
+
 input PlaylistUpdateWithoutCreatorDataInput {
   alias: String
   artwork: ImageUpdateManyInput
@@ -1666,6 +1908,7 @@ input PlaylistUpdateWithoutCreatorDataInput {
   numTracks: Int
   privacy: Privacy
   tracks: TrackUpdateManyWithoutPlaylistsInput
+  collaborativeTracks: PlaylistTrackUpdateManyWithoutPlaylistsInput
 }
 
 input PlaylistUpdateWithoutTracksDataInput {
@@ -1678,6 +1921,12 @@ input PlaylistUpdateWithoutTracksDataInput {
   name: String
   numTracks: Int
   privacy: Privacy
+  collaborativeTracks: PlaylistTrackUpdateManyWithoutPlaylistsInput
+}
+
+input PlaylistUpdateWithWhereUniqueWithoutCollaborativeTracksInput {
+  where: PlaylistWhereUniqueInput!
+  data: PlaylistUpdateWithoutCollaborativeTracksDataInput!
 }
 
 input PlaylistUpdateWithWhereUniqueWithoutCreatorInput {
@@ -1688,6 +1937,12 @@ input PlaylistUpdateWithWhereUniqueWithoutCreatorInput {
 input PlaylistUpdateWithWhereUniqueWithoutTracksInput {
   where: PlaylistWhereUniqueInput!
   data: PlaylistUpdateWithoutTracksDataInput!
+}
+
+input PlaylistUpsertWithWhereUniqueWithoutCollaborativeTracksInput {
+  where: PlaylistWhereUniqueInput!
+  update: PlaylistUpdateWithoutCollaborativeTracksDataInput!
+  create: PlaylistCreateWithoutCollaborativeTracksInput!
 }
 
 input PlaylistUpsertWithWhereUniqueWithoutCreatorInput {
@@ -1788,6 +2043,9 @@ input PlaylistWhereInput {
   tracks_every: TrackWhereInput
   tracks_some: TrackWhereInput
   tracks_none: TrackWhereInput
+  collaborativeTracks_every: PlaylistTrackWhereInput
+  collaborativeTracks_some: PlaylistTrackWhereInput
+  collaborativeTracks_none: PlaylistTrackWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1836,6 +2094,9 @@ type Query {
   playlist(where: PlaylistWhereUniqueInput!): Playlist
   playlists(where: PlaylistWhereInput, orderBy: PlaylistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Playlist]!
   playlistsConnection(where: PlaylistWhereInput, orderBy: PlaylistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlaylistConnection!
+  playlistTrack(where: PlaylistTrackWhereUniqueInput!): PlaylistTrack
+  playlistTracks(where: PlaylistTrackWhereInput, orderBy: PlaylistTrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlaylistTrack]!
+  playlistTracksConnection(where: PlaylistTrackWhereInput, orderBy: PlaylistTrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlaylistTrackConnection!
   track(where: TrackWhereUniqueInput!): Track
   tracks(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Track]!
   tracksConnection(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TrackConnection!
@@ -1859,6 +2120,7 @@ type Subscription {
   audio(where: AudioSubscriptionWhereInput): AudioSubscriptionPayload
   image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
   playlist(where: PlaylistSubscriptionWhereInput): PlaylistSubscriptionPayload
+  playlistTrack(where: PlaylistTrackSubscriptionWhereInput): PlaylistTrackSubscriptionPayload
   track(where: TrackSubscriptionWhereInput): TrackSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -1921,6 +2183,11 @@ input TrackCreateManyWithoutFeaturingInput {
 input TrackCreateManyWithoutPlaylistsInput {
   create: [TrackCreateWithoutPlaylistsInput!]
   connect: [TrackWhereUniqueInput!]
+}
+
+input TrackCreateOneInput {
+  create: TrackCreateInput
+  connect: TrackWhereUniqueInput
 }
 
 input TrackCreateWithoutAlbumInput {
@@ -2134,6 +2401,21 @@ input TrackSubscriptionWhereInput {
   NOT: [TrackSubscriptionWhereInput!]
 }
 
+input TrackUpdateDataInput {
+  album: AlbumUpdateOneRequiredWithoutTracksInput
+  artists: ArtistUpdateManyWithoutTracksInput
+  audio: AudioUpdateOneInput
+  discNumber: Int
+  duration: Int
+  explicit: Boolean
+  featuring: ArtistUpdateManyWithoutFeaturesInInput
+  genre: String
+  playlists: PlaylistUpdateManyWithoutTracksInput
+  isPlayable: Boolean
+  name: String
+  trackNumber: Int
+}
+
 input TrackUpdateInput {
   album: AlbumUpdateOneRequiredWithoutTracksInput
   artists: ArtistUpdateManyWithoutTracksInput
@@ -2222,6 +2504,13 @@ input TrackUpdateManyWithWhereNestedInput {
   data: TrackUpdateManyDataInput!
 }
 
+input TrackUpdateOneRequiredInput {
+  create: TrackCreateInput
+  update: TrackUpdateDataInput
+  upsert: TrackUpsertNestedInput
+  connect: TrackWhereUniqueInput
+}
+
 input TrackUpdateWithoutAlbumDataInput {
   artists: ArtistUpdateManyWithoutTracksInput
   audio: AudioUpdateOneInput
@@ -2296,6 +2585,11 @@ input TrackUpdateWithWhereUniqueWithoutFeaturingInput {
 input TrackUpdateWithWhereUniqueWithoutPlaylistsInput {
   where: TrackWhereUniqueInput!
   data: TrackUpdateWithoutPlaylistsDataInput!
+}
+
+input TrackUpsertNestedInput {
+  update: TrackUpdateDataInput!
+  create: TrackCreateInput!
 }
 
 input TrackUpsertWithWhereUniqueWithoutAlbumInput {

@@ -76,8 +76,17 @@ type Playlist {
   numTracks: Int!
   privacy: Privacy! @default(value: PRIVATE)
   tracks: [Track!]! @relation(name: "InPlaylist")
+  collaborativeTracks: [PlaylistTrack!]! @relation(name: "InCollaborativePlaylist")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+}
+
+type PlaylistTrack {
+  id: ID! @id
+  addedAt: DateTime!
+  addedBy: User!
+  playlists: [Playlist!]! @relation(name: "InCollaborativePlaylist")
+  track: Track!
 }
 
 type User {

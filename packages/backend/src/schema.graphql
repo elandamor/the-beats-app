@@ -1,7 +1,10 @@
-# import Query from "./schema/Album/schema.graphql"
-# import Query from "./schema/Artist/schema.graphql"
+# import Query, Mutation from "./schema/Album/schema.graphql"
+# import Query, Mutation from "./schema/Artist/schema.graphql"
 # import Query from "./schema/Playlist/schema.graphql"
-# import Query from "./schema/Track/schema.graphql"
+# import Query, Mutation from "./schema/Track/schema.graphql"
+
+scalar Duration
+scalar NonEmptyString
 
 enum ReleaseType {
   ALBUM

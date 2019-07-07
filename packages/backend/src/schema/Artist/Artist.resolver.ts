@@ -1,10 +1,15 @@
 import { Context } from "../../utils";
+import * as service from "./Artist.service";
 
 /**
  * Resolvers for Artist
  */
 
 export default {
+  Mutation: {
+    createArtist: (_, { input }, context: Context) =>
+      service.createArtist(input, context)
+  },
   Query: {
     artist: (_, { id }, { prisma }: Context) => prisma.artist({ id }),
     artists: (_, __, { prisma }: Context) =>
