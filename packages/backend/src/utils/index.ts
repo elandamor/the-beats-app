@@ -1,11 +1,4 @@
-import { Prisma, Track } from "../generated/prisma-client";
-
-export interface Context {
-  prisma: Prisma;
-}
-
-export const APP_SECRET = process.env.APP_SECRET;
-
+import { Track } from "../generated/prisma-client";
 /**
  * getDuration
  * @param media - Track or Tracks

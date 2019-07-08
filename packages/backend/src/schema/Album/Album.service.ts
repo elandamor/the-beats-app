@@ -1,4 +1,5 @@
-import { Context, getDuration } from "../../utils";
+import { getDuration } from "../../utils";
+import { Context } from "../../typings";
 import { AlbumCreateInput } from "../../generated/prisma-client";
 import { createArtists } from "../Artist/Artist.service";
 import { createTracks } from "../Track/Track.service";

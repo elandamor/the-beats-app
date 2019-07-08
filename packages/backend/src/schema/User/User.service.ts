@@ -1,8 +1,9 @@
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import { Context, APP_SECRET } from "../../utils";
+import { Context } from "../../typings";
 import { UserCreateInput } from "../../generated/prisma-client";
 import { UnknownError } from "../../utils/errors";
+import { APP_SECRET } from "../../constants";
 
 /**
  * Creates an user
