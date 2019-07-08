@@ -6,7 +6,7 @@ import { UnknownError } from "../../utils/errors";
 import { APP_SECRET } from "../../constants";
 
 /**
- * Creates an user
+ * Creates a user
  * @param user - Object of user to create
  * @param context - Exposes prisma
  */
@@ -38,4 +38,30 @@ export const createUser = async (user, { prisma }: Context) => {
       message: error.message
     });
   }
+};
+
+/**
+ * Logs in a user
+ * @param userCredentials - Object of user credentials
+ * @param context - Exposes prisma
+ */
+export const login = async (userCredentials, { prisma }: Context) => {
+  const { email, password } = userCredentials;
+
+  const user = await prisma.user({ email });
+
+  if (!user) {
+    throw new Error("Account doesn't exist!");
+  }
+
+  const passwordMatch = await bcrypt.compare(password, user.password);
+
+  if (!passwordMatch) {
+    throw new Error("Invalid email/password combination!");
+  }
+
+  return {
+    token: jwt.sign({ userId: user.id }, APP_SECRET),
+    user
+  };
 };

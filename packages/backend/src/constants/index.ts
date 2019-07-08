@@ -1,1 +1,2 @@
-export const APP_SECRET = process.env.APP_SECRET;
+// TODO: Get APP_SECRET from environment variables.
+export const APP_SECRET = "thisisasecret";

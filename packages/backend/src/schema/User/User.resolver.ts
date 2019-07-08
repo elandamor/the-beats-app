@@ -8,7 +8,8 @@ import * as service from "./User.service";
 export default {
   Mutation: {
     createUser: (_, { input }, context: Context) =>
-      service.createUser(input, context)
+      service.createUser(input, context),
+    login: (_, { input }, context: Context) => service.login(input, context)
   },
   Query: {
     user: (_, { id }, { prisma }: Context) => prisma.user({ id }),
