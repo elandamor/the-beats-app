@@ -1,4 +1,6 @@
+import * as jwt from "jsonwebtoken";
 import { Track } from "../generated/prisma-client";
+import { APP_SECRET, JWT_EXPIRES_IN } from "../constants";
 /**
  * getDuration
  * @param media - Track or Tracks
@@ -52,3 +54,28 @@ export const timeToSeconds = arg => {
 
   return seconds;
 };
+
+/**
+ * Get userId of logged in account from context
+ */
+export const getUserId = request => {
+  const authorization = request.headers.authorization;
+
+  if (!authorization) {
+    throw new Error("Authentication required!");
+  }
+
+  const token = authorization.replace("Bearer ", "");
+  const decoded = jwt.verify(token, APP_SECRET);
+
+  // @ts-ignore - (decoded) Property 'userId' does not exist on type 'string | object'
+  return decoded.userId;
+};
+
+/**
+ * Generates JWT token from user id
+ */
+export const generateToken = (userId: string) =>
+  jwt.sign({ userId }, APP_SECRET, {
+    expiresIn: JWT_EXPIRES_IN
+  });

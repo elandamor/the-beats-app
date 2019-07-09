@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 import { Context } from "../../typings";
 import { UserCreateInput } from "../../generated/prisma-client";
 import { UnknownError } from "../../utils/errors";
-import { APP_SECRET } from "../../constants";
+import { generateToken } from "../../utils";
 
 /**
  * Creates a user
@@ -30,7 +30,7 @@ export const createUser = async (user, { prisma }: Context) => {
     const user = await prisma.createUser({ ...payload });
 
     return {
-      token: jwt.sign({ userId: user.id }, APP_SECRET),
+      token: generateToken(user.id),
       user
     };
   } catch (error) {
@@ -45,7 +45,10 @@ export const createUser = async (user, { prisma }: Context) => {
  * @param userCredentials - Object of user credentials
  * @param context - Exposes prisma
  */
-export const login = async (userCredentials, { prisma }: Context) => {
+export const authenticateUser = async (
+  userCredentials,
+  { prisma }: Context
+) => {
   const { email, password } = userCredentials;
 
   const user = await prisma.user({ email });
@@ -61,7 +64,7 @@ export const login = async (userCredentials, { prisma }: Context) => {
   }
 
   return {
-    token: jwt.sign({ userId: user.id }, APP_SECRET),
+    token: generateToken(user.id),
     user
   };
 };
