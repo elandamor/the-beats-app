@@ -1,4 +1,4 @@
-import { Context } from "../../utils";
+import { Context } from "../../typings";
 import { ArtistCreateInput } from "../../generated/prisma-client";
 import { UnknownError } from "../../utils/errors";
 import { generateAlias } from "../../utils";

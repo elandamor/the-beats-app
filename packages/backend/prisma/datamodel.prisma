@@ -91,9 +91,11 @@ type PlaylistTrack {
 type User {
   id: ID! @id
   isAdmin: Boolean! @default(value: false)
-  name: String!
+  email: String! @unique
+  name: String
+  password: String!
   playlists: [Playlist!]! @relation(name: "CreatedBy")
-  username: String! @unique
+  username: String @unique
   verified: Boolean! @default(value: false)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

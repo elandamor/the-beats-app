@@ -4,8 +4,11 @@ import * as schema from "./schema";
 
 const server = new GraphQLServer({
   ...schema,
-  context: {
-    prisma
+  context: contextParams => {
+    return {
+      ...contextParams,
+      prisma
+    };
   }
 });
 

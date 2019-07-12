@@ -1,4 +1,5 @@
-import { Context, getDuration } from "../../utils";
+import { getDuration } from "../../utils";
+import { Context } from "../../typings";
 import {
   TrackCreateInput,
   TrackCreateWithoutAlbumInput,

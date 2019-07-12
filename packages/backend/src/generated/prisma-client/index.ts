@@ -499,8 +499,12 @@ export type UserOrderByInput =
   | "id_DESC"
   | "isAdmin_ASC"
   | "isAdmin_DESC"
+  | "email_ASC"
+  | "email_DESC"
   | "name_ASC"
   | "name_DESC"
+  | "password_ASC"
+  | "password_DESC"
   | "username_ASC"
   | "username_DESC"
   | "verified_ASC"
@@ -727,6 +731,20 @@ export interface UserWhereInput {
   id_not_ends_with?: Maybe<ID_Input>;
   isAdmin?: Maybe<Boolean>;
   isAdmin_not?: Maybe<Boolean>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
   name?: Maybe<String>;
   name_not?: Maybe<String>;
   name_in?: Maybe<String[] | String>;
@@ -741,6 +759,20 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
   playlists_every?: Maybe<PlaylistWhereInput>;
   playlists_some?: Maybe<PlaylistWhereInput>;
   playlists_none?: Maybe<PlaylistWhereInput>;
@@ -913,7 +945,9 @@ export interface TrackUpdateInput {
 
 export interface UserUpdateDataInput {
   isAdmin?: Maybe<Boolean>;
+  email?: Maybe<String>;
   name?: Maybe<String>;
+  password?: Maybe<String>;
   playlists?: Maybe<PlaylistUpdateManyWithoutCreatorInput>;
   username?: Maybe<String>;
   verified?: Maybe<Boolean>;
@@ -1921,6 +1955,7 @@ export interface TrackUpdateWithoutArtistsDataInput {
 
 export interface UserUpdateWithoutPlaylistsDataInput {
   isAdmin?: Maybe<Boolean>;
+  email?: Maybe<String>;
   name?: Maybe<String>;
   password?: Maybe<String>;
   username?: Maybe<String>;
@@ -2891,7 +2926,9 @@ export interface UserPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   isAdmin: () => Promise<Boolean>;
+  email: () => Promise<String>;
   name: () => Promise<String>;
+  password: () => Promise<String>;
   username: () => Promise<String>;
   verified: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -2903,7 +2940,9 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   isAdmin: () => Promise<AsyncIterator<Boolean>>;
+  email: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
   username: () => Promise<AsyncIterator<String>>;
   verified: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
