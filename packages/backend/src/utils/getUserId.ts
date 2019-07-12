@@ -5,7 +5,7 @@ import { APP_SECRET } from "../constants";
 /**
  * Get userId of logged in account from context
  */
-export const getUserId = (request: Request) => {
+export const getUserId = (request: Request): string => {
   const authorization = request.headers.authorization;
 
   if (!authorization) {

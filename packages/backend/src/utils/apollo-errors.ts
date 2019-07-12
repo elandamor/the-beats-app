@@ -112,7 +112,7 @@ export class ApolloError extends ExtendableError {
 
 export const isInstance = e => e instanceof ApolloError;
 
-export const createError = (code: string, config: ErrorConfig) => {
+export const createError = (code: string, config: ErrorConfig): ApolloError => {
   assert(
     isObject(config),
     "createError requires a config object as the second parameter"
