@@ -1,8 +1,7 @@
-import { Prisma, Track } from "../generated/prisma-client";
-
-export interface Context {
-  prisma: Prisma;
-}
+import { Request } from "express";
+import * as jwt from "jsonwebtoken";
+import { Track } from "../generated/prisma-client";
+import { APP_SECRET, JWT_EXPIRES_IN } from "../constants";
 
 /**
  * getDuration
@@ -57,3 +56,39 @@ export const timeToSeconds = arg => {
 
   return seconds;
 };
+
+/**
+ * Get userId of logged in account from context
+ */
+export const getUserId = (request: Request) => {
+  const authorization = request.headers.authorization;
+
+  if (!authorization) {
+    throw new Error("Authentication required!");
+  }
+
+  const token = authorization.replace("Bearer ", "");
+  const decoded = jwt.verify(token, APP_SECRET);
+
+  // @ts-ignore - (decoded) Property 'userId' does not exist on type 'string | object'
+  return decoded.userId;
+};
+
+/**
+ * Generates JWT token from user id
+ */
+export const generateToken = (userId: string) =>
+  jwt.sign({ userId }, APP_SECRET, {
+    expiresIn: JWT_EXPIRES_IN
+  });
+
+/**
+ * Console logging for dev
+ */
+export const logger = (message?: any, ...optionalParams: any[]) => {
+  if (process.env.NODE_ENV === "development") {
+    console.log(message, ...optionalParams);
+  }
+};
+
+export { generateAlias } from "./generateAlias";

@@ -4,3 +4,18 @@ type Query {
   playlist(id: ID!): Playlist
   playlists: PlaylistConnection
 }
+
+type Mutation {
+  createPlaylist(input: PlaylistCreatePayload!): Playlist
+  addToPlaylist(input: AddToPlaylistPayload!): Playlist
+}
+
+input PlaylistCreatePayload {
+  name: NonEmptyString!
+  trackIds: [ID!]
+}
+
+input AddToPlaylistPayload {
+  playlistId: ID!
+  trackIds: [ID!]!
+}

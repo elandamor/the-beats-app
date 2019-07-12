@@ -19,7 +19,7 @@ export const createTrack = async (
   album = { id: undefined }
 ) => {
   const { prisma } = context;
-  const { artists, duration, featuring, name, trackNumber } = track;
+  const { artists, featuring, name, trackNumber } = track;
 
   const artistsToConnect = await createArtists(artists, context);
   const featuringToConnect = await createArtists(featuring, context);

@@ -1,4 +1,5 @@
-import { Context, getDuration } from "../../utils";
+import { getDuration, getUserId, logger, generateAlias } from "../../utils";
+import { Context } from "../../typings";
 import { AlbumCreateInput } from "../../generated/prisma-client";
 import { createArtists } from "../Artist/Artist.service";
 import { createTracks } from "../Track/Track.service";
@@ -10,14 +11,17 @@ import { UnknownError, AlbumExistsError } from "../../utils/errors";
  * @param context - Exposes prisma
  */
 export const createAlbum = async (album, context: Context) => {
-  const { prisma } = context;
-  const albumExists = await prisma.$exists.album({ alias: album.alias });
+  const { prisma, request } = context;
+  const { artists, name, releaseDate, releaseType, tracks } = album;
+
+  const alias = generateAlias(name, { suffix: releaseType });
+
+  const albumExists = await prisma.$exists.album({ alias });
 
   if (albumExists) {
     throw new AlbumExistsError();
   }
 
-  const { alias, artists, name, releaseDate, releaseType, tracks } = album;
   const numTracks = tracks ? tracks.length : 0;
   const duration = tracks ? getDuration(tracks) : 0;
 
@@ -32,6 +36,9 @@ export const createAlbum = async (album, context: Context) => {
     duration,
     artists: {
       connect: artistsToConnect
+    },
+    addedBy: {
+      connect: { id: getUserId(request) }
     }
   };
 

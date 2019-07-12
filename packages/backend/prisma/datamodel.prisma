@@ -21,7 +21,6 @@ type Track {
   explicit: Boolean! @default(value: false)
   featuring: [Artist!]! @relation(name: "FeaturesIn")
   genre: String! @default(value: "Other")
-  playlists: [Playlist!]! @relation(name: "InPlaylist")
   isPlayable: Boolean! @default(value: true)
   name: String!
   trackNumber: Int!
@@ -41,6 +40,7 @@ type Album {
   releaseDate: DateTime!
   releaseType: ReleaseType!
   tracks: [Track!]! @relation(name: "InAlbum", onDelete: CASCADE)
+  addedBy: User!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -75,8 +75,7 @@ type Playlist {
   name: String!
   numTracks: Int!
   privacy: Privacy! @default(value: PRIVATE)
-  tracks: [Track!]! @relation(name: "InPlaylist")
-  collaborativeTracks: [PlaylistTrack!]! @relation(name: "InCollaborativePlaylist")
+  tracks: [PlaylistTrack!]! @relation(name: "InPlaylist")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -85,7 +84,7 @@ type PlaylistTrack {
   id: ID! @id
   addedAt: DateTime!
   addedBy: User!
-  playlists: [Playlist!]! @relation(name: "InCollaborativePlaylist")
+  playlists: [Playlist!]! @relation(name: "InPlaylist")
   track: Track!
 }
 

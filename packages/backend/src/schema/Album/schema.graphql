@@ -10,7 +10,6 @@ type Mutation {
 }
 
 input ArtistPayload {
-  alias: NonEmptyString!
   name: NonEmptyString!
 }
 
@@ -27,9 +26,8 @@ input TrackPayload {
 }
 
 input AlbumCreatePayload {
-  alias: NonEmptyString!
   artists: [ArtistPayload!]!
-  artwork: ArtworkPayload!
+  artwork: ArtworkPayload
   genres: [NonEmptyString!]
   name: NonEmptyString!
   releaseDate: DateTime!
