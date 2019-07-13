@@ -12,10 +12,10 @@ type Mutation {
 
 input PlaylistCreatePayload {
   name: NonEmptyString!
-  trackIds: [ID!]
+  trackId: ID
 }
 
 input AddToPlaylistPayload {
   playlistId: ID!
-  trackIds: [ID!]!
+  trackId: ID!
 }

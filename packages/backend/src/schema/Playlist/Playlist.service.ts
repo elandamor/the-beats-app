@@ -1,6 +1,6 @@
 import { getDuration, getUserId, generateAlias, logger } from "../../utils";
 import { Context } from "../../typings";
-import { UnknownError } from "../../utils/errors";
+import { UnknownError, NodeNotFoundError } from "../../utils/errors";
 import {
   PlaylistCreateInput,
   PlaylistUpdateInput,
@@ -72,19 +72,27 @@ export const createPlaylist = async (playlist, context: Context) => {
 };
 
 /**
- * Add track(s) to playlist
- * @param tracks - An input object
+ * Add track to playlist
+ * @param track - An input object
  * @param context - Exposes prisma
  */
 export const addToPlaylist = async (input, context: Context) => {
   const { prisma, request } = context;
-  const { playlistId, trackIds } = input;
+  const { playlistId, trackId } = input;
 
   const authenticatedUserId = getUserId(request);
 
-  const { collaborative, creator } = await prisma
+  const {
+    collaborative,
+    creator,
+    numTracks,
+    duration,
+    tracks
+  } = await prisma
     .playlist({ id: playlistId })
-    .$fragment(`{ collaborative creator { id } }`);
+    .$fragment(
+      `{ collaborative creator { id } duration numTracks tracks { track { id duration } } }`
+    );
 
   const addingAsCreator = creator.id === authenticatedUserId;
 
@@ -92,16 +100,43 @@ export const addToPlaylist = async (input, context: Context) => {
     throw new Error("Unauthorized collaboration!");
   }
 
+  // Get existing trackIds
+  const existingTrackIds = tracks.map(({ track }) => track.id);
+
+  // We need to check for any duplicates
+  const duplicateId = existingTrackIds.includes(trackId);
+
+  // We currently do not support duplicates
+  if (duplicateId) {
+    throw new Error("Duplicate track!");
+  }
+
+  let newDuration = duration;
+  let newNumTracks = numTracks;
+
+  // Get duration of track being added
+  const track = await prisma.track({ id: trackId });
+
+  if (track) {
+    newDuration += getDuration(track);
+    newNumTracks += 1;
+  } else {
+    throw new NodeNotFoundError({
+      message: "Track does not exist!"
+    });
+  }
+
   const payload: PlaylistUpdateInput = {
+    duration: newDuration,
+    numTracks: newNumTracks,
     tracks: {
-      create: trackIds.map((id: string) => ({
+      create: {
         addedAt: new Date().toISOString(),
         addedBy: { connect: { id: authenticatedUserId } },
-        track: { connect: { id } }
-      }))
+        track: { connect: { id: trackId } }
+      }
     }
   };
-  logger({ payload });
 
   try {
     const playlist = await prisma.updatePlaylist({
