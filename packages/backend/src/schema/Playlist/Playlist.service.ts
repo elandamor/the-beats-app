@@ -1,4 +1,4 @@
-import { getDuration, getUserId, generateAlias, logger } from "../../utils";
+import { getDuration, getAuthenticatedUser, generateAlias } from "../../utils";
 import { Context } from "../../typings";
 import { UnknownError, NodeNotFoundError } from "../../utils/errors";
 import {
@@ -16,7 +16,7 @@ export const createPlaylist = async (playlist, context: Context) => {
   const { prisma, request } = context;
   const { name, trackIds } = playlist;
 
-  const authenticatedUserId = getUserId(request);
+  const authenticatedUserId = getAuthenticatedUser(request).id;
 
   const alias = generateAlias(name, { prefix: authenticatedUserId });
 
@@ -80,7 +80,7 @@ export const addToPlaylist = async (input, context: Context) => {
   const { prisma, request } = context;
   const { playlistId, trackId } = input;
 
-  const authenticatedUserId = getUserId(request);
+  const authenticatedUserId = getAuthenticatedUser(request).id;
 
   const {
     collaborative,

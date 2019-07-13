@@ -5,7 +5,7 @@ import {
   UserUpdateInput
 } from "../../generated/prisma-client";
 import { UnknownError } from "../../utils/errors";
-import { generateToken, getUserId, hashPassword } from "../../utils";
+import { generateToken, getAuthenticatedUser, hashPassword } from "../../utils";
 
 /**
  * Creates a user
@@ -32,7 +32,7 @@ export const createUser = async (user, { prisma }: Context) => {
     const user = await prisma.createUser({ ...payload });
 
     return {
-      token: generateToken(user.id),
+      token: generateToken(user),
       user
     };
   } catch (error) {
@@ -49,7 +49,7 @@ export const createUser = async (user, { prisma }: Context) => {
  */
 export const updateUser = async (input, context: Context) => {
   const { prisma, request } = context;
-  const authenticatedUserId = getUserId(request);
+  const authenticatedUserId = getAuthenticatedUser(request).id;
 
   if (typeof input.password === "string") {
     input.password = await hashPassword(input.password);
@@ -95,7 +95,7 @@ export const authenticateUser = async (
   }
 
   return {
-    token: generateToken(user.id),
+    token: generateToken(user),
     user
   };
 };

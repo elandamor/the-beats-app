@@ -1,7 +1,7 @@
 export { generateAlias } from "./generateAlias";
 export { generateToken } from "./generateToken";
+export { getAuthenticatedUser } from "./getAuthenticatedUser";
 export { getDuration } from "./getDuration";
-export { getUserId } from "./getUserId";
 export { hashPassword } from "./hashPassword";
 export { logger } from "./logger";
 export { secondsToTime } from "./secondsToTime";

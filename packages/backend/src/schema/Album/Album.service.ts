@@ -1,4 +1,4 @@
-import { getDuration, getUserId, logger, generateAlias } from "../../utils";
+import { getDuration, generateAlias, getAuthenticatedUser } from "../../utils";
 import { Context } from "../../typings";
 import { AlbumCreateInput } from "../../generated/prisma-client";
 import { createArtists } from "../Artist/Artist.service";
@@ -12,8 +12,14 @@ import { UnknownError, AlbumExistsError } from "../../utils/errors";
  */
 export const createAlbum = async (album, context: Context) => {
   const { prisma, request } = context;
-  const { artists, name, releaseDate, releaseType, tracks } = album;
 
+  const authenticatedUserRole = getAuthenticatedUser(request).role;
+
+  if (authenticatedUserRole !== "ADMIN") {
+    throw new Error("Only an admin can create an album.");
+  }
+
+  const { artists, name, releaseDate, releaseType, tracks } = album;
   const alias = generateAlias(name, { suffix: releaseType });
 
   const albumExists = await prisma.$exists.album({ alias });
@@ -38,7 +44,7 @@ export const createAlbum = async (album, context: Context) => {
       connect: artistsToConnect
     },
     addedBy: {
-      connect: { id: getUserId(request) }
+      connect: { id: getAuthenticatedUser(request).id }
     }
   };
 
