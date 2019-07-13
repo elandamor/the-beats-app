@@ -1,5 +1,7 @@
 # import User, UserConnection from "../../generated/prisma.graphql"
 
+scalar NonEmptyString
+
 type Query {
   user(id: ID!): User
   users: UserConnection
@@ -7,6 +9,7 @@ type Query {
 
 type Mutation {
   createUser(input: UserCreatePayload!): AuthPayload!
+  updateUser(input: UserUpdatePayload!): User!
   authenticateUser(input: LoginUserPayload!): AuthPayload!
 }
 
@@ -18,6 +21,12 @@ type AuthPayload {
 input UserCreatePayload {
   email: String!
   password: String!
+}
+
+input UserUpdatePayload {
+  name: NonEmptyString
+  password: NonEmptyString
+  username: NonEmptyString
 }
 
 input LoginUserPayload {

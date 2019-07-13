@@ -1,9 +1,11 @@
 import * as bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
 import { Context } from "../../typings";
-import { UserCreateInput } from "../../generated/prisma-client";
+import {
+  UserCreateInput,
+  UserUpdateInput
+} from "../../generated/prisma-client";
 import { UnknownError } from "../../utils/errors";
-import { generateToken } from "../../utils";
+import { generateToken, getUserId, hashPassword } from "../../utils";
 
 /**
  * Creates a user
@@ -19,7 +21,7 @@ export const createUser = async (user, { prisma }: Context) => {
     throw new Error("An account with this email already exists!");
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await hashPassword(password);
 
   const payload: UserCreateInput = {
     email,
@@ -33,6 +35,35 @@ export const createUser = async (user, { prisma }: Context) => {
       token: generateToken(user.id),
       user
     };
+  } catch (error) {
+    throw new UnknownError({
+      message: error.message
+    });
+  }
+};
+
+/**
+ * Updates a user
+ * @param input - Object of fields to update
+ * @param context - Exposes prisma
+ */
+export const updateUser = async (input, context: Context) => {
+  const { prisma, request } = context;
+  const authenticatedUserId = getUserId(request);
+
+  if (typeof input.password === "string") {
+    input.password = await hashPassword(input.password);
+  }
+
+  const payload: UserUpdateInput = input;
+
+  try {
+    const user = await prisma.updateUser({
+      data: payload,
+      where: { id: authenticatedUserId }
+    });
+
+    return user;
   } catch (error) {
     throw new UnknownError({
       message: error.message

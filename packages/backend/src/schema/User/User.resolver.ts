@@ -9,6 +9,8 @@ export default {
   Mutation: {
     createUser: (_, { input }, context: Context) =>
       service.createUser(input, context),
+    updateUser: (_, { input }, context: Context) =>
+      service.updateUser(input, context),
     authenticateUser: (_, { input }, context: Context) =>
       service.authenticateUser(input, context)
   },
