@@ -2914,8 +2914,10 @@ export interface NodeNode {
 export interface UserPreviousValues {
   id: ID_Output;
   isAdmin: Boolean;
-  name: String;
-  username: String;
+  email: String;
+  name?: String;
+  password: String;
+  username?: String;
   verified: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -4638,6 +4640,6 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `https://eu1.prisma.sh/elandamor/the-beats-api/dev`
+  endpoint: `http://localhost:4466`
 });
 export const prisma = new Prisma();
