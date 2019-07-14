@@ -34,3 +34,12 @@ export const TrackExistsError = createError("TRACK_EXISTS", {
 export const UnknownError = createError("UNKNOWN_ERROR", {
   message: "An unknown error has occured"
 });
+
+/**
+ * Throws when the request was valid, but the server is refusing action.
+ * The user might not have the necessary permissions for a resource, or may
+ * need an account of some sort.
+ */
+export const ForbiddenError = createError("ACCESS_DENIED", {
+  message: "You do not have permission to perform operation."
+});

@@ -3,7 +3,11 @@ import { Context } from "../../typings";
 import { AlbumCreateInput } from "../../generated/prisma-client";
 import { createArtists } from "../Artist/Artist.service";
 import { createTracks } from "../Track/Track.service";
-import { UnknownError, AlbumExistsError } from "../../utils/errors";
+import {
+  UnknownError,
+  AlbumExistsError,
+  ForbiddenError
+} from "../../utils/errors";
 
 /**
  * Creates an album
@@ -16,7 +20,9 @@ export const createAlbum = async (album, context: Context) => {
   const authenticatedUserRole = getAuthenticatedUser(request).role;
 
   if (authenticatedUserRole !== "ADMIN") {
-    throw new Error("Only an admin can create an album.");
+    throw new ForbiddenError({
+      message: "You do not have permission to create an album."
+    });
   }
 
   const { artists, name, releaseDate, releaseType, tracks } = album;
