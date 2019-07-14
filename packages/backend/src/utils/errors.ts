@@ -15,10 +15,11 @@ export const EmptyStringError = createError("EXPECTED_STRING", {
 });
 
 /**
- * Throws when user requests a non-existent node
+ * Throws when the requested resource could not be found but may be
+ * available in the future.
  */
-export const NodeNotFoundError = createError("NODE_NOT_FOUND", {
-  message: "Node does not exist"
+export const NotFoundError = createError("404:NotFound", {
+  message: "The requested resource could not be found."
 });
 
 /**
@@ -36,10 +37,18 @@ export const UnknownError = createError("UNKNOWN_ERROR", {
 });
 
 /**
+ * Similar to ForbiddenError, but specifically for use when authentication is
+ * required and has failed or has not yet been provided.
+ */
+export const UnauthorizedError = createError("401:Unauthorized", {
+  message: "Authentication required"
+});
+
+/**
  * Throws when the request was valid, but the server is refusing action.
  * The user might not have the necessary permissions for a resource, or may
  * need an account of some sort.
  */
-export const ForbiddenError = createError("ACCESS_DENIED", {
-  message: "You do not have permission to perform operation."
+export const ForbiddenError = createError("403:Forbidden", {
+  message: "You don't have permissions to perform operation"
 });

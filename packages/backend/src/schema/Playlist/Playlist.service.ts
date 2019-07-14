@@ -1,6 +1,6 @@
 import { getDuration, getAuthenticatedUser, generateAlias } from "../../utils";
 import { Context } from "../../typings";
-import { UnknownError, NodeNotFoundError } from "../../utils/errors";
+import { UnknownError, NotFoundError } from "../../utils/errors";
 import {
   PlaylistCreateInput,
   PlaylistUpdateInput,
@@ -121,7 +121,7 @@ export const addToPlaylist = async (input, context: Context) => {
     newDuration += getDuration(track);
     newNumTracks += 1;
   } else {
-    throw new NodeNotFoundError({
+    throw new NotFoundError({
       message: "Track does not exist!"
     });
   }
