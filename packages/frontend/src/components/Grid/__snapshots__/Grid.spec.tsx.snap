@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Grid should display a grid 1`] = `
+.c0 {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-gap: 24px;
+}
+
+<div
+  class="c-grid c0"
+>
+  <div>
+    1
+  </div>
+  <div>
+    2
+  </div>
+  <div>
+    3
+  </div>
+</div>
+`;

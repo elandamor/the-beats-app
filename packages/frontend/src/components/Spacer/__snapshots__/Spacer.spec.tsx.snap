@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spacer should render without crashing 1`] = `
+.c0 {
+  height: 24px;
+}
+
+<div
+  class="c0"
+  spacing="24"
+/>
+`;

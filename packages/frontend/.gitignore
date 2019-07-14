@@ -1,0 +1,12 @@
+coverage
+build
+node_modules
+stats.json
+
+# Cruft
+.DS_Store
+.idea
+
+.env*
+
+*.log
