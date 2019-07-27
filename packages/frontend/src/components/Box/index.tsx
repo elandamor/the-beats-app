@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { compose, border, boxShadow } from 'styled-system';
+import { compose, borders, boxShadow } from 'styled-system';
 
 import { positioning, typography } from '@app/theme/componentTypes';
 
@@ -16,7 +16,7 @@ export interface IBoxProps extends IFlexProps {}
  */
 
 export const BoxStyles = compose(
-  border,
+  borders,
   boxShadow,
   positioning,
   typography,
@@ -31,7 +31,6 @@ const Box = styled(Flex)<IBoxProps>`
 Box.defaultProps = {
   flexDirection: 'column',
   position: 'relative',
-  width: '100%',
 };
 
 export default Box;

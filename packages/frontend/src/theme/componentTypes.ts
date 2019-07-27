@@ -50,10 +50,7 @@ import {
   overflow,
 } from 'styled-system';
 
-export const core = compose(
-  color,
-  space,
-);
+export const core = compose(space);
 
 export const flexbox = compose(
   core,
@@ -112,6 +109,7 @@ export const positioning = compose(
 
 export const typography = compose(
   core,
+  color,
   fontFamily,
   fontSize,
   fontStyle,

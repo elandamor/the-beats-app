@@ -1,10 +1,10 @@
 import styled from 'styled-components';
+import Box from '../Box';
 import theme from '../../theme';
 
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.cardBackground};
+const Wrapper = styled(Box)`
+  background-color: ${({ theme }) => theme.colors.surface};
   border-radius: 2px;
-  box-shadow: 0 10px 10px -6px rgba(214, 219, 230, 0.6);
 
   header {
     align-items: center;

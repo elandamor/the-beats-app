@@ -1,12 +1,13 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FC, useState } from 'react';
 import classNames from 'classnames';
+import { StyledSystemProps } from 'styled-system';
 // Styles
 import Wrapper from './styles';
-import { FiChevronDown } from 'react-icons/fi';
 
-export interface IProps {
+export interface IProps extends StyledSystemProps {
   children: any;
   className?: string;
+  defaultOpen?: boolean;
   onToggle?: Function;
   title: string;
 }
@@ -23,19 +24,22 @@ export interface IProps {
  *  </Accordion>
  */
 
-const Accordion: FunctionComponent<IProps> = ({
+const Accordion: FC<IProps> = ({
   children,
   className,
+  defaultOpen,
   onToggle,
   title,
+  ...rest
 }) => {
-  const [visibility, setVisibility] = useState(false);
+  const [visibility, setVisibility] = useState(defaultOpen);
 
   return (
     <Wrapper
       className={classNames('c-accordion', className, {
         '-open': visibility,
       })}
+      {...rest}
     >
       <header
         onClick={() => {
@@ -44,9 +48,6 @@ const Accordion: FunctionComponent<IProps> = ({
         }}
       >
         <span className="a-title">{title}</span>
-        <span className="c-icon">
-          <FiChevronDown />
-        </span>
       </header>
       {visibility ? <section>{children}</section> : null}
     </Wrapper>

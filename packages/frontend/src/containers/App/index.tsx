@@ -2,17 +2,13 @@ import React, { FC } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Normalize } from 'styled-normalize';
 // Components
-import { Box, ErrorBoundary, Header } from '@app/components';
-import Routes from '@app/components/Routes/Loadable';
+import { Box, ErrorBoundary, Header, Routes } from '@app/components';
 // Contexts
 import { AppProvider } from '@app/contexts';
 // Routes
 import routes from '@app/routes';
 
 import GlobalStyles from '@app/global-styles';
-
-// import { makeDebugger } from '@app/utils';
-// const debug = makeDebugger('App');
 
 export interface IAppProps extends RouteComponentProps {}
 

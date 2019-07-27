@@ -24,6 +24,7 @@ Portal.defaultProps = {
   alignItems: 'center',
   justifyContent: 'center',
   position: 'fixed',
+  width: '100%',
 };
 
 /**
@@ -39,10 +40,12 @@ export const PortalInner = styled(animated(Box))<IPortalInnerProps>``;
 PortalInner.defaultProps = {
   alignItems: 'stretch',
   bg: 'surface',
+  flex: 'none',
   flexDirection: 'column',
   maxHeight: ['100%', '90vh'],
   maxWidth: '600px',
   minHeight: '160px',
+  width: '100%',
 };
 
 /**
@@ -58,6 +61,7 @@ export const PortalInnerHeader = styled(animated(Box))<IPortalInnerHeaderProps>`
 `;
 
 PortalInnerHeader.defaultProps = {
+  flex: 'none',
   position: 'relative',
 };
 
@@ -74,4 +78,5 @@ export const Scrim = styled(animated(Box))<IScrimProps>`
 Scrim.defaultProps = {
   bg: 'blacks.5',
   position: 'absolute',
+  width: '100%',
 };

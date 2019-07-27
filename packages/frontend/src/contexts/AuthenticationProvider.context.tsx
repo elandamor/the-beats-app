@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { differenceInMinutes } from 'date-fns';
+import { differenceInDays } from 'date-fns';
 import { JWT_LOCAL_STORAGE_KEY } from '@app/constants';
 
 const DEFAULT_STATE = {
@@ -45,7 +45,7 @@ const Provider: FC<IProps> = (props) => {
     }
 
     try {
-      const isValid = differenceInMinutes(new Date().toISOString(), token) < 1;
+      const isValid = differenceInDays(new Date().toISOString(), token) < 1;
 
       if (!isValid) {
         throw new Error('jwt:expired');

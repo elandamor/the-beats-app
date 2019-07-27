@@ -8,7 +8,8 @@ import * as service from "./Album.service";
 export default {
   Mutation: {
     createAlbum: (_, { input }, context: Context) =>
-      service.createAlbum(input, context)
+      service.createAlbum(input, context),
+    deleteAlbum: (_, { id }, { prisma }: Context) => prisma.deleteAlbum({ id })
   },
   Query: {
     album: (_, { id }, { prisma }: Context) => prisma.album({ id }),

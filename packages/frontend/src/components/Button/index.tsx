@@ -8,18 +8,11 @@ export interface IButtonProps extends StyledSystemProps {
   className?: string;
   disabled?: boolean;
   icon?: React.ReactNode;
-  iconOnly?: boolean;
   iconSize?: number;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   text?: string;
   type?: 'button' | 'submit';
-  // Variants
-  flat?: boolean;
-  outlined?: boolean;
-  primary?: boolean;
-  raised?: boolean;
-  secondary?: boolean;
-  variant?: 'flat' | 'outlined' | 'primary' | 'raised' | 'secondary' | 'text';
+  variant?: string;
 }
 
 /**
@@ -34,7 +27,7 @@ const Button: FC<IButtonProps> = ({ text, ...rest }) => (
   // @ts-ignore
   <Wrapper {...rest}>
     {rest.icon && <i>{rest.icon}</i>}
-    {!rest.iconOnly && <label>{text}</label>}
+    {rest.variant !== 'icon' && <label>{text}</label>}
   </Wrapper>
 );
 
@@ -43,13 +36,10 @@ Button.defaultProps = {
   bg: 'transparent',
   color: 'text',
   disabled: false,
-  iconOnly: false,
   iconSize: 18,
-  minWidth: 64,
   onClick: () => null,
   text: 'Button',
   type: 'button',
-  variant: 'text',
 };
 
 export default Button;

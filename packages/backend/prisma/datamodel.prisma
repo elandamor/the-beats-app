@@ -1,9 +1,9 @@
 type Artist {
   id: ID! @id
-  albums: [Album!]! @relation(name: "AlbumCreatedBy")
+  albums: [Album!]! @relation(name: "AlbumCreatedBy", onDelete: SET_NULL)
   alias: String! @unique
   avatar: Image
-  featuresIn: [Track!]! @relation(name: "FeaturesIn")
+  featuresIn: [Track!]! @relation(name: "FeaturesIn", onDelete: SET_NULL)
   genres: [String!] @scalarList(strategy: RELATION)
   name: String!
   tracks: [Track!]! @relation(name: "ByArtist", onDelete: CASCADE)
@@ -75,7 +75,7 @@ type Playlist {
   name: String!
   numTracks: Int!
   privacy: Privacy! @default(value: PRIVATE)
-  tracks: [PlaylistTrack!]! @relation(name: "InPlaylist")
+  tracks: [PlaylistTrack!]! @relation(name: "InPlaylist", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

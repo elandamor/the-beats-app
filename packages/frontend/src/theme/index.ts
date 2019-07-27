@@ -87,6 +87,14 @@ export const theme: DefaultTheme = {
       },
     },
   },
+  buttons: {
+    icon: {
+      borderRadius: '100%',
+      height: '40px',
+      minWidth: '40px',
+      width: '40px',
+    },
+  },
   // Typography
   fonts: {
     sansSerif: `'Roboto',-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen

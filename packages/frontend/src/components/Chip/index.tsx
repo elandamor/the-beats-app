@@ -36,7 +36,7 @@ const Chip: FC<IChipProps> = ({
     {icon && <ChipIcon>{icon}</ChipIcon>}
     <ChipText {...rest}>{text}</ChipText>
     {showRemove && (
-      <ChipRemove iconOnly icon={<FiXCircle />} onClick={handleRemove} />
+      <ChipRemove variant="icon" icon={<FiXCircle />} onClick={handleRemove} />
     )}
   </Wrapper>
 );

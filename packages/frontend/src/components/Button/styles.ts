@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { borderRadius, color, minWidth, size, space } from 'styled-system';
+import styled from 'styled-components';
+import { color, buttonStyle, borders, layout } from 'styled-system';
 import { IButtonProps } from './index';
 import theme from '../../theme';
 
@@ -13,19 +13,16 @@ const Wrapper = styled.button<IButtonProps>`
   font-weight: ${theme.fontWeights[4]};
   justify-content: center;
   letter-spacing: 0.0892857143em;
-  min-height: ${theme.space[4] + theme.space[1] / 2}px;
-  opacity: ${({ disabled, raised }) => (raised && disabled ? '0.38' : '1')};
   outline: none;
   overflow: hidden;
   padding: ${theme.space[1]}px;
   position: relative;
   text-transform: uppercase;
   z-index: 1;
-  ${borderRadius};
+  ${buttonStyle};
+  ${borders};
   ${color};
-  ${minWidth};
-  ${size};
-  ${space};
+  ${layout};
 
   i {
     pointer-events: none;
@@ -56,41 +53,15 @@ const Wrapper = styled.button<IButtonProps>`
   &:not([disabled]) {
     &:focus {
       &:before {
-        ${({ raised }) =>
-          !raised &&
-          css`
-            background-color: ${({ theme }) =>
-              theme.isDark ? theme.colors.whites[3] : theme.colors.blacks[3]};
-          `};
-      }
-
-      &:after {
-        ${({ raised }) =>
-          raised &&
-          css`
-            background-color: ${({ theme }) =>
-              theme.isDark ? theme.colors.blacks[3] : theme.colors.whites[3]};
-          `};
+        background-color: ${({ theme }) =>
+          theme.isDark ? theme.colors.whites[3] : theme.colors.blacks[3]};
       }
     }
 
     &:hover {
       &:before {
-        ${({ raised }) =>
-          !raised &&
-          css`
-            background-color: ${({ theme }) =>
-              theme.isDark ? theme.colors.whites[2] : theme.colors.blacks[2]};
-          `};
-      }
-
-      &:after {
-        ${({ raised }) =>
-          raised &&
-          css`
-            background-color: ${({ theme }) =>
-              theme.isDark ? theme.colors.whites[2] : theme.colors.blacks[2]};
-          `};
+        background-color: ${({ theme }) =>
+          theme.isDark ? theme.colors.whites[2] : theme.colors.blacks[2]};
       }
     }
   }

@@ -55,5 +55,7 @@ declare module 'styled-system' {
       SpaceProps,
       TextAlignProps,
       WidthProps,
-      ZIndexProps {}
+      ZIndexProps {
+    color?: string;
+  }
 }

@@ -96,7 +96,7 @@ const Modal: FC<IModalProps> = (props) => {
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child);
+      return React.cloneElement(child, { closeModal: _close });
     }
 
     return child;
@@ -161,14 +161,11 @@ const Modal: FC<IModalProps> = (props) => {
                               }
                             >
                               <Button
+                                variant="icon"
                                 bg="surface"
-                                borderRadius="100%"
                                 onClick={() => _close()}
                                 icon={<FiX />}
-                                iconOnly={true}
-                                minWidth={40}
                                 text="Close"
-                                size="40px"
                               />
                             </PortalInnerHeader>
                             <Measure

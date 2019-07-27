@@ -23,7 +23,7 @@ const WrappedQuery: FC<IWrappedQueryProps> = ({ children, ...rest }) => (
         if (result.loading) {
           return rest.loader || <LoadingBar />;
         }
-        if (result.error) return <span>{`Error!: ${result.error}`}</span>;
+        if (result.error) return <span>{result.error}</span>;
       }
 
       return children(result);

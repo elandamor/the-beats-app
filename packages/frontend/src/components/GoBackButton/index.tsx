@@ -44,7 +44,7 @@ const GoBackButton = ({ className, show }: IGoBackButtonProps) => {
                 icon={<FiArrowLeft />}
                 onClick={() => history && history.goBack()}
                 iconSize={24}
-                iconOnly
+                variant="icon"
                 minWidth={56}
                 size={56}
                 borderRadius="50%"
