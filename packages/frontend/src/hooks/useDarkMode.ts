@@ -2,9 +2,6 @@ import { useEffect } from 'react';
 import useLocalStorage from './useLocalStorage';
 import useMedia from './useMedia';
 
-// import { makeDebugger } from '../utils';
-// const debug = makeDebugger('useDarkMode');
-
 function useDarkMode() {
   // Use our useLocalStorage hook to persist state through a page refresh.
   // Read the recipe for this hook to learn more: usehooks.com/useLocalStorage
