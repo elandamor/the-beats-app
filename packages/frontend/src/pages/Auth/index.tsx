@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 
-import { Button, Inner, Page, WrappedMutation } from '@app/components';
+import { Button, Inner, ScrollView, WrappedMutation } from '@app/components';
 import { H2 } from '@app/typography';
 import { useAuthentication } from '@app/hooks';
 import { AUTHENTICATE_USER } from '@app/graphql';
@@ -22,7 +22,7 @@ const Auth = ({ location }: IAuthProps) => {
   const { isAuthenticated, setJWT } = useAuthentication();
 
   return !isAuthenticated ? (
-    <Page>
+    <ScrollView>
       <Helmet>
         <title>Auth</title>
         <meta name="description" content="The page authenticates a user" />
@@ -58,7 +58,7 @@ const Auth = ({ location }: IAuthProps) => {
           }}
         </WrappedMutation>
       </Inner>
-    </Page>
+    </ScrollView>
   ) : (
     <Redirect
       to={

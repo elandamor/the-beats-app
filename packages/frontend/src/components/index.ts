@@ -9,8 +9,10 @@ export { default as Image } from './Image';
 export { default as Inner } from './Inner';
 export { default as Input } from './Input';
 export { default as Modal } from './Modal/Loadable';
-export { default as Page } from './Page';
+export { default as NavigationBar } from './NavigationBar/Loadable';
 export { default as Routes } from './Routes/Loadable';
+export { default as ScrollView } from './ScrollView';
+export { default as WrappedMutation } from './WrappedMutation';
 export { default as WrappedQuery } from './WrappedQuery';
 // Project Specific
 export { default as Album } from './Album';

@@ -1,11 +1,17 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { Inner, Page, Image, HorizontalScroller, Modal } from '@app/components';
+import {
+  Inner,
+  ScrollView,
+  Image,
+  HorizontalScroller,
+  Modal,
+} from '@app/components';
 import { H2, H3 } from '@app/typography';
 
 storiesOf('Page', module).add('default', () => (
-  <Page>
+  <ScrollView>
     <Image
       src="http://papers.co/wallpaper/papers.co-bg61-paint-ipad-pro-new-apple-art-purple-32-wallpaper.jpg"
       aspect="4/3"
@@ -70,5 +76,5 @@ storiesOf('Page', module).add('default', () => (
         officiis non!
       </p>
     </Inner>
-  </Page>
+  </ScrollView>
 ));

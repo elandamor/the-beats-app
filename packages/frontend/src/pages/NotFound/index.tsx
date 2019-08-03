@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { Inner, Page } from '@app/components';
+import { Inner, ScrollView } from '@app/components';
 
 import { H2, Text } from '@app/typography';
 
@@ -19,7 +19,7 @@ interface INotFoundProps extends RouteComponentProps {}
 
 const NotFound = (props: INotFoundProps) => {
   return (
-    <Page>
+    <ScrollView>
       <Helmet>
         <title>Oops! The page you're looking for doesn't exist.</title>
         <meta
@@ -33,7 +33,7 @@ const NotFound = (props: INotFoundProps) => {
         </Link>
         <Text>The page you're looking for doesn't exist.</Text>
       </Inner>
-    </Page>
+    </ScrollView>
   );
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Inner, Page } from '@app/components';
+import { Inner, ScrollView } from '@app/components';
 import { H4 } from '@app/typography';
 import { GetAlbums } from '@app/containers';
 
@@ -19,7 +19,7 @@ interface IDashboardProps extends RouteComponentProps {}
 
 const Dashboard = (props: IDashboardProps) => {
   return (
-    <Page>
+    <ScrollView>
       <Helmet>
         <title>Dashboard</title>
         <meta
@@ -31,7 +31,7 @@ const Dashboard = (props: IDashboardProps) => {
         <H4 mb="2">Albums</H4>
         <GetAlbums />
       </Inner>
-    </Page>
+    </ScrollView>
   );
 };
 
