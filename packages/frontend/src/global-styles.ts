@@ -46,7 +46,7 @@ export default createGlobalStyle`
   }
 
   [href] {
-    color: ${({ theme }) => theme.colors.link};
+    color: inherit;
     text-decoration: none;
   }
 `;
