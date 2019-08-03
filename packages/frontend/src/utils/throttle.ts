@@ -1,27 +1,38 @@
-// @ts-ignore
-export default function throttle<T extends (...args) => void>(
-  func: T,
+/**
+ * A throttled function that only invokes `func` at most once per every `threshold` milliseconds.
+ * @param func The function to throttle.
+ * @param threshold The number of milliseconds to throttle invocations to.
+ * @param scope  Where variables, functions, and objects are accessible in your code during runtime
+ */
+
+export default function throttle(
+  func: Function,
   threshold: number = 250,
   scope?: any,
-): T {
-  let last: number, deferTimer: number;
+) {
+  /**
+   * @var last The last time `func` was executed.
+   * @var timeoutID ID of the timeout you wish to clear, as returned by setTimeout().
+   */
+  let last: number, timeoutID: number | NodeJS.Timeout;
+
   return function(this: any) {
     let context = scope || this;
-
     let now = Date.now(),
       args = arguments;
+
     if (last && now < last + threshold) {
-      // hold on to it
-      clearTimeout(deferTimer);
-      deferTimer = setTimeout(function() {
+      if (typeof timeoutID === 'number') {
+        clearTimeout(timeoutID);
+      }
+
+      timeoutID = setTimeout(function() {
         last = now;
-        // @ts-ignore
         func.apply(context, args);
       }, threshold);
     } else {
       last = now;
-      // @ts-ignore
       func.apply(context, args);
     }
-  } as T;
+  };
 }
