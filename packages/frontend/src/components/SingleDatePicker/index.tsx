@@ -22,7 +22,7 @@ interface ISingleDatePickerProps {
   [propName: string]: any;
 }
 
-// @ts-ignore
+// @ts-ignore - Need to figure what extendMoment needs done here
 const moment = extendMoment(Moment);
 
 /**
@@ -95,8 +95,7 @@ const SingleDatePicker: FC<ISingleDatePickerProps> = ({
         id={id}
         onDateChange={(date: any) => setFieldValue(field.name, date)}
         focused={focused}
-        // @ts-ignore
-        onFocusChange={({ focused }) => setFocused(focused)}
+        onFocusChange={({ focused }) => setFocused(focused!)}
         numberOfMonths={1}
         showDefaultInputIcon={true}
         inputIconPosition="after"

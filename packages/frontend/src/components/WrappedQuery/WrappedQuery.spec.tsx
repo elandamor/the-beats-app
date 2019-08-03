@@ -82,7 +82,7 @@ describe('WrappedQuery', () => {
     );
 
     const firstTodoTextNode = await waitForElement(() => getByTestId('todo:0'));
-    // @ts-ignore
+    // @ts-ignore - Property 'toHaveTextContent' does not exist on type 'Matchers<HTMLElement>'
     expect(firstTodoTextNode).toHaveTextContent('First todo');
   });
 
@@ -101,7 +101,7 @@ describe('WrappedQuery', () => {
     await waitForDomChange();
 
     const errorTextNode = await waitForElement(() => getByTestId('error'));
-    // @ts-ignore
+    // @ts-ignore - Property 'toHaveTextContent' does not exist on type 'Matchers<HTMLElement>'
     expect(errorTextNode).toHaveTextContent('Error!!!');
   });
 });

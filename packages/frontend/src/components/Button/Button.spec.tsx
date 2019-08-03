@@ -36,7 +36,7 @@ describe('Button', () => {
     const buttonNode = getByTestId('button');
     fireEvent.click(buttonNode);
 
-    // @ts-ignore
+    // @ts-ignore - Property 'toHaveTextContent' does not exist on type 'Matchers<HTMLElement>'
     expect(buttonNode).toHaveTextContent('1');
   });
 });
