@@ -7,7 +7,11 @@ import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
 import { RetryLink } from 'apollo-link-retry';
 import { setContext } from 'apollo-link-context';
 
-import { GRAPHQL_ENDPOINT, NODE_ENV } from '@app/constants';
+import {
+  GRAPHQL_ENDPOINT,
+  NODE_ENV,
+  JWT_LOCAL_STORAGE_KEY,
+} from '@app/constants';
 
 const cache = new InMemoryCache();
 
@@ -17,8 +21,7 @@ const httpLink = new HttpLink({
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjankwcWFleXowMDdvMDc0MWJ3NDA5YWxwIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNTYzMTE4OTM0LCJleHAiOjE1NjM3MjM3MzR9.B6PkCWxlpPzD-s4InMaQ75_YXIGuGWdF7cOXLcllOj4';
+  const token = localStorage.getItem(JWT_LOCAL_STORAGE_KEY);
   // return the headers to the context so httpLink can read them
   return {
     headers: {

@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { differenceInDays } from 'date-fns';
+import { decode } from 'jsonwebtoken';
 import { JWT_LOCAL_STORAGE_KEY } from '@app/constants';
 
 const DEFAULT_STATE = {
@@ -45,9 +45,11 @@ const Provider: FC<IProps> = (props) => {
     }
 
     try {
-      const isValid = differenceInDays(new Date().toISOString(), token) < 1;
+      const decodedJWT: any = decode(token);
+      const EXP = decodedJWT.exp;
+      const NOW = parseInt((Date.now() / 1000).toString(), 10);
 
-      if (!isValid) {
+      if (NOW >= EXP) {
         throw new Error('jwt:expired');
       }
 
@@ -58,7 +60,7 @@ const Provider: FC<IProps> = (props) => {
         removeJWT();
       }
       setIsAuthenticated(false);
-      return false;
+      return e;
     } finally {
       setAuthenticating(false);
     }
