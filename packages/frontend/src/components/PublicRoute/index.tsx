@@ -8,6 +8,7 @@ import ErrorBoundary from '../ErrorBoundary';
 // const debug = makeDebugger('PublicRoute');
 
 interface IPublicRouteProps extends RouteProps {
+  component?: React.ComponentType<any>;
   routes?: IRouteProps[];
 }
 
@@ -27,10 +28,9 @@ const PublicRoute: FC<IPublicRouteProps> = ({
     <ErrorBoundary>
       <Route
         {...rest}
-        render={(props) => (
-          // @ts-ignore
-          <Component routes={rest.routes} {...props} />
-        )}
+        render={(props) =>
+          Component && <Component routes={rest.routes} {...props} />
+        }
       />
     </ErrorBoundary>
   );

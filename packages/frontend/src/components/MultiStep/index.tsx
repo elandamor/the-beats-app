@@ -3,7 +3,6 @@ import classNames from 'classnames';
 // Styles
 import Wrapper, { Navigation, Track, Tracks } from './styles';
 import Button from '../Button';
-import { KEYBOARD_CODE } from '../../constants';
 
 // import { makeDebugger } from '../../utils';
 // const debug = makeDebugger('MultiStep');
@@ -42,7 +41,7 @@ const MultiStep: FC<IProps> = ({
   showNavigation,
   showNavigationTop,
   steps,
-  verticalTrack,
+  verticalTrack = false,
 }) => {
   const [styles, setStyles] = useState(getNavStyles(0, steps.length));
   const [compState, setComp] = useState(0);
@@ -54,7 +53,7 @@ const MultiStep: FC<IProps> = ({
     setButtons(getButtonsState(index, steps.length));
   };
 
-  const next = (stepsLength?: number) => setStepState(compState + 1);
+  const next = () => setStepState(compState + 1);
 
   const previous = () =>
     setStepState(compState > 0 ? compState - 1 : compState);
@@ -70,13 +69,8 @@ const MultiStep: FC<IProps> = ({
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    return event.which === KEYBOARD_CODE.ENTER ? next(steps.length) : {};
-  };
-
   const renderTracks = () => {
     return (
-      // @ts-ignore
       <Tracks verticalTrack={verticalTrack}>
         {steps.map((_: any, index: number) => (
           <Track
@@ -84,7 +78,6 @@ const MultiStep: FC<IProps> = ({
             onClick={handleClick}
             key={index}
             value={index}
-            // @ts-ignore
             verticalTrack={verticalTrack}
           >
             <div className="side-nav__wrap">
@@ -122,10 +115,7 @@ const MultiStep: FC<IProps> = ({
   };
 
   return (
-    <Wrapper
-      className={classNames('c-multiStep', className)}
-      onKeyDown={handleKeyDown}
-    >
+    <Wrapper className={classNames('c-multiStep', className)}>
       {renderTracks()}
       {showNavigationTop && renderNavigation()}
       {steps[compState].component}

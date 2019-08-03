@@ -33,7 +33,6 @@ const Header: FC<IHeaderProps> = (props) => {
   };
 
   return (
-    // @ts-ignore
     <Box as="header" flex="none" {...props}>
       <Inner as={Flex}>
         <Flex alignItems="center">

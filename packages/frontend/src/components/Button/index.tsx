@@ -24,7 +24,6 @@ export interface IButtonProps extends StyledSystemProps {
  */
 
 const Button: FC<IButtonProps> = ({ text, ...rest }) => (
-  // @ts-ignore
   <Wrapper {...rest}>
     {rest.icon && <i>{rest.icon}</i>}
     {rest.variant !== 'icon' && <label>{text}</label>}

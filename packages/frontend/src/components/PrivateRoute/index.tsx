@@ -10,6 +10,7 @@ import ErrorBoundary from '../ErrorBoundary';
 // const debug = makeDebugger('PrivateRoute');
 
 interface IPrivateRouteProps extends RouteProps {
+  component?: React.ComponentType<any>;
   routes?: IRouteProps[];
 }
 
@@ -33,8 +34,7 @@ const PrivateRoute: FC<IPrivateRouteProps> = ({
         {...rest}
         render={(props) =>
           isAuthenticated ? (
-            // @ts-ignore
-            <Component routes={rest.routes} {...props} />
+            Component && <Component routes={rest.routes} {...props} />
           ) : (
             <Redirect
               to={{
