@@ -1,4 +1,4 @@
-import { Auth, Home, NotFound, Private } from './pages';
+import { Auth, Home, NotFound, Dashboard } from './pages';
 
 import { IRouteProps } from './components/Routes';
 
@@ -14,8 +14,8 @@ const routes: IRouteProps[] = [
   },
   {
     secure: true,
-    path: '/private',
-    component: Private,
+    path: '/dashboard',
+    component: Dashboard,
   },
   {
     path: '*',

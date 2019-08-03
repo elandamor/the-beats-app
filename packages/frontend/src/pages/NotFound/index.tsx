@@ -28,7 +28,7 @@ const NotFound = (props: INotFoundProps) => {
         />
       </Helmet>
       <Inner p={2}>
-        <Link to="/private">
+        <Link to="/dashboard">
           <H2 mb={0}>Oops!</H2>
         </Link>
         <Text>The page you're looking for doesn't exist.</Text>
