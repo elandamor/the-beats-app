@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { animated } from 'react-spring';
-
-// import { makeDebugger } from '../../utils';
-// const debug = makeDebugger('AnimatedWrapper');
+import Box from '../Box';
 
 interface IAnimatedWrapperProps {}
 
@@ -14,6 +12,6 @@ interface IAnimatedWrapperProps {}
  * <AnimatedWrapper />
  */
 
-const AnimatedWrapper = styled(animated.div)<IAnimatedWrapperProps>``;
+const AnimatedWrapper = styled(animated(Box))<IAnimatedWrapperProps>``;
 
 export default AnimatedWrapper;
