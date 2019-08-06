@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
-import Helmet from 'react-helmet';
 import { StyledSystemProps } from 'styled-system';
 // Styles
 import Wrapper from './styles';
-import Flex from '../Flex';
+import Card from '../Card';
+import { DELETE_ALBUM, GET_ALBUMS } from '@app/graphql';
+import { FiTrash2 } from 'react-icons/fi';
+import WrappedMutation from '../WrappedMutation';
+import Button from '../Button';
 import Box from '../Box';
-import { Text } from '@app/typography';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Album');
@@ -24,18 +26,36 @@ interface IAlbumProps extends StyledSystemProps {
 
 const Album: FC<IAlbumProps> = ({ data: album, ...rest }) => (
   <Wrapper {...rest}>
-    <Helmet title={`${album.name}`} />
-    <Flex mr="2" flex="none">
-      <Box bg="cardBorderColor" size="40px" />
-    </Flex>
-    <Box flex="1">
-      <Text>{album.name}</Text>
+    <Card image="../" title={album.name} />
+    <Box position="absolute" right="8px" bottom="8px">
+      <WrappedMutation
+        mutation={DELETE_ALBUM}
+        awaitRefetchQueries={true}
+        refetchQueries={() => {
+          return [{ query: GET_ALBUMS }];
+        }}
+      >
+        {(deleteAlbum) => (
+          <Button
+            variant="icon"
+            icon={<FiTrash2 />}
+            onClick={async () => {
+              try {
+                await deleteAlbum({
+                  variables: { id: album.id },
+                });
+              } catch (error) {
+                return error;
+              }
+            }}
+          />
+        )}
+      </WrappedMutation>
     </Box>
   </Wrapper>
 );
 
 Album.defaultProps = {
-  flexDirection: 'row',
   alignItems: 'center',
 };
 
