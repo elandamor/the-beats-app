@@ -1,15 +1,16 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { Inner, ScrollView } from '@app/components';
-import { H4 } from '@app/typography';
-import { GetAlbums } from '@app/containers';
+import { Inner, ScrollView, Card, Routes } from '@app/components';
+import { IRouteProps } from '@app/components/Routes';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Dashboard');
 
-interface IDashboardProps extends RouteComponentProps {}
+interface IDashboardProps extends RouteComponentProps {
+  routes?: IRouteProps[];
+}
 
 /**
  * @render react
@@ -18,19 +19,24 @@ interface IDashboardProps extends RouteComponentProps {}
  */
 
 const Dashboard = (props: IDashboardProps) => {
+  const { location, match, routes } = props;
+  const hasSubRoutes = routes && routes.length > 0;
+
   return (
     <ScrollView>
       <Helmet>
         <title>Dashboard</title>
-        <meta
-          name="description"
-          content="The page requires a user to be authenticated to view."
-        />
       </Helmet>
-      <Inner p={2}>
-        <H4 mb="2">Albums</H4>
-        <GetAlbums />
-      </Inner>
+      {match.isExact && (
+        <Inner p={2}>
+          <Link to={`${match.url}/albums`}>
+            <Card title="Albums" />
+          </Link>
+        </Inner>
+      )}
+      {hasSubRoutes && (
+        <Routes location={location} routes={routes} subRoutes={true} />
+      )}
     </ScrollView>
   );
 };
