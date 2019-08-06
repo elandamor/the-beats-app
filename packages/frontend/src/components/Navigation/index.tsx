@@ -1,17 +1,20 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import { StyledSystemProps } from 'styled-system';
 // Styles
 import Wrapper from './styles';
+import Flex from '../Flex';
 
 type Link = {
   className?: string;
   exact?: boolean;
   href: string;
+  icon?: React.ReactNode;
   label: string;
 };
 
-interface IProps {
+export interface INavigationProps extends StyledSystemProps {
   className?: string;
   links: Link[];
 }
@@ -30,22 +33,32 @@ interface IProps {
  * />
  */
 
-const Navigation: FC<IProps> = ({ className, links }) => (
+const Navigation: FC<INavigationProps> = ({ className, height, links }) => (
   <Wrapper className={classNames('c-nav', className)}>
-    <ul>
+    <Flex as="ul" m="0" p="0" alignItems="center" height={height}>
       {links.map((link: Link, index: number) => (
-        <li key={index}>
+        <Flex
+          as="li"
+          key={index}
+          flex="1"
+          height={height}
+          alignItems="center"
+          justifyContent="center"
+        >
           <NavLink
             exact={link.exact}
             activeClassName="-active"
             className={classNames('a-nav-item', link.className)}
             to={link.href}
           >
-            {link.label}
+            <Flex height={height} alignItems="center" justifyContent="center">
+              {link.icon}
+              {link.label}
+            </Flex>
           </NavLink>
-        </li>
+        </Flex>
       ))}
-    </ul>
+    </Flex>
   </Wrapper>
 );
 
