@@ -20,11 +20,8 @@ import { useWindowSize } from '@app/hooks';
 const portalContainer = document.getElementById('portals') || document.body;
 
 interface IModalProps extends StyledSystemProps {
-  children?: React.ReactNode;
-  className?: string;
   closeOnDocumentClick?: boolean;
   closeOnEscape?: boolean;
-  defaultOpen?: boolean;
   fullscreen?: boolean;
   hasStickyHeader?: boolean;
   modalTitle?: string;
@@ -47,13 +44,13 @@ interface IModalProps extends StyledSystemProps {
  */
 
 const Modal: FC<IModalProps> = (props) => {
-  const { children, defaultOpen } = props;
+  const { children, open } = props;
 
   const { height: windowHeight } = useWindowSize();
 
   const [contentHeight, setContentHeight] = useState<number>(-1);
   const [isFullscreen, setFullscreen] = useState(!!props.fullscreen);
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [isOpen, setIsOpen] = useState(open);
 
   const WRAPPER = useMemo(() => document.createElement('div'), []);
   WRAPPER.className = 'c-portal';
@@ -75,7 +72,7 @@ const Modal: FC<IModalProps> = (props) => {
   /**
    * Close modal
    */
-  const _close = () => {
+  const closeModal = () => {
     noScroll.off();
     setIsOpen(false);
     props.onClose && props.onClose();
@@ -84,29 +81,33 @@ const Modal: FC<IModalProps> = (props) => {
   /**
    * Open modal
    */
-  const _open = () => {
+  const openModal = () => {
     noScroll.on();
     setIsOpen(true);
     props.onOpen && props.onOpen();
   };
 
   const TRIGGER = props.trigger
-    ? React.cloneElement(props.trigger, { onClick: _open })
+    ? React.cloneElement(props.trigger, { onClick: openModal })
     : null;
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child, { closeModal: _close });
+      return React.cloneElement(child, { closeModal });
     }
 
     return child;
   });
 
   useEffect(() => {
-    if (defaultOpen) {
+    if (open) {
+      setIsOpen(true);
       noScroll.on();
+    } else {
+      setIsOpen(false);
+      noScroll.off();
     }
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     if (portalContainer && WRAPPER) {
@@ -124,7 +125,7 @@ const Modal: FC<IModalProps> = (props) => {
       const makeFullscreen = contentHeight > windowHeight;
       setFullscreen(makeFullscreen);
     }
-  }, [contentHeight]);
+  }, [contentHeight, windowHeight, props.fullscreen]);
 
   return (
     <React.Fragment>
@@ -141,7 +142,7 @@ const Modal: FC<IModalProps> = (props) => {
                     justifyContent={props.justifyContent}
                     p={isFullscreen ? '0' : props.p}
                   >
-                    <Scrim onClick={() => _close()} />
+                    <Scrim onClick={() => closeModal()} />
                     {portalInnerTransition.map(
                       (portalInner) =>
                         portalInner.item && (
@@ -163,7 +164,7 @@ const Modal: FC<IModalProps> = (props) => {
                               <Button
                                 variant="icon"
                                 bg="surface"
-                                onClick={() => _close()}
+                                onClick={() => closeModal()}
                                 icon={<FiX />}
                                 text="Close"
                               />
@@ -182,6 +183,18 @@ const Modal: FC<IModalProps> = (props) => {
                                 </ScrollView>
                               )}
                             </Measure>
+                            <PortalInnerHeader
+                              p={2}
+                              flexDirection="row"
+                              justifyContent="flex-end"
+                            >
+                              <Button
+                                bg="text"
+                                color="white"
+                                onClick={() => closeModal()}
+                                text="Create"
+                              />
+                            </PortalInnerHeader>
                           </PortalInner>
                         ),
                     )}
@@ -197,7 +210,7 @@ const Modal: FC<IModalProps> = (props) => {
 };
 
 Modal.defaultProps = {
-  defaultOpen: false,
+  open: false,
   p: 2,
 };
 

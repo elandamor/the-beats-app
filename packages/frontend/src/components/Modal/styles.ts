@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { animated } from 'react-spring';
-import { StyledSystemProps, ColorProps } from 'styled-system';
-import Box from '../Box';
+import { StyledSystemProps } from 'styled-system';
+import AnimatedWrapper from '../AnimatedWrapper';
 
 const sharedStyles = {
   height: '100%',
@@ -15,7 +14,7 @@ const sharedStyles = {
 
 interface IPortalProps extends StyledSystemProps {}
 
-export const Portal = styled(animated(Box))<IPortalProps>`
+export const Portal = styled(AnimatedWrapper)<IPortalProps>`
   ${sharedStyles};
 `;
 
@@ -35,7 +34,7 @@ interface IPortalInnerProps extends IPortalProps {
   fullscreen?: boolean;
 }
 
-export const PortalInner = styled(animated(Box))<IPortalInnerProps>``;
+export const PortalInner = styled(AnimatedWrapper)<IPortalInnerProps>``;
 
 PortalInner.defaultProps = {
   alignItems: 'stretch',
@@ -54,7 +53,9 @@ PortalInner.defaultProps = {
 
 interface IPortalInnerHeaderProps extends IPortalProps {}
 
-export const PortalInnerHeader = styled(animated(Box))<IPortalInnerHeaderProps>`
+export const PortalInnerHeader = styled(AnimatedWrapper)<
+  IPortalInnerHeaderProps
+>`
   left: 0;
   top: 0;
   z-index: 1;
@@ -69,9 +70,9 @@ PortalInnerHeader.defaultProps = {
  * Scrim
  */
 
-interface IScrimProps extends ColorProps {}
+interface IScrimProps extends IPortalProps {}
 
-export const Scrim = styled(animated(Box))<IScrimProps>`
+export const Scrim = styled(AnimatedWrapper)<IScrimProps>`
   ${sharedStyles};
 `;
 
