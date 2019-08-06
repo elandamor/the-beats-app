@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 
 import { IRouteProps } from '../Routes';
 import ErrorBoundary from '../ErrorBoundary';
+import { useCurrentRoute } from '@app/hooks';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('PublicRoute');
@@ -24,6 +25,10 @@ const PublicRoute: FC<IPublicRouteProps> = ({
   component: Component,
   ...rest
 }) => {
+  const { setCurrentRoute } = useCurrentRoute();
+
+  useEffect(() => setCurrentRoute(rest), []);
+
   return (
     <ErrorBoundary>
       <Route

@@ -9,12 +9,15 @@ import PrivateRoute from '../PrivateRoute/Loadable';
 import PublicRoute from '../PublicRoute/Loadable';
 
 export interface IRouteProps extends RouteProps {
+  isSubRoute?: boolean;
   secure?: boolean;
   routes?: IRouteProps[];
+  title?: string;
 }
 
 interface IRoutesProps extends SwitchProps {
   routes: IRouteProps[];
+  subRoutes?: boolean;
 }
 
 const Wrapper = styled(Box)`
@@ -42,7 +45,7 @@ const Wrapper = styled(Box)`
  * />
  */
 
-const Routes: FC<IRoutesProps> = ({ location, routes }) => {
+const Routes: FC<IRoutesProps> = ({ location, routes, subRoutes }) => {
   const routeTransitions = useTransition(
     location,
     (location) => location.pathname,
@@ -53,17 +56,22 @@ const Routes: FC<IRoutesProps> = ({ location, routes }) => {
     },
   );
 
+  const modifiedRoutes = subRoutes
+    ? routes.map((route) => Object.assign({}, route, { isSubRoute: true }))
+    : routes;
+
   return (
     <Wrapper as="main">
       {routeTransitions.map(({ item, props: styleProps, key }) => (
         <AnimatedWrapper key={key} style={styleProps}>
           <Switch location={item}>
-            {routes.map(({ secure, ...rest }: IRouteProps, index: number) =>
-              secure ? (
-                <PrivateRoute key={index} {...rest} />
-              ) : (
-                <PublicRoute key={index} {...rest} />
-              ),
+            {modifiedRoutes.map(
+              ({ secure, ...rest }: IRouteProps, index: number) =>
+                secure ? (
+                  <PrivateRoute key={index} {...rest} />
+                ) : (
+                  <PublicRoute key={index} {...rest} />
+                ),
             )}
           </Switch>
         </AnimatedWrapper>

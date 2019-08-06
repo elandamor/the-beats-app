@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 
-import { useAuthentication } from '@app/hooks';
+import { useAuthentication, useCurrentRoute } from '@app/hooks';
 import { IRouteProps } from '../Routes';
 import LoadingBar from '../LoadingBar';
 import ErrorBoundary from '../ErrorBoundary';
@@ -27,6 +27,9 @@ const PrivateRoute: FC<IPrivateRouteProps> = ({
   ...rest
 }) => {
   const { authenticating, isAuthenticated } = useAuthentication();
+  const { setCurrentRoute } = useCurrentRoute();
+
+  useEffect(() => setCurrentRoute(rest), []);
 
   return !authenticating ? (
     <ErrorBoundary>

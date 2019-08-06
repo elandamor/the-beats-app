@@ -1,4 +1,5 @@
 export { default as useAuthentication } from './useAuthentication';
+export { default as useCurrentRoute } from './useCurrentRoute';
 export { default as useDarkMode } from './useDarkMode';
 export { default as useLocalStorage } from './useLocalStorage';
 export { default as useMedia } from './useMedia';
