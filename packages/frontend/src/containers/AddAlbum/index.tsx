@@ -20,7 +20,7 @@ const INITIAL_VALUES: AlbumFormValues = {
   artwork: [],
 };
 
-const ALBUM_PAYLOAD = {
+export const ALBUM_PAYLOAD = {
   artists: [
     {
       name: 'Khalid',
@@ -46,9 +46,9 @@ const ALBUM_PAYLOAD = {
 /**
  * @render react
  * @name AddAlbum component
- * @description AddAlbum component.
+ * @description UI for album creation.
  * @example
- * <AddAlbum />
+ * <AddAlbum {...routeProps} />
  */
 
 const AddAlbum: FC<IProps> = (props) => (
@@ -60,8 +60,7 @@ const AddAlbum: FC<IProps> = (props) => (
       refetchQueries={() => {
         return [{ query: GET_ALBUMS }];
       }}
-      onCompleted={(data) => {
-        console.log(data);
+      onCompleted={() => {
         props.closeModal && props.closeModal();
       }}
     >
@@ -79,6 +78,19 @@ const AddAlbum: FC<IProps> = (props) => (
           }}
           render={(formikProps) => (
             <Form>
+              <Field
+                name="artwork"
+                render={({ field }: FieldProps<AlbumFormValues>) => (
+                  <Input
+                    {...field}
+                    field={field}
+                    form={formikProps}
+                    label="Artwork"
+                    hideLabel={true}
+                    type="file"
+                  />
+                )}
+              />
               <Field
                 name="name"
                 render={({ field }: FieldProps<AlbumFormValues>) => (

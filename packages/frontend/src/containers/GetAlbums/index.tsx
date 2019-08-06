@@ -1,8 +1,19 @@
 import React, { FC } from 'react';
-import { WrappedQuery, Album, Flex, Button } from '@app/components';
-import { GET_ALBUMS, DELETE_ALBUM } from '@app/graphql';
-import WrappedMutation from '@app/components/WrappedMutation';
-import { FiTrash2 } from 'react-icons/fi';
+import { Helmet } from 'react-helmet';
+import { FiPlusCircle } from 'react-icons/fi';
+import {
+  WrappedQuery,
+  Album,
+  Flex,
+  Box,
+  Button,
+  Modal,
+  Card,
+  Inner,
+} from '@app/components';
+import { GET_ALBUMS } from '@app/graphql';
+import { useRouter } from '@app/hooks';
+import AddAlbum from '../AddAlbum';
 
 interface IGetAlbumsProps {}
 
@@ -14,44 +25,47 @@ interface IGetAlbumsProps {}
  * <GetAlbums />
  */
 
-const GetAlbums: FC<IGetAlbumsProps> = () => (
-  <WrappedQuery query={GET_ALBUMS}>
-    {({ data }) =>
-      data.albums.edges.map(({ node }: IAlbum) => (
-        <Flex key={node.id} alignItems="center">
-          <Flex>
-            <Album data={node} />
-          </Flex>
-          <Flex flex="none">
-            <WrappedMutation
-              mutation={DELETE_ALBUM}
-              awaitRefetchQueries={true}
-              refetchQueries={() => {
-                return [{ query: GET_ALBUMS }];
-              }}
-              onCompleted={(data) => console.log(data)}
-            >
-              {(deleteAlbum) => (
-                <Button
-                  variant="icon"
-                  icon={<FiTrash2 />}
-                  onClick={async () => {
-                    try {
-                      await deleteAlbum({
-                        variables: { id: node.id },
-                      });
-                    } catch (error) {
-                      return error;
-                    }
-                  }}
-                />
-              )}
-            </WrappedMutation>
-          </Flex>
-        </Flex>
-      ))
-    }
-  </WrappedQuery>
-);
+const GetAlbums: FC<IGetAlbumsProps> = () => {
+  const routeProps = useRouter();
+
+  return (
+    <Inner p={2}>
+      <Helmet>
+        <title>Albums</title>
+        <meta
+          name="description"
+          content="Browse music albums on the-beats-app"
+        />
+      </Helmet>
+      <WrappedQuery query={GET_ALBUMS}>
+        {({ data, loading }) => {
+          if (!loading && data.albums.edges.length < 1) {
+            return (
+              <Box>
+                <Card title="No albums" />
+                <Modal
+                  trigger={
+                    <Box position="absolute" right="8px" bottom="8px">
+                      <Button variant="icon" icon={<FiPlusCircle />} />
+                    </Box>
+                  }
+                  fullscreen={true}
+                >
+                  <AddAlbum {...routeProps} />
+                </Modal>
+              </Box>
+            );
+          }
+
+          return data.albums.edges.map(({ node }: IAlbum) => (
+            <Flex key={node.id} alignItems="center">
+              <Album data={node} />
+            </Flex>
+          ));
+        }}
+      </WrappedQuery>
+    </Inner>
+  );
+};
 
 export default GetAlbums;
