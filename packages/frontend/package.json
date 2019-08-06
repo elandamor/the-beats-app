@@ -67,6 +67,7 @@
     "@types/styled-system": "5.0.0",
     "apollo": "2.15.0",
     "babel-loader": "8.0.6",
-    "the-react-scripts": "^0.1.1"
+    "the-react-scripts": "^0.1.1",
+    "why-did-you-update": "^1.0.6"
   }
 }
