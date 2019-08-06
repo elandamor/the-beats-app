@@ -6,8 +6,9 @@ import Flex from '../Flex';
 import GoBackButton from '../GoBackButton/Loadable';
 import Toggle from '../Toggle/Loadable';
 
-import { useTheme, useRouter } from '@app/hooks';
+import { useTheme, useRouter, useCurrentRoute } from '@app/hooks';
 import { generic } from '@app/assets';
+import { H1 } from '@app/typography';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Header');
@@ -22,11 +23,14 @@ interface IHeaderProps extends IBoxProps {}
  * <Header />
  */
 
-const Header: FC<IHeaderProps> = (props) => {
+const Header: FC<IHeaderProps> = ({ ...props }) => {
   const { location } = useRouter();
   const { darkMode, setDarkMode } = useTheme();
+  const { currentRoute } = useCurrentRoute();
 
-  const showBackButton = location.state && location.state.showBackButton;
+  const showBackButton =
+    currentRoute.isSubRoute ||
+    (location.state && location.state.showBackButton);
 
   const handleSetDarkMode = () => {
     setDarkMode(!darkMode);
@@ -37,6 +41,9 @@ const Header: FC<IHeaderProps> = (props) => {
       <Inner as={Flex}>
         <Flex alignItems="center">
           <GoBackButton show={showBackButton} />
+        </Flex>
+        <Flex alignItems="center" justifyContent="center">
+          <H1 fontSize={[4, 5]}>{currentRoute.title}</H1>
         </Flex>
         <Flex alignItems="center" justifyContent="flex-end">
           <Toggle
