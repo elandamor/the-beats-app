@@ -1,21 +1,22 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps, Redirect } from 'react-router-dom';
 
 import { Box, ScrollView } from '@app/components';
+
+interface IHomeProps extends RouteComponentProps {}
 
 /**
  * @render react
  * @name Home page
  * @description Landing page for the web app.
  */
-
-interface IHomeProps extends RouteComponentProps {}
-
+// TODO: Remove Redirect when building for client. Currently bening used to focus on dashboard.
 const Home = (props: IHomeProps) => {
   return (
     <ScrollView justifyContent="center">
-      <Helmet title="The React App - Built with love by @elandamor" />
+      <Redirect to="/dashboard" />
+      <Helmet title="the-beats-app - Built with love by @elandamor" />
       <Link
         aria-label="Go to about page"
         to={{

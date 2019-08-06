@@ -52,6 +52,13 @@ if (process.env.NODE_ENV !== 'production') {
   window.localStorage.setItem('debug', 'reactBoilerplate:*');
 }
 
+// Why-did-you-update is a function that monkey patches React and notifies you
+// in the console when potentially unnecessary re-renders occur.
+// if (process.env.NODE_ENV !== 'production') {
+//   const { whyDidYouUpdate } = require('why-did-you-update');
+//   whyDidYouUpdate(React);
+// }
+
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,
 // we do not want it installed

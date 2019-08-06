@@ -36,7 +36,6 @@ storiesOf('Page', module).add('default', () => (
           aspect="4/3"
         />
         <Modal
-          defaultOpen={true}
           hasStickyHeader={true}
           trigger={
             <Image
