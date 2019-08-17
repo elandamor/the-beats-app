@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { WrappedQuery, Track } from '@app/components';
+import { useQuery } from 'react-apollo';
+import { Track } from '@app/components';
 import { GET_TRACKS } from '@app/graphql';
 
 interface IGetTracksProps {}
@@ -12,14 +13,12 @@ interface IGetTracksProps {}
  * <GetTracks />
  */
 
-const GetTracks: FC<IGetTracksProps> = () => (
-  <WrappedQuery query={GET_TRACKS}>
-    {({ data }) =>
-      data.tracks.edges.map(({ node }: ITrack) => (
-        <Track key={node.id} data={node} />
-      ))
-    }
-  </WrappedQuery>
-);
+const GetTracks: FC<IGetTracksProps> = () => {
+  const { data } = useQuery(GET_TRACKS);
+
+  return data.tracks.edges.map(({ node }: ITrack) => (
+    <Track key={node.id} data={node} />
+  ));
+};
 
 export default GetTracks;

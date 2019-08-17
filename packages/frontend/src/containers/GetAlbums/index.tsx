@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
+import { useQuery } from 'react-apollo';
 import { Helmet } from 'react-helmet';
+import { RouteComponentProps } from 'react-router-dom';
 import { FiPlusCircle } from 'react-icons/fi';
 import {
-  WrappedQuery,
   Album,
   Flex,
   Box,
@@ -10,12 +11,16 @@ import {
   Modal,
   Card,
   Inner,
+  Routes,
 } from '@app/components';
 import { GET_ALBUMS } from '@app/graphql';
 import { useRouter } from '@app/hooks';
 import AddAlbum from '../AddAlbum';
+import { IRouteProps } from '@app/components/Routes';
 
-interface IGetAlbumsProps {}
+interface IGetAlbumsProps extends RouteComponentProps {
+  routes?: IRouteProps[];
+}
 
 /**
  * @render react
@@ -25,45 +30,52 @@ interface IGetAlbumsProps {}
  * <GetAlbums />
  */
 
-const GetAlbums: FC<IGetAlbumsProps> = () => {
+const GetAlbums: FC<IGetAlbumsProps> = (props) => {
   const routeProps = useRouter();
+  const { data, loading } = useQuery(GET_ALBUMS);
+  const { location, match, routes } = props;
+  const hasSubRoutes = routes && routes.length > 0;
+
+  if (!loading && data.albums.edges.length < 1) {
+    return (
+      <Box>
+        <Card title="No albums" />
+        <Modal
+          trigger={
+            <Box position="absolute" right="8px" bottom="8px">
+              <Button variant="icon" icon={<FiPlusCircle />} />
+            </Box>
+          }
+          fullscreen={true}
+        >
+          <AddAlbum {...routeProps} />
+        </Modal>
+      </Box>
+    );
+  }
 
   return (
     <Inner p={2}>
-      <Helmet>
-        <title>Albums</title>
-        <meta
-          name="description"
-          content="Browse music albums on the-beats-app"
-        />
-      </Helmet>
-      <WrappedQuery query={GET_ALBUMS}>
-        {({ data, loading }) => {
-          if (!loading && data.albums.edges.length < 1) {
-            return (
-              <Box>
-                <Card title="No albums" />
-                <Modal
-                  trigger={
-                    <Box position="absolute" right="8px" bottom="8px">
-                      <Button variant="icon" icon={<FiPlusCircle />} />
-                    </Box>
-                  }
-                  fullscreen={true}
-                >
-                  <AddAlbum {...routeProps} />
-                </Modal>
-              </Box>
-            );
-          }
-
-          return data.albums.edges.map(({ node }: IAlbum) => (
+      {match.isExact && (
+        <React.Fragment>
+          <Helmet>
+            <title>Albums</title>
+            <meta
+              name="description"
+              content="Browse music albums on the-beats-app"
+            />
+          </Helmet>
+          {data.albums.edges.map(({ node }: IAlbum) => (
             <Flex key={node.id} alignItems="center">
-              <Album data={node} />
+              <Album data={node} mb="2" />
             </Flex>
-          ));
-        }}
-      </WrappedQuery>
+          ))}
+        </React.Fragment>
+      )}
+
+      {hasSubRoutes && (
+        <Routes location={location} routes={routes} subRoutes={true} />
+      )}
     </Inner>
   );
 };
