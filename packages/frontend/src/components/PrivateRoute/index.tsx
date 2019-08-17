@@ -41,7 +41,7 @@ const PrivateRoute: FC<IPrivateRouteProps> = ({
           ) : (
             <Redirect
               to={{
-                pathname: '/auth',
+                pathname: '/auth/login',
                 state: { from: props.location },
               }}
             />

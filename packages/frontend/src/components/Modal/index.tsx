@@ -13,6 +13,8 @@ import ErrorBoundary from '../ErrorBoundary';
 import ScrollView from '../ScrollView';
 
 import { useWindowSize } from '@app/hooks';
+import { Text } from '@app/typography';
+import Flex from '../Flex';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Modal');
@@ -154,20 +156,32 @@ const Modal: FC<IModalProps> = (props) => {
                             height={isFullscreen ? '100%' : 'auto'}
                           >
                             <PortalInnerHeader
-                              p={2}
-                              flexDirection="row"
-                              justifyContent="flex-end"
                               position={
                                 props.hasStickyHeader ? 'absolute' : 'relative'
                               }
                             >
-                              <Button
-                                variant="icon"
-                                bg="surface"
-                                onClick={() => closeModal()}
-                                icon={<FiX />}
-                                text="Close"
-                              />
+                              <Flex flex="none" minWidth="56px" />
+                              <Flex justifyContent="center">
+                                {props.modalTitle && (
+                                  <Text fontSize="4" fontWeight="bold">
+                                    {props.modalTitle}
+                                  </Text>
+                                )}
+                              </Flex>
+                              <Flex
+                                flex="none"
+                                justifyContent="flex-end"
+                                px="1"
+                                minWidth="56px"
+                              >
+                                <Button
+                                  variant="icon"
+                                  bg="surface"
+                                  onClick={() => closeModal()}
+                                  icon={<FiX />}
+                                  text="Close"
+                                />
+                              </Flex>
                             </PortalInnerHeader>
                             <Measure
                               bounds
@@ -183,18 +197,6 @@ const Modal: FC<IModalProps> = (props) => {
                                 </ScrollView>
                               )}
                             </Measure>
-                            <PortalInnerHeader
-                              p={2}
-                              flexDirection="row"
-                              justifyContent="flex-end"
-                            >
-                              <Button
-                                bg="text"
-                                color="white"
-                                onClick={() => closeModal()}
-                                text="Create"
-                              />
-                            </PortalInnerHeader>
                           </PortalInner>
                         ),
                     )}

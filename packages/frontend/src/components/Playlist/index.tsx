@@ -23,7 +23,7 @@ const Playlist: FC<IPlaylistProps> = ({ data: playlist, ...rest }) => (
   <Wrapper {...rest}>
     <Helmet title={`${playlist.name}`} />
     <Flex mr="2" flex="none">
-      <Box bg="cardBorderColor" size="40px" />
+      <Box bg="cardBorderColor" size="80px" />
     </Flex>
     <Box flex="1">
       <Text>{playlist.name}</Text>

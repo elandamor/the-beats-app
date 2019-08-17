@@ -32,6 +32,9 @@ const Dashboard = (props: IDashboardProps) => {
           <Link to={`${match.url}/albums`}>
             <Card title="Albums" />
           </Link>
+          <Link to={`${match.url}/playlists`}>
+            <Card title="Playlists" />
+          </Link>
         </Inner>
       )}
       {hasSubRoutes && (

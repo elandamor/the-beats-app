@@ -38,7 +38,7 @@ export const PortalInner = styled(AnimatedWrapper)<IPortalInnerProps>``;
 
 PortalInner.defaultProps = {
   alignItems: 'stretch',
-  bg: 'surface',
+  bg: 'background',
   flex: 'none',
   flexDirection: 'column',
   maxHeight: ['100%', '90vh'],
@@ -62,7 +62,11 @@ export const PortalInnerHeader = styled(AnimatedWrapper)<
 `;
 
 PortalInnerHeader.defaultProps = {
+  alignItems: 'center',
+  bg: 'surface',
   flex: 'none',
+  flexDirection: 'row',
+  height: '64px',
   position: 'relative',
 };
 
