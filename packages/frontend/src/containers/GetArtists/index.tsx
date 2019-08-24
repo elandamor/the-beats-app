@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import { Artist } from '@app/components';
 import { GET_ARTISTS } from '@app/graphql';
 

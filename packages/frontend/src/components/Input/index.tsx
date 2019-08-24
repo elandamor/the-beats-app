@@ -6,7 +6,7 @@ import Box from '../Box';
 import { Text } from '@app/typography';
 import Flex from '../Flex';
 import Button from '../Button';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { Eye, EyeOff } from 'react-feather';
 import Dropzone from '../Dropzone/Loadable';
 
 export interface IInputProps extends FieldProps {
@@ -67,7 +67,7 @@ const Input: FC<IInputProps> = ({ field, hideLabel, label, ...rest }) => {
           {isPasswordInput && (
             <Button
               variant="icon"
-              icon={passwordVisible ? <FiEye /> : <FiEyeOff />}
+              icon={passwordVisible ? <Eye /> : <EyeOff />}
               onClick={() => setPasswordVisible(!passwordVisible)}
               minWidth="40px"
               size="40px"

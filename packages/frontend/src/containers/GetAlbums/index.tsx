@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router-dom';
-import { FiPlusCircle } from 'react-icons/fi';
+import { PlusCircle } from 'react-feather';
 import {
   Album,
   Flex,
@@ -43,7 +43,7 @@ const GetAlbums: FC<IGetAlbumsProps> = (props) => {
         <Modal
           trigger={
             <Box position="absolute" right="8px" bottom="8px">
-              <Button variant="icon" icon={<FiPlusCircle />} />
+              <Button variant="icon" icon={<PlusCircle />} />
             </Box>
           }
           fullscreen={true}

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { FiArrowLeft } from 'react-icons/fi';
+import { ArrowLeft } from 'react-feather';
 import { useTransition } from 'react-spring';
 // Styles
 import Wrapper from './styles';
@@ -41,7 +41,7 @@ const GoBackButton = ({ className, show }: IGoBackButtonProps) => {
             <AnimatedWrapper key={key} style={styleProps}>
               <Wrapper
                 className={classNames('', className)}
-                icon={<FiArrowLeft />}
+                icon={<ArrowLeft />}
                 onClick={() => history && history.goBack()}
                 iconSize={24}
                 variant="icon"

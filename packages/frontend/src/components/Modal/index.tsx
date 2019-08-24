@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { FiX } from 'react-icons/fi';
+import { X } from 'react-feather';
 import { useTransition } from 'react-spring';
 import { StyledSystemProps } from 'styled-system';
 import Measure from 'react-measure';
@@ -178,7 +178,7 @@ const Modal: FC<IModalProps> = (props) => {
                                   variant="icon"
                                   bg="surface"
                                   onClick={() => closeModal()}
-                                  icon={<FiX />}
+                                  icon={<X />}
                                   text="Close"
                                 />
                               </Flex>

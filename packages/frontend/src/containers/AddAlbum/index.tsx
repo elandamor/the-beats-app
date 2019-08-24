@@ -2,10 +2,7 @@ import React, { FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router-dom';
 import { Formik, Form, Field, FieldProps } from 'formik';
-import { useMutation } from 'react-apollo';
-import Uppy from '@uppy/core';
-import { DragDrop } from '@uppy/react';
-import XHRUpload from '@uppy/xhr-upload';
+import { useMutation } from '@apollo/react-hooks';
 // Styles
 import Wrapper from './styles';
 import { Input } from '@app/components';
@@ -46,21 +43,6 @@ export const ALBUM_PAYLOAD = {
   ],
 };
 
-const uppy = Uppy({
-  meta: { type: 'avatar' },
-  restrictions: { maxNumberOfFiles: 1 },
-  autoProceed: true,
-});
-
-uppy.use(XHRUpload, {
-  endpoint: 'http://my-website.org/upload',
-});
-
-uppy.on('complete', (result) => {
-  const url = result.successful[0].uploadURL;
-  console.log({ url });
-});
-
 /**
  * @render react
  * @name AddAlbum component
@@ -83,18 +65,6 @@ const AddAlbum: FC<IProps> = (props) => {
   return (
     <Wrapper>
       <Helmet title="Create a new album" />
-      <DragDrop
-        uppy={uppy}
-        locale={{
-          strings: {
-            // Text to show on the droppable area.
-            // `%{browse}` is replaced with a link that opens the system file selection dialog.
-            dropHereOr: 'Drop here or %{browse}',
-            // Used as the label for the link that opens the system file selection dialog.
-            browse: 'browse',
-          },
-        }}
-      />
       <Formik
         initialValues={INITIAL_VALUES}
         onSubmit={async () => {

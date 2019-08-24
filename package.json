@@ -2,11 +2,12 @@
   "name": "the-beats-app",
   "private": true,
   "scripts": {
+    "nuke": "lerna clean -y && rm -rf node_modules && rm -rf yarn.lock && yarn",
     "start": "lerna run --parallel start"
   },
   "devDependencies": {
     "cross-env": "5.2.0",
-    "lerna": "^3.15.0"
+    "lerna": "^3.16.4"
   },
   "workspaces": [
     "packages/*"

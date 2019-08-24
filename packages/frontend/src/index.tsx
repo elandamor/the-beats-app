@@ -9,7 +9,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 // Import root app
 import App from './containers/App';

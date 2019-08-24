@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { StyledSystemProps } from 'styled-system';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 // Styles
 import Wrapper from './styles';
 import Card from '../Card';
 import { GET_PLAYLISTS } from '@app/graphql';
-import { FiPlus, FiMoreHorizontal } from 'react-icons/fi';
+import { Plus, MoreHorizontal } from 'react-feather';
 import Button from '../Button';
 import Flex from '../Flex';
 import { H6 } from '@app/typography';
@@ -41,7 +41,7 @@ const Album: FC<IAlbumProps> = ({ data: album, ...rest }) => {
           <Flex flex="none" p="1">
             <Modal
               fullscreen={true}
-              trigger={<Button variant="icon" icon={<FiPlus />} />}
+              trigger={<Button variant="icon" icon={<Plus />} />}
               modalTitle="Add to a Playlist"
             >
               {!loadingPlaylists && data.playlists.edges.length < 1 ? (
@@ -56,7 +56,7 @@ const Album: FC<IAlbumProps> = ({ data: album, ...rest }) => {
                 ))
               )}
             </Modal>
-            <Button variant="icon" icon={<FiMoreHorizontal />} />
+            <Button variant="icon" icon={<MoreHorizontal />} />
           </Flex>
         </Flex>
       </Card>

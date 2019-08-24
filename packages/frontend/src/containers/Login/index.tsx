@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import {
   Formik,
   Form,

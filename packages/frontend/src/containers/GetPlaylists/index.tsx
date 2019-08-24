@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import { Helmet } from 'react-helmet';
 import { Flex, Box, Card, Inner, Playlist } from '@app/components';
 import { GET_PLAYLISTS } from '@app/graphql';

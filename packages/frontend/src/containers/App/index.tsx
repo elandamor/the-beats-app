@@ -15,7 +15,7 @@ import { AppProvider } from '@app/contexts';
 import routes from '@app/routes';
 
 import GlobalStyles from '@app/global-styles';
-import { FiCircle } from 'react-icons/fi';
+import { Circle } from 'react-feather';
 
 export interface IAppProps extends RouteComponentProps {}
 
@@ -43,8 +43,8 @@ const App: FC<IAppProps> = (props) => {
         <ErrorBoundary>
           <NavigationBar
             links={[
-              { exact: true, href: '/', icon: <FiCircle /> },
-              { href: '/dashboard', icon: <FiCircle /> },
+              { exact: true, href: '/', icon: <Circle /> },
+              { href: '/dashboard', icon: <Circle /> },
             ]}
             height="64px"
           />

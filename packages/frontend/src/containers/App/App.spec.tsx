@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 import App from './index';
 import client from '../../apollo.config';
