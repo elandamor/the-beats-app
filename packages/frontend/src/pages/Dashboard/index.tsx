@@ -1,9 +1,8 @@
+import { Card, Inner, Routes, ScrollView } from '@app/components';
+import { IRouteProps } from '@app/components/Routes';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, RouteComponentProps } from 'react-router-dom';
-
-import { Inner, ScrollView, Card, Routes } from '@app/components';
-import { IRouteProps } from '@app/components/Routes';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Dashboard');
