@@ -1,12 +1,11 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import classNames from 'classnames';
-import { SpaceProps } from 'styled-system';
+import { StyledSystemProps } from 'styled-system';
 // Styles
 import Wrapper from './styles';
 
 import IOImageLazyLoader from '@app/utils/IOImageLazyLoader';
 
-export interface IImageProps extends SpaceProps {
+export interface IImageProps extends StyledSystemProps {
   aspect?: string;
   className?: string;
   src: string;
@@ -63,12 +62,8 @@ const Image: FC<IImageProps> = ({ className, src, ...rest }) => {
   }, [isDocumentLoad]);
 
   return (
-    <Wrapper
-      className={classNames('', className)}
-      isCached={isCached}
-      {...rest}
-    >
-      <img {...rest} ref={imgEl} data-src={src} />
+    <Wrapper isCached={isCached} {...rest}>
+      <img ref={imgEl} data-src={src} />
     </Wrapper>
   );
 };

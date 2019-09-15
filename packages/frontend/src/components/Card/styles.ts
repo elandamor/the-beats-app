@@ -2,8 +2,9 @@ import styled, { css } from 'styled-components';
 import { ICardProps } from './index';
 import { theme } from '@app/theme';
 import H6 from '@app/typography/H6';
+import Box from '../Box';
 
-const Wrapper = styled.div<ICardProps>`
+const Wrapper = styled(Box)<ICardProps>`
   border-radius: 2px;
   /* box-shadow: 0 10px 10px -6px rgba(214, 219, 230, 0.6); */
   background-color: ${({ theme }) => theme.colors.surface};

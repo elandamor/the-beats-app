@@ -12,6 +12,7 @@ import { H6 } from '@app/typography';
 import Modal from '../Modal';
 import Box from '../Box';
 import Playlist from '../Playlist';
+import { Link } from 'react-router-dom';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Album');
@@ -33,10 +34,12 @@ const Album: FC<IAlbumProps> = ({ data: album, ...rest }) => {
 
   return (
     <Wrapper {...rest}>
-      <Card image="../" contentPadding={0}>
+      <Card contentPadding={0}>
         <Flex alignItems="center">
           <Flex flex="1" px="2" py="1">
-            <H6 m="0">{album.name}</H6>
+            <Link to={`/dashboard/albums/${album.id}`}>
+              <H6 m="0">{album.name}</H6>
+            </Link>
           </Flex>
           <Flex flex="none" p="1">
             <Modal

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/elandamor/the-beats-app#readme",
   "scripts": {
     "build": "the-react-scripts build",
+    "cy:open": "cypress open",
     "generate": "the-react-scripts generate",
     "generate:schema": "apollo schema:download --endpoint http://localhost:4000 schema.json",
     "generate:schemaTypes": "apollo codegen:generate --localSchemaFile=schema.json --target=typescript --globalTypesFile=src/@types/graphql-global-types.ts types",
@@ -28,6 +29,7 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "@apollo/react-components": "3.0.1",
     "@apollo/react-hooks": "3.0.1",
     "@apollo/react-testing": "3.0.1",
     "apollo-cache-inmemory": "1.6.3",
@@ -68,6 +70,7 @@
     "@types/yup": "0.26.22",
     "apollo": "2.17.2",
     "babel-loader": "8.0.6",
+    "cypress": "3.4.1",
     "the-react-scripts": "^0.1.1",
     "why-did-you-update": "^1.0.6"
   }

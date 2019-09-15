@@ -21,6 +21,8 @@ export interface IScrollViewProps extends StyledSystemProps {}
 const Wrapper = styled(Box)`
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const ScrollView: FC<IScrollViewProps> = ({ children, ...rest }) => {
@@ -60,7 +62,6 @@ const ScrollView: FC<IScrollViewProps> = ({ children, ...rest }) => {
 
 ScrollView.defaultProps = {
   height: '100%',
-  overflow: 'auto',
   width: '100%',
   zIndex: 0,
 };

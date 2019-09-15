@@ -13,14 +13,15 @@ import * as Yup from 'yup';
 import { Button, Input } from '@app/components';
 import { Text } from '@app/typography';
 import { PASSWORD_REGEX, PASSWORD_REGEX_MESSAGE } from '@app/constants';
+import { useAuthentication } from '@app/hooks';
 
 interface IRegisterFormProps
   extends RouteComponentProps,
     FormikProps<FormikValues> {}
 
 interface IRegisterFormValues {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
   passwordConfirm?: string;
 }
 
@@ -52,6 +53,8 @@ const RegisterValidation = Yup.object().shape({
  */
 
 const RegisterForm: FC<IRegisterFormProps> = (props) => {
+  const Auth = useAuthentication();
+
   const MERGED_INITIAL_PROPS = {
     ...INITIAL_VALUES,
     ...props.initialValues,
@@ -60,7 +63,15 @@ const RegisterForm: FC<IRegisterFormProps> = (props) => {
   return (
     <Formik
       initialValues={MERGED_INITIAL_PROPS}
-      onSubmit={() => null}
+      onSubmit={async ({ email, password }, { setSubmitting }) => {
+        setSubmitting(false);
+
+        try {
+          await Auth.signUp(email, password);
+        } catch (error) {
+          return error;
+        }
+      }}
       validationSchema={RegisterValidation}
       render={(formikProps) => (
         <Form>
@@ -110,7 +121,9 @@ const RegisterForm: FC<IRegisterFormProps> = (props) => {
           <Text>
             Already have an account?{' '}
             <Link to={`/auth/login`}>
-              <Text fontWeight="bold">Login</Text>
+              <Text as="span" fontWeight="bold">
+                Login
+              </Text>
             </Link>
           </Text>
         </Form>

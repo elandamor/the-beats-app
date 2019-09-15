@@ -1,17 +1,16 @@
+import { generic } from '@app/assets';
+import { useCurrentRoute, useRouter, useTheme } from '@app/hooks';
+import { H1 } from '@app/typography';
+import { makeDebugger } from '@app/utils';
 import React, { FC } from 'react';
 // Styles
 import Box, { IBoxProps } from '../Box';
-import Inner from '../Inner';
 import Flex from '../Flex';
 import GoBackButton from '../GoBackButton/Loadable';
+import Inner from '../Inner';
 import Toggle from '../Toggle/Loadable';
 
-import { useTheme, useRouter, useCurrentRoute } from '@app/hooks';
-import { generic } from '@app/assets';
-import { H1 } from '@app/typography';
-
-// import { makeDebugger } from '@app/utils';
-// const debug = makeDebugger('Header');
+const debug = makeDebugger('Header');
 
 interface IHeaderProps extends IBoxProps {}
 
@@ -35,6 +34,8 @@ const Header: FC<IHeaderProps> = ({ ...props }) => {
   const handleSetDarkMode = () => {
     setDarkMode(!darkMode);
   };
+
+  debug({ currentRoute });
 
   return (
     <Box as="header" flex="none" {...props}>

@@ -9,6 +9,8 @@ import { Text } from '@app/typography';
 
 interface ITrackProps extends StyledSystemProps {
   data: ITrack;
+  hideAlbumCover?: boolean;
+  hideTrackNumber?: boolean;
 }
 
 /**
@@ -19,11 +21,21 @@ interface ITrackProps extends StyledSystemProps {
  * <Track data={track} />
  */
 
-const Track: FC<ITrackProps> = ({ data: track, ...rest }) => (
+const Track: FC<ITrackProps> = ({
+  data: track,
+  hideAlbumCover,
+  hideTrackNumber,
+  ...rest
+}) => (
   <Wrapper {...rest}>
     <Helmet title={`${track.name}`} />
-    <Flex mr="2" flex="none">
-      <Box bg="cardBorderColor" size="40px" />
+    <Flex mr="2" flex="none" alignItems="center">
+      {track.trackNumber && !hideTrackNumber && (
+        <span>{track.trackNumber}</span>
+      )}
+      {track.artwork && !hideAlbumCover && (
+        <Box bg="cardBorderColor" size="40px" />
+      )}
     </Flex>
     <Box flex="1">
       <Text>{track.name}</Text>

@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
+import { StyledSystemProps } from 'styled-system';
 // Components
 import Image from '../Image/Loadable';
 // Styles
 import Wrapper, { Content, Description, Title } from './styles';
 
-export interface ICardProps {
+export interface ICardProps extends StyledSystemProps {
   className?: string;
   compact?: boolean;
   contentPadding?: number;

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { useMutation } from '@apollo/react-hooks';
+import { Link, Redirect, RouteComponentProps } from 'react-router-dom';
 import {
   Formik,
   Form,
@@ -15,20 +14,19 @@ import { Button, Input } from '@app/components';
 import { useAuthentication } from '@app/hooks';
 import { Text } from '@app/typography';
 import { PASSWORD_REGEX, PASSWORD_REGEX_MESSAGE } from '@app/constants';
-import { AUTHENTICATE_USER } from '@app/graphql';
 
 interface ILoginFormProps
   extends RouteComponentProps,
     FormikProps<FormikValues> {}
 
 interface ILoginFormValues {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 }
 
 const INITIAL_VALUES: ILoginFormValues = {
-  email: '',
-  password: '',
+  email: 'mpofuthandolwethu@gmail.com',
+  password: 'Pass123!',
 };
 
 const LoginValidation = Yup.object().shape({
@@ -50,31 +48,22 @@ const LoginValidation = Yup.object().shape({
  */
 
 const LoginForm: FC<ILoginFormProps> = (props) => {
-  const { setJWT } = useAuthentication();
-  const [authenticateUser] = useMutation(AUTHENTICATE_USER, {
-    onCompleted: ({ authenticatedUser }) => {
-      setJWT(authenticatedUser.token);
-    },
-  });
+  const Auth = useAuthentication();
 
   const MERGED_INITIAL_PROPS = {
     ...INITIAL_VALUES,
     ...props.initialValues,
   };
 
-  return (
+  return !Auth.authenticating && !Auth.isAuthenticated ? (
     <Formik
       initialValues={MERGED_INITIAL_PROPS}
       validationSchema={LoginValidation}
       onSubmit={async ({ email, password }, { setSubmitting }) => {
         setSubmitting(false);
 
-        const payload = { email, password };
-
         try {
-          await authenticateUser({
-            variables: { input: payload },
-          });
+          await Auth.signIn(email, password);
         } catch (error) {
           return error;
         }
@@ -115,12 +104,16 @@ const LoginForm: FC<ILoginFormProps> = (props) => {
           <Text>
             Don't have an account?{' '}
             <Link to={`/auth/register`}>
-              <Text fontWeight="bold">Register</Text>
+              <Text as="span" fontWeight="bold">
+                Register
+              </Text>
             </Link>
           </Text>
         </Form>
       )}
     />
+  ) : (
+    <Redirect to="/" />
   );
 };
 

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { theme } from '@app/theme';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -26,7 +26,7 @@ export const Wrapper = styled.div`
     height: 24px;
     padding: 0;
     border-radius: 30px;
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.surface};
   }
 
   .react-toggle-track-check,

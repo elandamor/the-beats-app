@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Normalize } from 'styled-normalize';
+import { Circle } from 'react-feather';
 // Components
 import {
   Box,
@@ -8,6 +9,7 @@ import {
   Header,
   NavigationBar,
   Routes,
+  ScrollView,
 } from '@app/components';
 // Contexts
 import { AppProvider } from '@app/contexts';
@@ -15,7 +17,9 @@ import { AppProvider } from '@app/contexts';
 import routes from '@app/routes';
 
 import GlobalStyles from '@app/global-styles';
-import { Circle } from 'react-feather';
+
+import { makeDebugger } from '@app/utils';
+const debug = makeDebugger('App');
 
 export interface IAppProps extends RouteComponentProps {}
 
@@ -27,6 +31,8 @@ export interface IAppProps extends RouteComponentProps {}
  */
 
 const App: FC<IAppProps> = (props) => {
+  debug({ props });
+
   return (
     <AppProvider>
       <Box height="100%" overflow="hidden">
@@ -35,16 +41,16 @@ const App: FC<IAppProps> = (props) => {
         <ErrorBoundary>
           <Header />
         </ErrorBoundary>
-        <Box>
+        <ScrollView>
           <ErrorBoundary>
             <Routes location={props.location} routes={routes} />
           </ErrorBoundary>
-        </Box>
+        </ScrollView>
         <ErrorBoundary>
           <NavigationBar
             links={[
-              { exact: true, href: '/', icon: <Circle /> },
-              { href: '/dashboard', icon: <Circle /> },
+              { exact: true, href: '/', icon: <Circle size="20" /> },
+              { href: '/dashboard', icon: <Circle size="20" /> },
             ]}
             height="64px"
           />

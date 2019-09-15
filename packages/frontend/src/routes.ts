@@ -1,11 +1,5 @@
 import { Auth, Home, NotFound, Dashboard } from './pages';
-import {
-  GetAlbums,
-  GetPlaylists,
-  Login,
-  Register,
-  AddAlbum,
-} from './containers';
+import { GetAlbum, GetAlbums, Login, Register, AddAlbum } from './containers';
 
 import { IRouteProps } from './components/Routes';
 
@@ -17,45 +11,49 @@ const routes: IRouteProps[] = [
     title: 'Home',
   },
   {
+    exact: true,
     path: '/auth',
     component: Auth,
-    routes: [
-      {
-        path: '/auth/login',
-        component: Login,
-        title: 'Login',
-      },
-      {
-        path: '/auth/register',
-        component: Register,
-        title: 'Register',
-      },
-    ],
   },
   {
+    exact: true,
+    path: '/auth/login',
+    component: Login,
+    title: 'Login',
+  },
+  {
+    exact: true,
+    path: '/auth/register',
+    component: Register,
+    title: 'Register',
+  },
+  {
+    exact: true,
     secure: true,
     path: '/dashboard',
     component: Dashboard,
     title: 'Dashboard',
-    routes: [
-      {
-        path: '/dashboard/albums',
-        component: GetAlbums,
-        title: 'Albums',
-        routes: [
-          {
-            path: '/dashboard/albums/create',
-            component: AddAlbum,
-            title: 'New album',
-          },
-        ],
-      },
-      {
-        path: '/dashboard/playlists',
-        component: GetPlaylists,
-        title: 'Playlists',
-      },
-    ],
+  },
+  {
+    exact: true,
+    secure: true,
+    path: '/dashboard/albums',
+    component: GetAlbums,
+    title: 'Albums',
+  },
+  {
+    exact: true,
+    secure: true,
+    path: '/dashboard/albums/:albumId',
+    component: GetAlbum,
+    title: 'Album',
+  },
+  {
+    exact: true,
+    secure: true,
+    path: '/dashboard/albums/create',
+    component: AddAlbum,
+    title: 'New album',
   },
   {
     path: '*',

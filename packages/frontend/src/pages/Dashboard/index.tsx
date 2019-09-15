@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { Inner, ScrollView, Card, Routes } from '@app/components';
+import { Inner, Card } from '@app/components';
 import { IRouteProps } from '@app/components/Routes';
 
 // import { makeDebugger } from '@app/utils';
@@ -19,28 +19,17 @@ interface IDashboardProps extends RouteComponentProps {
  */
 
 const Dashboard = (props: IDashboardProps) => {
-  const { location, match, routes } = props;
-  const hasSubRoutes = routes && routes.length > 0;
+  const { match } = props;
 
   return (
-    <ScrollView>
+    <Inner p={2}>
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
-      {match.isExact && (
-        <Inner p={2}>
-          <Link to={`${match.url}/albums`}>
-            <Card title="Albums" />
-          </Link>
-          <Link to={`${match.url}/playlists`}>
-            <Card title="Playlists" />
-          </Link>
-        </Inner>
-      )}
-      {hasSubRoutes && (
-        <Routes location={location} routes={routes} subRoutes={true} />
-      )}
-    </ScrollView>
+      <Link to={`${match.url}/albums`}>
+        <Card title="Albums" mb="2" />
+      </Link>
+    </Inner>
   );
 };
 

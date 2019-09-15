@@ -1,20 +1,30 @@
 import React, { FC, useState, useEffect } from 'react';
 import { decode } from 'jsonwebtoken';
+import { useMutation } from '@apollo/react-hooks';
 import { JWT_LOCAL_STORAGE_KEY } from '@app/constants';
+import { AUTHENTICATE_USER, CREATE_USER } from '@app/graphql';
 
 const DEFAULT_STATE = {
   authenticating: true,
   isAuthenticated: false,
-  setJWT: (JWT: string) => true,
+  signIn: (_email: string, _password: string) => {},
+  signUp: (_email: string, _password: string) => {},
 };
 
 export const AuthenticationContext = React.createContext(DEFAULT_STATE);
 
-interface IProps {
-  children: React.ReactNode;
-}
+const Provider: FC = (props) => {
+  const [authenticateUser] = useMutation(AUTHENTICATE_USER, {
+    onCompleted: ({ authenticatedUser }) => {
+      setJWT(authenticatedUser.token);
+    },
+  });
+  const [createUser] = useMutation(CREATE_USER, {
+    onCompleted: ({ user }) => {
+      setJWT(user.token);
+    },
+  });
 
-const Provider: FC<IProps> = (props) => {
   const [authenticating, setAuthenticating] = useState(
     DEFAULT_STATE.authenticating,
   );
@@ -23,14 +33,34 @@ const Provider: FC<IProps> = (props) => {
   );
 
   /**
-   * Remove JWT from localStorage.
+   * signIn
    */
-  const removeJWT = () => {
+  const signIn = async (email: string, password: string) => {
     try {
-      window.localStorage.removeItem(JWT_LOCAL_STORAGE_KEY);
-      return true;
-    } catch (e) {
-      return false;
+      const {
+        data: { authenticatedUser },
+      } = await authenticateUser({
+        variables: { input: { email, password } },
+      });
+      return authenticatedUser;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  /**
+   * signUp
+   */
+  const signUp = async (email: string, password: string) => {
+    try {
+      const {
+        data: { user },
+      } = await createUser({
+        variables: { input: { email, password } },
+      });
+      return user;
+    } catch (error) {
+      return error;
     }
   };
 
@@ -56,9 +86,6 @@ const Provider: FC<IProps> = (props) => {
       setIsAuthenticated(true);
       return true;
     } catch (e) {
-      if (e.message === 'jwt:expired') {
-        removeJWT();
-      }
       setIsAuthenticated(false);
       return e;
     } finally {
@@ -109,7 +136,7 @@ const Provider: FC<IProps> = (props) => {
 
   return (
     <AuthenticationContext.Provider
-      value={{ authenticating, isAuthenticated, setJWT }}
+      value={{ authenticating, isAuthenticated, signIn, signUp }}
     >
       {props.children}
     </AuthenticationContext.Provider>

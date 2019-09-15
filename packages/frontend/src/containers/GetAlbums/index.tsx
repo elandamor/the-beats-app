@@ -3,20 +3,14 @@ import { useQuery } from '@apollo/react-hooks';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router-dom';
 import { PlusCircle } from 'react-feather';
-import {
-  Album,
-  Flex,
-  Box,
-  Button,
-  Modal,
-  Card,
-  Inner,
-  Routes,
-} from '@app/components';
+import { Album, Flex, Box, Button, Modal, Card, Inner } from '@app/components';
 import { GET_ALBUMS } from '@app/graphql';
 import { useRouter } from '@app/hooks';
 import AddAlbum from '../AddAlbum';
 import { IRouteProps } from '@app/components/Routes';
+
+import { makeDebugger } from '@app/utils';
+const debug = makeDebugger('GetAlbums');
 
 interface IGetAlbumsProps extends RouteComponentProps {
   routes?: IRouteProps[];
@@ -30,11 +24,9 @@ interface IGetAlbumsProps extends RouteComponentProps {
  * <GetAlbums />
  */
 
-const GetAlbums: FC<IGetAlbumsProps> = (props) => {
+const GetAlbums: FC<IGetAlbumsProps> = () => {
   const routeProps = useRouter();
   const { data, loading } = useQuery(GET_ALBUMS);
-  const { location, match, routes } = props;
-  const hasSubRoutes = routes && routes.length > 0;
 
   if (!loading && data.albums.edges.length < 1) {
     return (
@@ -54,28 +46,25 @@ const GetAlbums: FC<IGetAlbumsProps> = (props) => {
     );
   }
 
+  const albums = data.albums && data.albums.edges;
+
+  debug({ albums });
+
   return (
     <Inner p={2}>
-      {match.isExact && (
-        <React.Fragment>
-          <Helmet>
-            <title>Albums</title>
-            <meta
-              name="description"
-              content="Browse music albums on the-beats-app"
-            />
-          </Helmet>
-          {data.albums.edges.map(({ node }: IAlbum) => (
-            <Flex key={node.id} alignItems="center">
-              <Album data={node} mb="2" />
-            </Flex>
-          ))}
-        </React.Fragment>
-      )}
-
-      {hasSubRoutes && (
-        <Routes location={location} routes={routes} subRoutes={true} />
-      )}
+      <Helmet>
+        <title>Albums</title>
+        <meta
+          name="description"
+          content="Browse music albums on the-beats-app"
+        />
+      </Helmet>
+      {albums &&
+        albums.map(({ node }: IAlbum) => (
+          <Flex key={node.id} alignItems="center">
+            <Album data={node} mb="2" />
+          </Flex>
+        ))}
     </Inner>
   );
 };

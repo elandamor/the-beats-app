@@ -1,0 +1,9 @@
+{
+  "chromeWebSecurity": false,
+  "env": {
+    "localAppURL": "http://localhost:3000"
+  },
+  "video": false,
+  "viewportHeight": 667,
+  "viewportWidth": 375
+}

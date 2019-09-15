@@ -1,20 +1,18 @@
-import React, { FC, useState, useEffect, useMemo } from 'react';
-import { createPortal } from 'react-dom';
-import { X } from 'react-feather';
-import { useTransition } from 'react-spring';
-import { StyledSystemProps } from 'styled-system';
-import Measure from 'react-measure';
-import noScroll from 'no-scroll';
-// Styles
-import { Scrim, Portal, PortalInner, PortalInnerHeader } from './styles';
-
-import Button from '../Button';
-import ErrorBoundary from '../ErrorBoundary';
-import ScrollView from '../ScrollView';
-
 import { useWindowSize } from '@app/hooks';
 import { Text } from '@app/typography';
+import noScroll from 'no-scroll';
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { X } from 'react-feather';
+import Measure from 'react-measure';
+import { useTransition } from 'react-spring';
+import { StyledSystemProps } from 'styled-system';
+import Button from '../Button';
+import ErrorBoundary from '../ErrorBoundary';
 import Flex from '../Flex';
+import ScrollView from '../ScrollView';
+// Styles
+import { Portal, PortalInner, PortalInnerHeader, Scrim } from './styles';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Modal');
@@ -31,6 +29,7 @@ interface IModalProps extends StyledSystemProps {
   onOpen?: () => void;
   open?: boolean;
   trigger: React.ReactElement;
+  animConfig?: any;
 }
 
 /**
@@ -65,11 +64,15 @@ const Modal: FC<IModalProps> = (props) => {
     config: { duration: 195 },
   });
 
-  const portalInnerTransition = useTransition(isOpen, null, {
-    from: { opacity: 0, transform: 'scale(0.8)' },
-    enter: { opacity: 1, transform: 'scale(1)' },
-    leave: { opacity: 0, transform: 'scale(0.8)' },
-  });
+  const portalInnerTransition = useTransition(
+    isOpen,
+    null,
+    props.animConfig || {
+      from: { opacity: 0, transform: 'scale(0.8)' },
+      enter: { opacity: 1, transform: 'scale(1)' },
+      leave: { opacity: 0, transform: 'scale(0.8)' },
+    },
+  );
 
   /**
    * Close modal
