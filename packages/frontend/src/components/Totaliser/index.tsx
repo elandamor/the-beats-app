@@ -16,7 +16,7 @@ interface ITotaliserProps {
  * @name Totaliser component
  * @description Totaliser component.
  * @example
- * <Totaliser />
+ * <Totaliser series={[{ amount: 4, color: '#000000' }]} />
  */
 
 const Totaliser: FC<ITotaliserProps> = ({ series: dirtySeries, size }) => {
@@ -28,17 +28,19 @@ const Totaliser: FC<ITotaliserProps> = ({ series: dirtySeries, size }) => {
     return accumulator + currentValue.amount;
   }, 0);
 
-  let previousValue = 0;
-
   // Sort the series by amount, highest to lowest
   const sortedSeries = dirtySeries.sort((a, b) => {
     return b.amount - a.amount;
   });
 
+  let previousValue = 0;
+
   const cleanSeries = sortedSeries.map(({ amount, color }, index) => {
     const currentValue = previousValue;
     const lineCapOffset = 2.2; // Degrees added by rounded lineCap that have to be removed for accurate visual
-    const angleDistance = (amount / seriesTotal) * 270 - lineCapOffset;
+    const maxTotaliserAngle = 270; // degrees - 75% of 360deg
+    const angleDistance =
+      (amount / seriesTotal) * maxTotaliserAngle - lineCapOffset;
 
     const startAngle = previousValue;
     const endAngle = startAngle + angleDistance;
@@ -80,6 +82,7 @@ const Totaliser: FC<ITotaliserProps> = ({ series: dirtySeries, size }) => {
         <Box key={index} position="absolute" zIndex={series.zIndex}>
           <Chart
             options={series.options}
+            // Set to 100% of the chart angle range
             series={[100]}
             type="radialBar"
             height={size}
