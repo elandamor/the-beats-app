@@ -1,5 +1,4 @@
-import { Card, Inner, Routes, ScrollView } from '@app/components';
-import Chart from '@app/components/Chart';
+import { Card, Inner, Routes, ScrollView, Totaliser } from '@app/components';
 import { IRouteProps } from '@app/components/Routes';
 import theme from '@app/theme';
 import React from 'react';
@@ -60,7 +59,7 @@ const Dashboard = (props: IDashboardProps) => {
       {hasSubRoutes && (
         <Routes location={location} routes={routes} subRoutes={true} />
       )}
-      <Chart series={series} size={400} />
+      <Totaliser series={series} size={400} />
     </ScrollView>
   );
 };

@@ -1,6 +1,6 @@
 // Totaliser.spec.tsx
 // import * as React from 'react';
-// import { render } from 'react-testing-library';
+// import { render } from '@app/utils/test-utils';
 
 // import Totaliser from './index';
 

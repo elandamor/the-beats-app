@@ -1,15 +1,14 @@
-import classNames from 'classnames';
 import React, { FC } from 'react';
-// @ts-ignore
-import { ArcSeries, XYPlot } from 'react-vis';
-// Styles
-import Wrapper from './styles';
-
-// import { makeDebugger } from '@app/utils';
-// const debug = makeDebugger('Totaliser');
+import Chart from 'react-apexcharts';
+import Box from '../Box';
 
 interface ITotaliserProps {
   className?: string;
+  size?: number;
+  series: {
+    amount: number;
+    color: string;
+  }[];
 }
 
 /**
@@ -20,67 +19,79 @@ interface ITotaliserProps {
  * <Totaliser />
  */
 
-const Totaliser: FC<ITotaliserProps> = ({ className }) => {
-  const PI = Math.PI;
-
-  const series = [4, 3, 2, 1];
-  const total = series.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-  );
-
-  function updateData() {
-    const computeRadian = (value: number) => {
-      return ((value / total) * 6 * PI) / 4;
-    };
-
-    const newData = [
-      {
-        angle0: 0,
-        angle: computeRadian(series[0]),
-        radius: 1,
-        radius0: 0.75,
-        color: 'red',
-      },
-      {
-        angle0: computeRadian(series[0]),
-        angle: computeRadian(series[0] + series[1]),
-        radius: 1,
-        radius0: 0.75,
-        color: 'yellow',
-      },
-      {
-        angle0: computeRadian(series[0] + series[1]),
-        angle: computeRadian(series[0] + series[1] + series[2]),
-        radius: 1,
-        radius0: 0.75,
-        color: 'blue',
-      },
-      {
-        angle0: computeRadian(series[0] + series[1] + series[2]),
-        angle: (6 * PI) / 4,
-        radius: 1,
-        radius0: 0.75,
-        color: 'green',
-      },
-    ];
-
-    return newData;
+const Totaliser: FC<ITotaliserProps> = ({ series: dirtySeries, size }) => {
+  if (!dirtySeries) {
+    return null;
   }
 
-  const data = updateData();
+  const seriesTotal = dirtySeries.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue.amount;
+  }, 0);
+
+  let previousValue = 0;
+
+  // Sort the series by amount, highest to lowest
+  const sortedSeries = dirtySeries.sort((a, b) => {
+    return b.amount - a.amount;
+  });
+
+  const cleanSeries = sortedSeries.map(({ amount, color }, index) => {
+    const currentValue = previousValue;
+    const lineCapOffset = 2.2; // Degrees added by rounded lineCap that have to be removed for accurate visual
+    const angleDistance = (amount / seriesTotal) * 270 - lineCapOffset;
+
+    const startAngle = previousValue;
+    const endAngle = startAngle + angleDistance;
+
+    const formattedSeries = {
+      amount: amount,
+      options: {
+        plotOptions: {
+          radialBar: {
+            startAngle,
+            endAngle,
+            dataLabels: {
+              show: false,
+            },
+            track: {
+              background: 'rgba(0,0,0,0)',
+            },
+          },
+        },
+        stroke: {
+          lineCap: 'round',
+        },
+        fill: {
+          colors: [amount > 0 ? color : 'rgba(0,0,0,0)'],
+          opacity: 1,
+        },
+      },
+      zIndex: dirtySeries.length - ++index,
+    };
+
+    previousValue = currentValue + angleDistance;
+
+    return formattedSeries;
+  });
 
   return (
-    <Wrapper className={classNames('', className)}>
-      <XYPlot xDomain={[-2, 2]} yDomain={[-2, 2]} width={320} height={320}>
-        <ArcSeries
-          animation
-          radiusDomain={[0, 1.25]}
-          data={data}
-          colorType="literal"
-        />
-      </XYPlot>
-    </Wrapper>
+    <Box>
+      {cleanSeries.map((series, index) => (
+        <Box key={index} position="absolute" zIndex={series.zIndex}>
+          <Chart
+            options={series.options}
+            series={[100]}
+            type="radialBar"
+            height={size}
+          />
+        </Box>
+      ))}
+    </Box>
   );
+};
+
+Totaliser.defaultProps = {
+  size: 320,
 };
 
 export default Totaliser;
