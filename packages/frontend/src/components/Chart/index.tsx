@@ -1,14 +1,11 @@
-import classNames from 'classnames';
+import theme from '@app/theme';
 import React, { FC } from 'react';
-// Styles
-import Wrapper from './styles';
-
-// import { makeDebugger } from '@app/utils';
-// const debug = makeDebugger('Chart');
+import ReactApexChart from 'react-apexcharts';
+import Box from '../Box';
 
 interface IChartProps {
   className?: string;
-  size: number;
+  size?: number;
 }
 
 /**
@@ -19,43 +16,89 @@ interface IChartProps {
  * <Chart />
  */
 
-const Chart: FC<IChartProps> = ({ className, size }) => {
-  const strokeWidth = 1;
+const Chart: FC<IChartProps> = ({ size }) => {
+  const dirtySeries = [
+    {
+      amount: 2,
+      color: theme.colors.intent.danger,
+    },
+    {
+      amount: 1,
+      color: theme.colors.intent.warning,
+    },
+    {
+      amount: 1,
+      color: theme.colors.intent.info,
+    },
+    {
+      amount: 1,
+      color: theme.colors.white,
+    },
+  ];
+
+  const seriesTotal = dirtySeries.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue.amount;
+  }, 0);
+
+  let previousValue = 0;
+
+  const cleanSeries = dirtySeries.map(({ amount, color }, index) => {
+    const currentValue = previousValue;
+    const lineCapOffset = 2.2; // Degrees added by rounded lineCap that have to be removed for accurate visual
+    const angleDistance = (amount / seriesTotal) * 270 - lineCapOffset;
+
+    const startAngle = previousValue;
+    const endAngle = startAngle + angleDistance;
+
+    const formattedSeries = {
+      amount: amount,
+      options: {
+        plotOptions: {
+          radialBar: {
+            startAngle,
+            endAngle,
+            dataLabels: {
+              show: false,
+            },
+            track: {
+              background: 'rgba(0,0,0,0)',
+            },
+          },
+        },
+        stroke: {
+          lineCap: 'round',
+        },
+        fill: {
+          colors: [amount > 0 ? color : 'rgba(0,0,0,0)'],
+          opacity: 1,
+        },
+      },
+      zIndex: dirtySeries.length - ++index,
+    };
+
+    previousValue = currentValue + angleDistance;
+
+    return formattedSeries;
+  });
 
   return (
-    <Wrapper className={classNames('', className)}>
-      <svg width={size} height={size}>
-        <defs>
-          {/* <!-- cuts hole in centre of graph --> */}
-          <mask id="centrehole">
-            <rect x="-100%" y="-100%" width="200%" height="200%" fill="white" />
-            <circle cx="0" cy="0" r="195" fill="black" />
-          </mask>
-        </defs>
-
-        {/* <!-- Graph is drawn centred at (0,0). The transform moves it into middle of SVG. --> */}
-        {/* <!-- The mask forms the hole in the centre. --> */}
-        <g
-          transform={`translate(${size / 2},${size / 2})`}
-          mask="url(#centrehole)"
-        >
-          {/* <!-- inner bevel - same as above but with different colours and is masked --> */}
-          <g mask="url(#innerbevel)">
-            <circle cx="0" cy="-235" r="40" fill="#5bc8b7" />
-            {/* <!-- light blue segment --> */}
-            <path d="M0 0 0 -275 A 275 275 0 0 1 0 275" fill="#5bc8b7" />
-            {/* <!-- red segment --> */}
-            <path d="M0 0 0 275 A 275 275 0 0 1 -275 0" fill="#ef6974" />
-
-            {/* <!-- light blue rounded end --> */}
-            <circle cx="0" cy="235" r="40" fill="#5bc8b7" />
-            {/* <!-- red rounded end --> */}
-            <circle cx="-235" cy="0" r="40" fill="#ef6974" />
-          </g>
-        </g>
-      </svg>
-    </Wrapper>
+    <Box>
+      {cleanSeries.map((series, index) => (
+        <Box key={index} position="absolute" zIndex={series.zIndex}>
+          <ReactApexChart
+            options={series.options}
+            series={[100]}
+            type="radialBar"
+            height={size}
+          />
+        </Box>
+      ))}
+    </Box>
   );
+};
+
+Chart.defaultProps = {
+  size: 320,
 };
 
 export default Chart;

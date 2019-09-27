@@ -1,4 +1,5 @@
 import { Card, Inner, Routes, ScrollView } from '@app/components';
+import Chart from '@app/components/Chart';
 import { IRouteProps } from '@app/components/Routes';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -39,6 +40,7 @@ const Dashboard = (props: IDashboardProps) => {
       {hasSubRoutes && (
         <Routes location={location} routes={routes} subRoutes={true} />
       )}
+      <Chart size={400} />
     </ScrollView>
   );
 };

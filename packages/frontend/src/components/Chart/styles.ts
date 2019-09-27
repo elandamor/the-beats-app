@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  .radial-chart {
+  /* .radial-chart {
     position: relative;
     display: inline-block;
     transition: all 0.3s ease-in;
@@ -17,7 +17,7 @@ const Wrapper = styled.div`
     transform-origin: center;
     transition: all 0.6s cubic-bezier(0.58, 0.16, 0.5, 1.14);
     transition-delay: 0.3s;
-  }
+  } */
 `;
 
 export default Wrapper;

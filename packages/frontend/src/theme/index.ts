@@ -44,6 +44,12 @@ export const theme: DefaultTheme = {
     error: '#FF3567',
     errorDark: '#FF3567',
     errorLight: '#FF3567',
+    intent: {
+      success: '#47B881',
+      danger: '#EC4C47',
+      warning: '#E2E449',
+      info: '#5AC1F2',
+    },
     // Blacks
     black: '#000000',
     blacks: [
