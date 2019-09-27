@@ -1,6 +1,7 @@
 import { Card, Inner, Routes, ScrollView } from '@app/components';
 import Chart from '@app/components/Chart';
 import { IRouteProps } from '@app/components/Routes';
+import theme from '@app/theme';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -22,6 +23,25 @@ const Dashboard = (props: IDashboardProps) => {
   const { location, match, routes } = props;
   const hasSubRoutes = routes && routes.length > 0;
 
+  const series = [
+    {
+      amount: 4,
+      color: theme.colors.intent.danger,
+    },
+    {
+      amount: 10,
+      color: theme.colors.intent.warning,
+    },
+    {
+      amount: 12.5,
+      color: theme.colors.intent.info,
+    },
+    {
+      amount: 0,
+      color: theme.colors.white,
+    },
+  ];
+
   return (
     <ScrollView>
       <Helmet>
@@ -40,7 +60,7 @@ const Dashboard = (props: IDashboardProps) => {
       {hasSubRoutes && (
         <Routes location={location} routes={routes} subRoutes={true} />
       )}
-      <Chart size={400} />
+      <Chart series={series} size={400} />
     </ScrollView>
   );
 };
