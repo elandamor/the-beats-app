@@ -24,7 +24,7 @@ const Dashboard = (props: IDashboardProps) => {
 
   const series = [
     {
-      amount: 4,
+      amount: 40,
       color: theme.colors.intent.danger,
     },
     {

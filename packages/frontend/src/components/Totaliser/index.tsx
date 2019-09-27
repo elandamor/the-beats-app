@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import Chart from 'react-apexcharts';
-import Box from '../Box';
+import Box, { IBoxProps } from '../Box';
 
-interface ITotaliserProps {
-  className?: string;
+interface ITotaliserProps extends IBoxProps {
   size?: number;
   series: {
     amount: number;
@@ -19,7 +18,11 @@ interface ITotaliserProps {
  * <Totaliser series={[{ amount: 4, color: '#000000' }]} />
  */
 
-const Totaliser: FC<ITotaliserProps> = ({ series: dirtySeries, size }) => {
+const Totaliser: FC<ITotaliserProps> = ({
+  series: dirtySeries,
+  size,
+  ...rest
+}) => {
   if (!dirtySeries) {
     return null;
   }
@@ -46,7 +49,7 @@ const Totaliser: FC<ITotaliserProps> = ({ series: dirtySeries, size }) => {
     const endAngle = startAngle + angleDistance;
 
     const formattedSeries = {
-      amount: amount,
+      amount,
       options: {
         plotOptions: {
           radialBar: {
@@ -64,8 +67,8 @@ const Totaliser: FC<ITotaliserProps> = ({ series: dirtySeries, size }) => {
           lineCap: 'round',
         },
         fill: {
-          colors: [amount > 0 ? color : 'rgba(0,0,0,0)'],
-          opacity: 1,
+          colors: [color],
+          opacity: amount > 0 ? 1 : 0,
         },
       },
       zIndex: dirtySeries.length - ++index,
@@ -77,9 +80,14 @@ const Totaliser: FC<ITotaliserProps> = ({ series: dirtySeries, size }) => {
   });
 
   return (
-    <Box>
+    <Box {...rest}>
       {cleanSeries.map((series, index) => (
-        <Box key={index} position="absolute" zIndex={series.zIndex}>
+        <Box
+          key={index}
+          position="absolute"
+          zIndex={series.zIndex}
+          width="100%"
+        >
           <Chart
             options={series.options}
             // Set to 100% of the chart angle range
