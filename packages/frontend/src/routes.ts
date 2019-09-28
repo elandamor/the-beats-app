@@ -1,7 +1,13 @@
-import { Auth, Home, NotFound, Dashboard } from './pages';
-import { GetAlbum, GetAlbums, Login, Register, AddAlbum } from './containers';
-
 import { IRouteProps } from './components/Routes';
+import {
+  AddAlbum,
+  GetAlbum,
+  GetAlbums,
+  GetTracks,
+  Login,
+  Register,
+} from './containers';
+import { Auth, Dashboard, Home, NotFound } from './pages';
 
 const routes: IRouteProps[] = [
   {
@@ -54,6 +60,13 @@ const routes: IRouteProps[] = [
     path: '/dashboard/albums/create',
     component: AddAlbum,
     title: 'New album',
+  },
+  {
+    exact: true,
+    secure: true,
+    path: '/dashboard/tracks',
+    component: GetTracks,
+    title: 'Tracks',
   },
   {
     path: '*',

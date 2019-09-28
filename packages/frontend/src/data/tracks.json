@@ -1,0 +1,428 @@
+[
+  {
+    "node": {
+      "id": "cjohmgtx4e2os09115o42w6ee",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjohlx9aqdyrl091105ili0ra",
+          "name": "MIke Posner"
+        }
+      ],
+      "name": "A Lover and a Memory",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtvwe2nx0911mtc9r95p",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        },
+        {
+          "id": "cjohlx8rudyr009110l78h5h9",
+          "name": "Lauren Jauregui"
+        }
+      ],
+      "featuring": [],
+      "name": "All Night",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtxqe2p80911yydprm2z",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjociu2aa8any0911wz8p47gy",
+          "name": "Era Istrefi"
+        }
+      ],
+      "name": "Anything More",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtw2e2o10911nn4b350r",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        },
+        {
+          "id": "cjohlx8rudyr10911u816142a",
+          "name": "Daddy Yankee"
+        },
+        {
+          "id": "cjohlx8rudyr20911bjg9v40q",
+          "name": "Play-N-Skillz"
+        },
+        {
+          "id": "cjohlx8rudyr30911ryx8prbi",
+          "name": "Elvis Crespo"
+        }
+      ],
+      "featuring": [],
+      "name": "Azukita",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtwre2oj09111hbfsm2u",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjohlx9aqdyri0911napvg3q0",
+          "name": "Kiiara"
+        }
+      ],
+      "name": "Be Somebody",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtxxe2pc0911ptidze9s",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjohlx9aqdyro0911ue0k3d9q",
+          "name": "Bella Thorne"
+        }
+      ],
+      "name": "Do Not Disturb",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtxge2p00911bkg2liuv",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjohlx9aqdyrn0911bhaomcm4",
+          "name": "Jim Adkins"
+        }
+      ],
+      "name": "Golden Days",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjoorxv4tpsng0911ljhvjwiq",
+      "artists": [
+        {
+          "id": "cjocmc1nw94mo0911ffpv50ur",
+          "name": "Kygo"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjocmc38q94nj09115xhxg8cx",
+          "name": "Sandro Cavazza"
+        }
+      ],
+      "name": "Happy Now",
+      "album": {
+        "artwork": {
+          "url": "ydktqdorvxyjwjvxhebb"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtw9e2o70911yzzlydnt",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        },
+        {
+          "id": "cjohlx8rudyr40911hsqhwawh",
+          "name": "TWIIG"
+        }
+      ],
+      "featuring": [],
+      "name": "Hoovela",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtwge2ob0911ogr7gtvx",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjohlx9aqdyrh091101fbv3ug",
+          "name": "Louis Tomlinson"
+        }
+      ],
+      "name": "Just Hold On",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgty3e2pg0911mmnx6o6z",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjociu2aa8anz09115ppredop",
+          "name": "Ina Wroldsen"
+        }
+      ],
+      "name": "Lie to Me",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtvse2nu0911y0dqmu2d",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [],
+      "name": "Neon Future III (Intro)",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtyfe2pq0911j21zpil1",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjohlx9aqdyrp09114v6a0mm9",
+          "name": "Bill Nye"
+        }
+      ],
+      "name": "Noble Gas",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtxke2p40911ftu7mxje",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjociu2aa8anx09115wq815mb",
+          "name": "Lady Antebellum"
+        }
+      ],
+      "name": "Our Love Glows",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtwye2on0911zh3ji8ni",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjohlx9aqdyrj0911rupnq1nr",
+          "name": "Lil Yatchy"
+        },
+        {
+          "id": "cjohlx9aqdyrk0911y3wzmv74",
+          "name": "AJR"
+        }
+      ],
+      "name": "Pretender",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtwme2of0911hubauekh",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjoch60gl7xj90911fz16hgq4",
+          "name": "BTS"
+        }
+      ],
+      "name": "Waste It on Me",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgty8e2pk0911zyyxuhnk",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        },
+        {
+          "id": "cjoch5zxr7xj30911omhflkwe",
+          "name": "Don Diablo"
+        },
+        {
+          "id": "cjoch5zxr7xj40911lu83if0z",
+          "name": "Lush & Simon"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjoch60z37xje0911z46qio2i",
+          "name": "BullySongs"
+        }
+      ],
+      "name": "What We Started",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  },
+  {
+    "node": {
+      "id": "cjohmgtxbe2ow0911f3up5fsb",
+      "artists": [
+        {
+          "id": "cjoch5yv07xip09111l2j9t28",
+          "name": "Steve Aoki"
+        }
+      ],
+      "featuring": [
+        {
+          "id": "cjohlx9aqdyrm09114artbh9k",
+          "name": "blink-182"
+        }
+      ],
+      "name": "Why Are We so Broken",
+      "album": {
+        "artwork": {
+          "url": "texuohrqozjarva7limv"
+        }
+      }
+    }
+  }
+]

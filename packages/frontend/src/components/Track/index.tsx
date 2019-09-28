@@ -1,51 +1,93 @@
+import classNames from 'classnames';
 import React, { FC } from 'react';
-import Helmet from 'react-helmet';
-import { StyledSystemProps } from 'styled-system';
+import Equalizer from '../Equalizer';
+import Image from '../Image/Loadable';
+import Spacer from '../Spacer';
 // Styles
-import Wrapper from './styles';
-import Flex from '../Flex';
-import Box from '../Box';
-import { Text } from '@app/typography';
-
-interface ITrackProps extends StyledSystemProps {
-  data: ITrack;
-  hideAlbumCover?: boolean;
-  hideTrackNumber?: boolean;
-}
+import Wrapper, { Duration } from './styles';
 
 /**
  * @render react
  * @name Track component
  * @description Track component.
  * @example
- * <Track data={track} />
+ * <Track />
  */
 
+export interface ITrackProps {
+  className?: string;
+  [key: string]: any;
+}
+
 const Track: FC<ITrackProps> = ({
-  data: track,
+  className,
+  current,
+  data,
+  onSelect: handleClick,
   hideAlbumCover,
+  hideDuration,
   hideTrackNumber,
   ...rest
 }) => (
-  <Wrapper {...rest}>
-    <Helmet title={`${track.name}`} />
-    <Flex mr="2" flex="none" alignItems="center">
-      {track.trackNumber && !hideTrackNumber && (
-        <span>{track.trackNumber}</span>
+  <Wrapper
+    className={classNames('c-track', className, {
+      '-current': current,
+      '-paused': current && rest.playState === 'paused',
+    })}
+    {...rest}
+  >
+    {data.trackNumber && !hideTrackNumber && !rest.minimal && (
+      <span className="a-trackNumber">{!current && data.trackNumber}</span>
+    )}
+    {data.album && !hideAlbumCover && (
+      <div className="c-cover__wrapper">
+        <Image src="../" />
+      </div>
+    )}
+    {current && <Equalizer pause={current && rest.playState === 'paused'} />}
+    <div className="c-details" onClick={handleClick}>
+      <span className="a-name">
+        {data.name}
+        {data.featuring && data.featuring.length > 0 && (
+          <React.Fragment>
+            &nbsp; (<span className="a-feat">feat. </span>
+            {data.featuring
+              .map((artist: any) => (
+                <span key={artist.id} className="a-artist">
+                  {artist.name}
+                </span>
+              ))
+              .reduce((prev: any, curr: any) => [prev, ', ', curr])}
+            )
+          </React.Fragment>
+        )}
+      </span>
+      <Spacer spacing={2} />
+      <small className="c-artists">
+        {data.artists
+          .map((artist: any) => (
+            <span key={artist.id} className="a-artist">
+              {artist.name}
+            </span>
+          ))
+          .reduce((prev: any, curr: any) => [prev, ', ', curr])}
+      </small>
+      {rest.duration && (
+        <React.Fragment>
+          <Spacer spacing={8} />
+          <Duration>
+            {rest.duration.current} / {rest.duration.total}
+          </Duration>
+        </React.Fragment>
       )}
-      {track.artwork && !hideAlbumCover && (
-        <Box bg="cardBorderColor" size="40px" />
-      )}
-    </Flex>
-    <Box flex="1">
-      <Text>{track.name}</Text>
-    </Box>
+    </div>
   </Wrapper>
 );
 
 Track.defaultProps = {
-  flexDirection: 'row',
-  alignItems: 'center',
+  hideAlbumCover: true,
+  hideDuration: false,
+  hideTrackNumber: false,
 };
 
 export default Track;

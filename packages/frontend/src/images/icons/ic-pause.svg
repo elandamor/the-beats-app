@@ -1,0 +1,5 @@
+
+482 bytes → 167 bytes 34.65%
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="18">
+  <path fill="#000" fill-rule="nonzero" d="M0 1v16a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1zm10 0v16a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1z"/>
+</svg>

@@ -1,18 +1,13 @@
+import { H6 } from '@app/typography';
 import React, { FC } from 'react';
+import { MoreHorizontal } from 'react-feather';
+import { Link } from 'react-router-dom';
 import { StyledSystemProps } from 'styled-system';
-import { useQuery } from '@apollo/react-hooks';
+import Button from '../Button';
+import Card from '../Card';
+import Flex from '../Flex';
 // Styles
 import Wrapper from './styles';
-import Card from '../Card';
-import { GET_PLAYLISTS } from '@app/graphql';
-import { Plus, MoreHorizontal } from 'react-feather';
-import Button from '../Button';
-import Flex from '../Flex';
-import { H6 } from '@app/typography';
-import Modal from '../Modal';
-import Box from '../Box';
-import Playlist from '../Playlist';
-import { Link } from 'react-router-dom';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Album');
@@ -30,8 +25,6 @@ interface IAlbumProps extends StyledSystemProps {
  */
 
 const Album: FC<IAlbumProps> = ({ data: album, ...rest }) => {
-  const { data, loading: loadingPlaylists } = useQuery(GET_PLAYLISTS);
-
   return (
     <Wrapper {...rest}>
       <Card contentPadding={0}>
@@ -42,23 +35,6 @@ const Album: FC<IAlbumProps> = ({ data: album, ...rest }) => {
             </Link>
           </Flex>
           <Flex flex="none" p="1">
-            <Modal
-              fullscreen={true}
-              trigger={<Button variant="icon" icon={<Plus />} />}
-              modalTitle="Add to a Playlist"
-            >
-              {!loadingPlaylists && data.playlists.edges.length < 1 ? (
-                <Box>
-                  <Card title="No playlists" />
-                </Box>
-              ) : (
-                data.playlists.edges.map(({ node }: IPlaylist) => (
-                  <Flex key={node.id} alignItems="center">
-                    <Playlist data={node} />
-                  </Flex>
-                ))
-              )}
-            </Modal>
             <Button variant="icon" icon={<MoreHorizontal />} />
           </Flex>
         </Flex>

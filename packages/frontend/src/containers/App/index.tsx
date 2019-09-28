@@ -1,24 +1,22 @@
-import React, { FC } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Normalize } from 'styled-normalize';
-import { Circle } from 'react-feather';
 // Components
 import {
   Box,
   ErrorBoundary,
   Header,
-  NavigationBar,
   Routes,
   ScrollView,
 } from '@app/components';
+import Player from '@app/components/Player';
 // Contexts
 import { AppProvider } from '@app/contexts';
+import GlobalStyles from '@app/global-styles';
 // Routes
 import routes from '@app/routes';
-
-import GlobalStyles from '@app/global-styles';
-
 import { makeDebugger } from '@app/utils';
+import React, { FC } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Normalize } from 'styled-normalize';
+
 const debug = makeDebugger('App');
 
 export interface IAppProps extends RouteComponentProps {}
@@ -46,15 +44,11 @@ const App: FC<IAppProps> = (props) => {
             <Routes location={props.location} routes={routes} />
           </ErrorBoundary>
         </ScrollView>
-        <ErrorBoundary>
-          <NavigationBar
-            links={[
-              { exact: true, href: '/', icon: <Circle size="20" /> },
-              { href: '/dashboard', icon: <Circle size="20" /> },
-            ]}
-            height="64px"
-          />
-        </ErrorBoundary>
+        <Box borderRadius="4px" flex="none" height="64px" overflow="hidden">
+          <ErrorBoundary>
+            <Player />
+          </ErrorBoundary>
+        </Box>
       </Box>
     </AppProvider>
   );

@@ -1,11 +1,13 @@
 import { useQuery } from '@apollo/react-hooks';
-import { Box, Image, Inner, Track } from '@app/components';
+import { Box, Inner, Track } from '@app/components';
 import { IRouteProps } from '@app/components/Routes';
+import { OnDeckContext } from '@app/contexts/OnDeck.context';
+import { PlaylistContext } from '@app/contexts/Playlist.context';
 import { GET_ALBUM } from '@app/graphql';
-import { H4, H6, Text } from '@app/typography';
+import { H4 } from '@app/typography';
 import { makeDebugger } from '@app/utils';
-import React, { FC } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import React, { FC, useContext } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Placeholder from './placeholder';
 
 const debug = makeDebugger('GetAlbum');
@@ -43,29 +45,34 @@ const GetAlbum: FC<IGetAlbumProps> = ({ match: { params } }) => {
 
   debug({ artists });
 
+  const onDeckCtx = useContext(OnDeckContext);
+  const playlistCtx = useContext(PlaylistContext);
+
   return (
     <Inner p="0">
       <Box>
-        <Box>
-          <Image src={artwork && artwork.url} />
-        </Box>
         <Box>
           <Box px="2">
             <H4 mt="3" mb="1">
               {name}
             </H4>
-            <H6 mt="0" mb="3">
-              {artists
-                .map((artist: IArtist) => (
-                  <Text as="span" key={artist.id}>
-                    <Link to={`/artists/${artist.id}`}>{artist.name}</Link>
-                  </Text>
-                ))
-                .reduce((prev: any, curr: any) => [prev, ', ', curr])}
-            </H6>
           </Box>
           {tracks.map((track: ITrack) => (
-            <Track key={track.id} data={track} />
+            <Track
+              key={track.id}
+              current={onDeckCtx.source.id === track.id}
+              data={track}
+              onSelect={() =>
+                playlistCtx.addToPlaylist(
+                  Object.assign({}, track, {
+                    album: {
+                      artwork: { ...artwork },
+                    },
+                  }),
+                )
+              }
+              playState={onDeckCtx.playState}
+            />
           ))}
         </Box>
       </Box>

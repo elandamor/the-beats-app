@@ -1,9 +1,8 @@
+import { Card, Inner } from '@app/components';
+import { IRouteProps } from '@app/components/Routes';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, RouteComponentProps } from 'react-router-dom';
-
-import { Inner, Card } from '@app/components';
-import { IRouteProps } from '@app/components/Routes';
 
 // import { makeDebugger } from '@app/utils';
 // const debug = makeDebugger('Dashboard');
@@ -28,6 +27,9 @@ const Dashboard = (props: IDashboardProps) => {
       </Helmet>
       <Link to={`${match.url}/albums`}>
         <Card title="Albums" mb="2" />
+      </Link>
+      <Link to={`${match.url}/tracks`}>
+        <Card title="Tracks" mb="2" />
       </Link>
     </Inner>
   );
