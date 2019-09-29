@@ -1,13 +1,13 @@
-import { getDuration, generateAlias, getAuthenticatedUser } from "../../utils";
-import { Context } from "../../typings";
 import { AlbumCreateInput } from "../../generated/prisma-client";
+import { Context } from "../../typings";
+import { generateAlias, getAuthenticatedUser, getDuration } from "../../utils";
+import {
+  AlbumExistsError,
+  ForbiddenError,
+  UnknownError
+} from "../../utils/errors";
 import { createArtists } from "../Artist/Artist.service";
 import { createTracks } from "../Track/Track.service";
-import {
-  UnknownError,
-  AlbumExistsError,
-  ForbiddenError
-} from "../../utils/errors";
 
 /**
  * Creates an album

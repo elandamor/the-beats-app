@@ -1,11 +1,11 @@
 import * as bcrypt from "bcrypt";
-import { Context } from "../../typings";
 import {
   UserCreateInput,
   UserUpdateInput
 } from "../../generated/prisma-client";
-import { UnknownError } from "../../utils/errors";
+import { Context } from "../../typings";
 import { generateToken, getAuthenticatedUser, hashPassword } from "../../utils";
+import { UnknownError } from "../../utils/errors";
 
 /**
  * Creates a user
@@ -13,7 +13,7 @@ import { generateToken, getAuthenticatedUser, hashPassword } from "../../utils";
  * @param context - Exposes prisma
  */
 export const createUser = async (user, { prisma }: Context) => {
-  const { email, password } = user;
+  const { email, password, isAdmin } = user;
 
   const userExists = await prisma.$exists.user({ email });
 
@@ -25,7 +25,8 @@ export const createUser = async (user, { prisma }: Context) => {
 
   const payload: UserCreateInput = {
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    ...(isAdmin ? { isAdmin } : {})
   };
 
   try {

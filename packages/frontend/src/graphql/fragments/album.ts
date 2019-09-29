@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { TRACK } from './track';
 
 export const ALBUM = gql`
   fragment album on Album {
@@ -13,15 +14,7 @@ export const ALBUM = gql`
     }
     genres
     tracks {
-      id
-      name
-      artists {
-        name
-      }
-      featuring {
-        name
-      }
-      trackNumber
+      ...track
     }
     numTracks
     duration
@@ -31,4 +24,5 @@ export const ALBUM = gql`
       url
     }
   }
+  ${TRACK}
 `;

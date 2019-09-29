@@ -1,12 +1,12 @@
-import { getDuration } from "../../utils";
-import { Context } from "../../typings";
 import {
+  Album,
   TrackCreateInput,
-  TrackCreateWithoutAlbumInput,
-  Album
+  TrackCreateWithoutAlbumInput
 } from "../../generated/prisma-client";
-import { createArtists } from "../Artist/Artist.service";
+import { Context } from "../../typings";
+import { getDuration } from "../../utils";
 import { UnknownError } from "../../utils/errors";
+import { createArtists } from "../Artist/Artist.service";
 
 /**
  * Creates an track
