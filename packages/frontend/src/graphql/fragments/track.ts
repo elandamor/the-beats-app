@@ -15,7 +15,9 @@ export const TRACK = gql`
     duration
     trackNumber
     album {
+      id
       artwork {
+        id
         url
       }
     }

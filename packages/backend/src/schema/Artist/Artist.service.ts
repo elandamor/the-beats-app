@@ -1,7 +1,7 @@
-import { Context } from "../../typings";
 import { ArtistCreateInput } from "../../generated/prisma-client";
-import { UnknownError } from "../../utils/errors";
+import { Context } from "../../typings";
 import { generateAlias } from "../../utils";
+import { UnknownError } from "../../utils/errors";
 
 /**
  * Creates an artist
@@ -42,6 +42,10 @@ export const createArtist = async (artist, { prisma }: Context) => {
 export const createArtists = async (artists, context: Context) => {
   if (!artists) {
     return;
+  }
+
+  if (artists.length < 1) {
+    return [];
   }
 
   return new Promise<Array<{ id: string }>>(resolve => {
