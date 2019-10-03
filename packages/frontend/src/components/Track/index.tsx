@@ -1,5 +1,6 @@
+import { OnDeckContext } from '@app/contexts/OnDeck.context';
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import Equalizer from '../Equalizer';
 import Image from '../Image/Loadable';
 import Spacer from '../Spacer';
@@ -28,61 +29,65 @@ const Track: FC<ITrackProps> = ({
   hideDuration,
   hideTrackNumber,
   ...rest
-}) => (
-  <Wrapper
-    className={classNames('c-track', className, {
-      '-current': current,
-      '-paused': current && rest.playState === 'paused',
-    })}
-    {...rest}
-  >
-    {data.trackNumber && !hideTrackNumber && !rest.minimal && (
-      <span className="a-trackNumber">{!current && data.trackNumber}</span>
-    )}
-    {data.album && !hideAlbumCover && (
-      <div className="c-cover__wrapper">
-        <Image src="../" />
-      </div>
-    )}
-    {current && <Equalizer pause={current && rest.playState === 'paused'} />}
-    <div className="c-details" onClick={handleClick}>
-      <span className="a-name">
-        {data.name}
-        {data.featuring && data.featuring.length > 0 && (
+}) => {
+  const { playState } = useContext(OnDeckContext);
+
+  return (
+    <Wrapper
+      className={classNames('c-track', className, {
+        '-current': current,
+        '-paused': current && playState === 'paused',
+      })}
+      {...rest}
+    >
+      {data.trackNumber && !hideTrackNumber && !rest.minimal && (
+        <span className="a-trackNumber">{!current && data.trackNumber}</span>
+      )}
+      {data.album && !hideAlbumCover && (
+        <div className="c-cover__wrapper">
+          <Image src="../" />
+        </div>
+      )}
+      {current && <Equalizer pause={current && playState === 'paused'} />}
+      <div className="c-details" onClick={handleClick}>
+        <span className="a-name">
+          {data.name}
+          {data.featuring && data.featuring.length > 0 && (
+            <React.Fragment>
+              &nbsp; (<span className="a-feat">feat. </span>
+              {data.featuring
+                .map((artist: any) => (
+                  <span key={artist.id} className="a-artist">
+                    {artist.name}
+                  </span>
+                ))
+                .reduce((prev: any, curr: any) => [prev, ', ', curr])}
+              )
+            </React.Fragment>
+          )}
+        </span>
+        <Spacer spacing={2} />
+        <small className="c-artists">
+          {data.artists
+            .map((artist: any) => (
+              <span key={artist.id} className="a-artist">
+                {artist.name}
+              </span>
+            ))
+            .reduce((prev: any, curr: any) => [prev, ', ', curr])}
+        </small>
+        {rest.duration && (
           <React.Fragment>
-            &nbsp; (<span className="a-feat">feat. </span>
-            {data.featuring
-              .map((artist: any) => (
-                <span key={artist.id} className="a-artist">
-                  {artist.name}
-                </span>
-              ))
-              .reduce((prev: any, curr: any) => [prev, ', ', curr])}
-            )
+            <Spacer spacing={8} />
+            <Duration>
+              {rest.duration.current} / {rest.duration.total}
+            </Duration>
           </React.Fragment>
         )}
-      </span>
-      <Spacer spacing={2} />
-      <small className="c-artists">
-        {data.artists
-          .map((artist: any) => (
-            <span key={artist.id} className="a-artist">
-              {artist.name}
-            </span>
-          ))
-          .reduce((prev: any, curr: any) => [prev, ', ', curr])}
-      </small>
-      {rest.duration && (
-        <React.Fragment>
-          <Spacer spacing={8} />
-          <Duration>
-            {rest.duration.current} / {rest.duration.total}
-          </Duration>
-        </React.Fragment>
-      )}
-    </div>
-  </Wrapper>
-);
+      </div>
+    </Wrapper>
+  );
+};
 
 Track.defaultProps = {
   hideAlbumCover: true,

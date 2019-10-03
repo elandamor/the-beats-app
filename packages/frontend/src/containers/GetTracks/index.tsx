@@ -41,7 +41,7 @@ const GetTracks: FC<IGetTracksProps> = () => {
   debug({ tracks });
 
   return (
-    <Inner py="2">
+    <Inner py="1">
       <Helmet>
         <title>Tracks</title>
         <meta name="description" content="Browse tracks on the-beats-app" />
@@ -53,7 +53,6 @@ const GetTracks: FC<IGetTracksProps> = () => {
             current={onDeckCtx.source.id === track.id}
             data={track}
             onSelect={() => playlistCtx.addToPlaylist(track)}
-            playState={onDeckCtx.playState}
             hideAlbumCover={false}
             hideTrackNumber={true}
           />

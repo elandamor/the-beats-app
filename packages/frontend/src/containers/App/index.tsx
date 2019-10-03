@@ -1,4 +1,3 @@
-// Components
 import {
   Box,
   ErrorBoundary,
@@ -7,10 +6,8 @@ import {
   ScrollView,
 } from '@app/components';
 import Player from '@app/components/Player';
-// Contexts
 import { AppProvider } from '@app/contexts';
 import GlobalStyles from '@app/global-styles';
-// Routes
 import routes from '@app/routes';
 import { makeDebugger } from '@app/utils';
 import React, { FC } from 'react';

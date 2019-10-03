@@ -1,5 +1,5 @@
 import { makeDebugger } from '@app/utils';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 const debug = makeDebugger('OnDeckContext');
 
@@ -28,30 +28,21 @@ interface IProviderProps {
 }
 
 const Provider: FC<IProviderProps> = (props) => {
-  const [state, setState] = useState(DEFAULT_STATE);
-  const [source, setSource] = useState({ id: '-1' });
+  const [state, updateState] = useState(DEFAULT_STATE);
+  const [source, setSource] = useState(DEFAULT_STATE.source);
 
   /**
    * Resets state to DEFAULT_STATE
    */
   const reset = () => {
-    setState(DEFAULT_STATE);
+    updateState(DEFAULT_STATE);
   };
 
   /**
    * Updates nowPlaying (onDeck) with a source
    */
   const setOnDeck = (incomingSource: ITrack) => {
-    debug(incomingSource.id === source.id);
-
-    if (incomingSource.id === source.id) {
-      return false;
-    }
-    debug('Setting onDeck...');
-    reset();
     setSource(incomingSource);
-
-    return true;
   };
 
   /**
@@ -61,9 +52,8 @@ const Provider: FC<IProviderProps> = (props) => {
     if (typeof playState !== 'string') {
       return false;
     }
-    debug('Updating playState...');
 
-    setState({
+    updateState({
       ...state,
       isPlaying: Boolean(playState === 'playing'),
       playState,
@@ -72,11 +62,17 @@ const Provider: FC<IProviderProps> = (props) => {
     return true;
   };
 
+  useEffect(() => {
+    updateState({
+      ...state,
+      source,
+    });
+  }, [source]);
+
   return (
     <OnDeckContext.Provider
       value={{
         ...state,
-        source,
         reset,
         setOnDeck,
         updatePlayState,

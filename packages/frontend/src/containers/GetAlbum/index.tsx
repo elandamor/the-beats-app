@@ -5,12 +5,11 @@ import { OnDeckContext } from '@app/contexts/OnDeck.context';
 import { PlaylistContext } from '@app/contexts/Playlist.context';
 import { GET_ALBUM } from '@app/graphql';
 import { H4 } from '@app/typography';
-import { makeDebugger } from '@app/utils';
 import React, { FC, useContext } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Placeholder from './placeholder';
 
-const debug = makeDebugger('GetAlbum');
+// const debug = makeDebugger('GetAlbum');
 
 interface MatchParams {
   albumId: string;
@@ -29,6 +28,9 @@ interface IGetAlbumProps extends RouteComponentProps<MatchParams> {
  */
 
 const GetAlbum: FC<IGetAlbumProps> = ({ match: { params } }) => {
+  const onDeckCtx = useContext(OnDeckContext);
+  const playlistCtx = useContext(PlaylistContext);
+
   const { data, loading } = useQuery(GET_ALBUM, {
     variables: {
       id: params.albumId,
@@ -40,13 +42,8 @@ const GetAlbum: FC<IGetAlbumProps> = ({ match: { params } }) => {
   }
 
   const {
-    album: { artwork, name, artists, tracks },
+    album: { artwork, name, tracks },
   } = data;
-
-  debug({ artists });
-
-  const onDeckCtx = useContext(OnDeckContext);
-  const playlistCtx = useContext(PlaylistContext);
 
   return (
     <Inner p="0">

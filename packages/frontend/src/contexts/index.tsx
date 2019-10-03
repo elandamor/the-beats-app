@@ -16,9 +16,9 @@ export const AppProvider: FC<IAppProvider> = ({ children }) => {
       <ThemeProvider>
         <NetworkStatusProvider>
           <CurrentRouteProvider>
-            <PlaylistProvider>
-              <OnDeckProvider>{children}</OnDeckProvider>
-            </PlaylistProvider>
+            <OnDeckProvider>
+              <PlaylistProvider>{children}</PlaylistProvider>
+            </OnDeckProvider>
           </CurrentRouteProvider>
         </NetworkStatusProvider>
       </ThemeProvider>

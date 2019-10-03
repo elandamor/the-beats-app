@@ -1,8 +1,8 @@
+import { PlaylistContext } from '@app/contexts/Playlist.context';
 import { makeDebugger } from '@app/utils';
 import { Howl } from 'howler';
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { OnDeckContext } from '../../contexts/OnDeck.context';
-import { PlaylistContext } from '../../contexts/Playlist.context';
 import Controls from '../Controls';
 import Flex from '../Flex';
 import ProgressBar from '../ProgressBar';
@@ -33,6 +33,7 @@ const Player: FC<IPlayerProps> = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [lastSound, setLastSound] = useState<Howl>();
 
   /**
    * The step called within requestAnimationFrame to update the playback position.
@@ -99,10 +100,14 @@ const Player: FC<IPlayerProps> = () => {
       });
     }
 
+    setLastSound(sound);
+
     // Begin playing the sound.
     sound.play();
 
-    onDeckCtx.setOnDeck(data);
+    if (data.id !== onDeckCtx.source.id) {
+      onDeckCtx.setOnDeck(data);
+    }
 
     // Keep track of the index we are currently playing.
     setCurrentIndex(index);
@@ -124,9 +129,8 @@ const Player: FC<IPlayerProps> = () => {
    * @param  {Number} index Index in the playlist.
    */
   const _skipTo = (index: number) => {
-    // Stop the current track.
-    if (playlist[currentIndex] && playlist[currentIndex].howl) {
-      playlist[currentIndex].howl.stop();
+    if (lastSound) {
+      lastSound.stop();
     }
 
     setProgress(0);
@@ -176,7 +180,9 @@ const Player: FC<IPlayerProps> = () => {
   };
 
   useEffect(() => {
-    _skipTo(playlist.indexOf(onDeckCtx.source));
+    if (onDeckCtx.source.id !== '-1') {
+      _skipTo(playlist.indexOf(onDeckCtx.source));
+    }
   }, [onDeckCtx.source]);
 
   return (

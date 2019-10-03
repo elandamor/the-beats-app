@@ -24,30 +24,29 @@ const Provider: FC<IProviderProps> = (props) => {
   const onDeckCtx = useContext(OnDeckContext);
 
   const [playlist, setPlaylist] = useState(DEFAULT_STATE.playlist);
-  const [source, setSource] = useState({ id: '-1' });
 
   const addToPlaylist = (source: ITrack) => {
     if (!source) {
       return false;
     }
-    setSource(source);
 
     const inPlaylist = Boolean(
       playlist.find((track: ITrack) => track.id === source.id),
     );
 
     if (!inPlaylist) {
-      debug('Adding to playlist...', source);
-      setPlaylist([...playlist, source]);
+      const updatedPlaylist = playlist.concat(source);
+      debug('setPlaylist');
+      setPlaylist(updatedPlaylist);
+      onDeckCtx.setOnDeck(source);
     }
 
     return true;
   };
 
   useEffect(() => {
-    debug({ playlist });
-    onDeckCtx.setOnDeck(source);
-  }, [playlist]);
+    debug('uE');
+  }, [onDeckCtx.source]);
 
   return (
     <PlaylistContext.Provider
