@@ -1,4 +1,4 @@
-import styled , { keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const bounce = keyframes`
   0% {
@@ -16,13 +16,13 @@ const bounce = keyframes`
 
 const Wrapper = styled.div`
   align-items: center;
-  background-color: hsla(0, 0%, 96%, 0.85);
+  background-color: ${({ theme }) => theme.colors.background};
   border-radius: 3px;
   display: flex;
   height: 40px;
   justify-content: center;
   position: absolute;
-  transition: opacity .195s ease-in;
+  transition: opacity 0.195s ease-in;
   width: 40px;
   will-change: opacity;
 
@@ -44,7 +44,8 @@ export const Bar1 = styled.div`
 
   &::after,
   &::before {
-    background-color: #000000;
+    background-color: ${({ theme }) =>
+      theme.isDark ? theme.colors.white : theme.colors.black};
     content: '';
     display: block;
     height: 100%;

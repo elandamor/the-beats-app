@@ -9,7 +9,7 @@ export const Wrapper = styled(Flex)`
   width: 100%;
 
   &::before {
-    background-color: ${theme.colors.surface};
+    background-color: ${({ theme }) => theme.colors.surface};
     backdrop-filter: saturate(50%) blur(20px);
     content: '';
     height: 100%;

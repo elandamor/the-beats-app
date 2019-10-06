@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { height, space, width, StyledSystemProps } from 'styled-system';
+import { height, space, StyledSystemProps, width } from 'styled-system';
 import Box from '../Box';
 
 interface IWrapperProps extends StyledSystemProps {
@@ -14,7 +14,7 @@ const fadeIn = keyframes`
 `;
 
 const Wrapper = styled(Box)<IWrapperProps>`
-  background-color: ${({ theme }) => theme.colors.cardBorderColor};
+  background-color: ${({ theme }) => theme.colors.surface};
   overflow: hidden;
   padding-bottom: ${({ aspect }) => `calc(100% / (${aspect}))`};
   position: relative;

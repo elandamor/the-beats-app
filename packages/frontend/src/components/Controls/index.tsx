@@ -34,7 +34,6 @@ const Controls: FC<IProps> = ({ minimal, onChange: handleChange }) => {
         />
       )}
       <PlayPauseButton
-        bg="blacks.3"
         borderRadius={100}
         className={`-${isPlaying ? 'pause' : 'play'}`}
         onClick={() => handleChange(isPlaying ? 'pause' : 'play')}

@@ -5,7 +5,8 @@ import { ITrackProps } from './index';
 const Wrapper = styled.div`
   align-items: center;
   border-radius: 4px;
-  color: #555;
+  color: ${({ theme }) =>
+    theme.isDark ? theme.colors.whites[7] : theme.colors.blacks[7]};
   display: flex;
   font-size: ${theme.fontSizes[1]}px;
   list-style-type: none;
@@ -25,7 +26,7 @@ const Wrapper = styled.div`
   }
 
   .c-cover__wrapper {
-    background-color: ${(props) => props.theme.colors.cardBorderColor};
+    background-color: ${({ theme }) => theme.colors.surface};
     border-radius: 4px;
     flex: none;
     height: ${({ coverSize }: ITrackProps) => coverSize || '40'}px;
@@ -50,7 +51,8 @@ const Wrapper = styled.div`
   }
 
   .a-name {
-    color: ${theme.colors.black};
+    color: ${({ theme }) =>
+      theme.isDark ? theme.colors.white : theme.colors.black};
     font-size: ${theme.fontSizes[3]}px;
   }
 
@@ -89,7 +91,8 @@ const Wrapper = styled.div`
 `;
 
 export const Duration = styled.div`
-  color: ${theme.colors.blacks[5]};
+  color: ${({ theme }) =>
+    theme.isDark ? theme.colors.whites[5] : theme.colors.blacks[5]};
   flex: none;
   font-size: ${theme.fontSizes[1]}px;
 `;

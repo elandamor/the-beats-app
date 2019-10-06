@@ -28,11 +28,12 @@ const Wrapper = styled.div`
     }
 
     &::-webkit-progress-bar {
-      background-color: #e4e6e9;
+      background-color: ${({ theme }) => theme.colors.background};
     }
 
     &::-webkit-progress-value {
-      background-color: ${theme.colors.black};
+      background-color: ${({ theme }) =>
+        theme.isDark ? theme.colors.white : theme.colors.black};
     }
   }
 
@@ -46,7 +47,8 @@ const Wrapper = styled.div`
 
     &::-webkit-slider-thumb {
       appearance: none;
-      background: ${theme.colors.black};
+      background: ${({ theme }) =>
+        theme.isDark ? theme.colors.white : theme.colors.black};
       display: none;
       height: ${theme.space[2]}px;
       width: ${theme.space[2]}px;
