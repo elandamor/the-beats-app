@@ -120,7 +120,7 @@ export default [
         ],
         featuring: [
           {
-            name: "MIke Posner"
+            name: "Mike Posner"
           }
         ],
         name: "A Lover and a Memory",

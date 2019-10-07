@@ -35,9 +35,8 @@ const Provider: FC<IProviderProps> = (props) => {
     );
 
     if (!inPlaylist) {
-      const updatedPlaylist = playlist.concat(source);
       debug('setPlaylist');
-      setPlaylist(updatedPlaylist);
+      setPlaylist([source]);
       onDeckCtx.setOnDeck(source);
     }
 
