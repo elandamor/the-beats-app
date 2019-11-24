@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { StyledSystemProps } from 'styled-system';
+import LoadingBar from '../LoadingBar';
 // Styles
 import Wrapper from './styles';
 
@@ -13,6 +14,7 @@ export interface IButtonProps extends StyledSystemProps {
   text?: string;
   type?: 'button' | 'submit';
   variant?: string;
+  loading?: boolean;
 }
 
 /**
@@ -23,10 +25,16 @@ export interface IButtonProps extends StyledSystemProps {
  * <Button text="Test" />
  */
 
-const Button: FC<IButtonProps> = ({ text, ...rest }) => (
-  <Wrapper {...rest}>
-    {rest.icon && <i>{rest.icon}</i>}
-    {rest.variant !== 'icon' && <label>{text}</label>}
+const Button: FC<IButtonProps> = ({ text, loading, ...rest }) => (
+  <Wrapper aria-label={rest['ariaLabel']} {...rest}>
+    {loading ? (
+      <LoadingBar />
+    ) : (
+      <React.Fragment>
+        {rest.icon && <i>{rest.icon}</i>}
+        {rest.variant !== 'icon' && <label>{text}</label>}
+      </React.Fragment>
+    )}
   </Wrapper>
 );
 

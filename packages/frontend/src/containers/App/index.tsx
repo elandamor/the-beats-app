@@ -8,6 +8,7 @@ import {
 import Player from '@app/components/Player';
 import { AppProvider } from '@app/contexts';
 import GlobalStyles from '@app/global-styles';
+import { useAuthentication } from '@app/hooks';
 import routes from '@app/routes';
 import { makeDebugger } from '@app/utils';
 import React, { FC } from 'react';
@@ -26,7 +27,8 @@ export interface IAppProps extends RouteComponentProps {}
  */
 
 const App: FC<IAppProps> = (props) => {
-  debug({ props });
+  const Auth = useAuthentication();
+  debug({ Auth });
 
   return (
     <AppProvider>

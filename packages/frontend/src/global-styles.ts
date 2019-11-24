@@ -50,4 +50,10 @@ export default createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
 `;

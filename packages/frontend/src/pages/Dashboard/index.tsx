@@ -28,6 +28,12 @@ const Dashboard = (props: IDashboardProps) => {
       <Link to={`${match.url}/albums`}>
         <Card title="Albums" mb="2" />
       </Link>
+      <Link to={`${match.url}/artists`}>
+        <Card title="Artists" mb="2" />
+      </Link>
+      <Link to={`${match.url}/playlists`}>
+        <Card title="Playlists" mb="2" />
+      </Link>
       <Link to={`${match.url}/tracks`}>
         <Card title="Tracks" mb="2" />
       </Link>

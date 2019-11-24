@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   align-items: center;
   border-radius: 4px;
   color: ${({ theme }) =>
-    theme.isDark ? theme.colors.whites[7] : theme.colors.blacks[7]};
+    theme.isDark ? theme.colors.whites[8] : theme.colors.blacks[8]};
   display: flex;
   font-size: ${theme.fontSizes[1]}px;
   list-style-type: none;

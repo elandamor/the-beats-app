@@ -12,7 +12,9 @@ import Toggle from '../Toggle/Loadable';
 
 const debug = makeDebugger('Header');
 
-interface IHeaderProps extends IBoxProps {}
+interface IHeaderProps extends IBoxProps {
+  appBarTitle?: string;
+}
 
 /**
  * @render react
@@ -22,7 +24,7 @@ interface IHeaderProps extends IBoxProps {}
  * <Header />
  */
 
-const Header: FC<IHeaderProps> = ({ ...props }) => {
+const Header: FC<IHeaderProps> = ({ appBarTitle, ...props }) => {
   const { location } = useRouter();
   const { darkMode, setDarkMode } = useTheme();
   const { currentRoute } = useCurrentRoute();
@@ -44,7 +46,7 @@ const Header: FC<IHeaderProps> = ({ ...props }) => {
           <GoBackButton show={showBackButton} />
         </Flex>
         <Flex alignItems="center" justifyContent="center">
-          <H1 fontSize={[4, 5]}>{currentRoute.title}</H1>
+          <H1 fontSize={[4, 5]}>{currentRoute.title || appBarTitle}</H1>
         </Flex>
         <Flex alignItems="center" justifyContent="flex-end">
           <Toggle
@@ -78,6 +80,7 @@ const Header: FC<IHeaderProps> = ({ ...props }) => {
 };
 
 Header.defaultProps = {
+  appBarTitle: 'pdbeats',
   bg: 'surface',
   height: [64, 88],
 };

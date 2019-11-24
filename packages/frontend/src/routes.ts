@@ -3,6 +3,8 @@ import {
   AddAlbum,
   GetAlbum,
   GetAlbums,
+  GetArtists,
+  GetPlaylists,
   GetTracks,
   Login,
   Register,
@@ -17,21 +19,20 @@ const routes: IRouteProps[] = [
     title: 'Home',
   },
   {
-    exact: true,
     path: '/auth',
     component: Auth,
-  },
-  {
-    exact: true,
-    path: '/auth/login',
-    component: Login,
-    title: 'Login',
-  },
-  {
-    exact: true,
-    path: '/auth/register',
-    component: Register,
-    title: 'Register',
+    routes: [
+      {
+        path: '/auth/login',
+        component: Login,
+        title: 'Login',
+      },
+      {
+        path: '/auth/register',
+        component: Register,
+        title: 'Register',
+      },
+    ],
   },
   {
     exact: true,
@@ -53,6 +54,7 @@ const routes: IRouteProps[] = [
     path: '/dashboard/albums/:albumId',
     component: GetAlbum,
     title: 'Album',
+    isSubRoute: true,
   },
   {
     exact: true,
@@ -67,6 +69,20 @@ const routes: IRouteProps[] = [
     path: '/dashboard/tracks',
     component: GetTracks,
     title: 'Tracks',
+  },
+  {
+    exact: true,
+    secure: true,
+    path: '/dashboard/artists',
+    component: GetArtists,
+    title: 'Artists',
+  },
+  {
+    exact: true,
+    secure: true,
+    path: '/dashboard/playlists',
+    component: GetPlaylists,
+    title: 'Playlists',
   },
   {
     path: '*',

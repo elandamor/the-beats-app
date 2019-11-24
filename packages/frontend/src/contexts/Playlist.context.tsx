@@ -1,5 +1,5 @@
 import { makeDebugger } from '@app/utils';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { OnDeckContext } from './OnDeck.context';
 
 const debug = makeDebugger('PlaylistContext');
@@ -43,9 +43,9 @@ const Provider: FC<IProviderProps> = (props) => {
     return true;
   };
 
-  useEffect(() => {
-    debug('uE');
-  }, [onDeckCtx.source]);
+  // useEffect(() => {
+  //   debug('uE');
+  // }, [onDeckCtx.source]);
 
   return (
     <PlaylistContext.Provider

@@ -10,6 +10,10 @@ export const Wrapper = styled.div`
   position: relative;
   user-select: none;
 
+  /* * {
+    outline: thin solid red;
+  } */
+
   .react-toggle-screenreader-only {
     border: 0;
     clip: rect(0 0 0 0);
@@ -22,11 +26,12 @@ export const Wrapper = styled.div`
   }
 
   .react-toggle-track {
-    width: 48px;
+    width: 46px;
     height: 24px;
     padding: 0;
+    border: thin solid ${({ theme }) => theme.colors.text};
     border-radius: 30px;
-    background-color: ${({ theme }) => theme.colors.surface};
+    background-color: ${({ theme }) => theme.colors.background};
   }
 
   .react-toggle-track-check,
@@ -60,10 +65,10 @@ export const Wrapper = styled.div`
 
   .react-toggle-thumb {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 20px;
-    height: 20px;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background-color: ${({ theme }) => theme.colors.text};
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
@@ -71,6 +76,6 @@ export const Wrapper = styled.div`
   }
 
   &.-checked .react-toggle-thumb {
-    transform: translateX(24px);
+    transform: translateX(22px);
   }
 `;

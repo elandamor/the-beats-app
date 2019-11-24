@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
+import Measure from 'react-measure';
 import styled from 'styled-components';
 import { StyledSystemProps } from 'styled-system';
-import Measure from 'react-measure';
-
 import Box from '../Box';
 
 // import { makeDebugger } from '@app/utils';
@@ -63,7 +62,6 @@ const ScrollView: FC<IScrollViewProps> = ({ children, ...rest }) => {
 ScrollView.defaultProps = {
   height: '100%',
   width: '100%',
-  zIndex: 0,
 };
 
 export default ScrollView;

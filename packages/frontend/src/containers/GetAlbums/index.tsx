@@ -1,16 +1,11 @@
-import React, { FC } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import { Album, Flex, Inner, LoadingBar } from '@app/components';
+import { IRouteProps } from '@app/components/Routes';
+import { GET_ALBUMS } from '@app/graphql';
+import { Text } from '@app/typography';
+import React, { FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router-dom';
-import { PlusCircle } from 'react-feather';
-import { Album, Flex, Box, Button, Modal, Card, Inner } from '@app/components';
-import { GET_ALBUMS } from '@app/graphql';
-import { useRouter } from '@app/hooks';
-import AddAlbum from '../AddAlbum';
-import { IRouteProps } from '@app/components/Routes';
-
-import { makeDebugger } from '@app/utils';
-const debug = makeDebugger('GetAlbums');
 
 interface IGetAlbumsProps extends RouteComponentProps {
   routes?: IRouteProps[];
@@ -25,30 +20,17 @@ interface IGetAlbumsProps extends RouteComponentProps {
  */
 
 const GetAlbums: FC<IGetAlbumsProps> = () => {
-  const routeProps = useRouter();
-  const { data, loading } = useQuery(GET_ALBUMS);
+  const { data, error, loading } = useQuery<any>(GET_ALBUMS);
 
-  if (!loading && data.albums.edges.length < 1) {
-    return (
-      <Box>
-        <Card title="No albums" />
-        <Modal
-          trigger={
-            <Box position="absolute" right="8px" bottom="8px">
-              <Button variant="icon" icon={<PlusCircle />} />
-            </Box>
-          }
-          fullscreen={true}
-        >
-          <AddAlbum {...routeProps} />
-        </Modal>
-      </Box>
-    );
+  if (error) {
+    return <Text>An error has occurred</Text>;
+  }
+
+  if (loading) {
+    return <LoadingBar />;
   }
 
   const albums = data.albums && data.albums.edges;
-
-  debug({ albums });
 
   return (
     <Inner p={2}>

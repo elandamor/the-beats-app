@@ -11209,9 +11209,9 @@ liftoff@^2.5.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-"lighthousebot@git+https://github.com/ebidel/lighthousebot.git":
+"lighthousebot@https://github.com/ebidel/lighthousebot":
   version "0.2.0"
-  resolved "git+https://github.com/ebidel/lighthousebot.git#7f87bcaeb221009354d90ab706379ed21eed0d39"
+  resolved "https://github.com/ebidel/lighthousebot#7f87bcaeb221009354d90ab706379ed21eed0d39"
   dependencies:
     minimist "^1.2.0"
     node-fetch "^2.2.0"

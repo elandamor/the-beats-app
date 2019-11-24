@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import { Box, Card, Inner, Track } from '@app/components';
+import { Inner, LoadingBar, Track } from '@app/components';
 import { IRouteProps } from '@app/components/Routes';
 import { OnDeckContext } from '@app/contexts/OnDeck.context';
 import { PlaylistContext } from '@app/contexts/Playlist.context';
@@ -28,12 +28,8 @@ const GetTracks: FC<IGetTracksProps> = () => {
   const onDeckCtx = useContext(OnDeckContext);
   const playlistCtx = useContext(PlaylistContext);
 
-  if (!loading && data.tracks.edges.length < 1) {
-    return (
-      <Box>
-        <Card title="No tracks" />
-      </Box>
-    );
+  if (loading) {
+    return <LoadingBar />;
   }
 
   const tracks = data.tracks && data.tracks.edges;

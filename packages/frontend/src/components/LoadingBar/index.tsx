@@ -21,7 +21,7 @@ const LoadingBar = styled.div`
   background: ${({ theme }) => theme.colors.text};
   height: 2px;
   left: 0;
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 0;
   transform: translateX(100%);

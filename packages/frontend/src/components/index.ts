@@ -1,5 +1,4 @@
 export { default as Accordion } from './Accordion';
-// Project Specific
 export { default as Album } from './Album';
 export { default as Artist } from './Artist';
 export { default as Box } from './Box';
@@ -12,6 +11,7 @@ export { default as HorizontalScroller } from './HorizontalScroller';
 export { default as Image } from './Image';
 export { default as Inner } from './Inner';
 export { default as Input } from './Input';
+export { default as LoadingBar } from './LoadingBar';
 export { default as Modal } from './Modal/Loadable';
 export { default as NavigationBar } from './NavigationBar/Loadable';
 export { default as Playlist } from './Playlist';

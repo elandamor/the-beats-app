@@ -16,7 +16,7 @@ interface IProgressBarProps extends SpaceProps {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   progress: number;
   progressMax?: number;
-};
+}
 
 const ProgressBar: FC<IProgressBarProps> = ({
   progress,
@@ -26,15 +26,17 @@ const ProgressBar: FC<IProgressBarProps> = ({
 }) => (
   <Wrapper {...rest}>
     <progress max="100" value={progress} />
-    <input
-      type="range"
-      id="progress"
-      name="progress"
-      min="0"
-      max={progressMax}
-      value={progress}
-      onChange={handleChange}
-    />
+    <label htmlFor="progress">
+      <input
+        type="range"
+        id="progress"
+        name="progress"
+        min="0"
+        max={progressMax}
+        value={progress}
+        onChange={handleChange}
+      />
+    </label>
   </Wrapper>
 );
 

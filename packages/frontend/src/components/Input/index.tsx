@@ -1,13 +1,13 @@
+import { Text } from '@app/typography';
+import { ErrorMessage, FieldProps } from 'formik';
 import React, { FC, useState } from 'react';
-import { FieldProps, ErrorMessage } from 'formik';
+import { Eye, EyeOff } from 'react-feather';
+import Box from '../Box';
+import Button from '../Button';
+import Dropzone from '../Dropzone/Loadable';
+import Flex from '../Flex';
 // Styles
 import { DefaultInput } from './styles';
-import Box from '../Box';
-import { Text } from '@app/typography';
-import Flex from '../Flex';
-import Button from '../Button';
-import { Eye, EyeOff } from 'react-feather';
-import Dropzone from '../Dropzone/Loadable';
 
 export interface IInputProps extends FieldProps {
   autoComplete?: string;
@@ -16,6 +16,8 @@ export interface IInputProps extends FieldProps {
   placeholder?: string;
   readOnly?: boolean;
   type?: 'text' | 'email' | 'number' | 'password' | 'file';
+  startAdornment?: React.ReactElement;
+  endAdornment?: React.ReactElement;
 }
 
 /**
@@ -31,7 +33,14 @@ export interface IInputProps extends FieldProps {
  * />
  */
 
-const Input: FC<IInputProps> = ({ field, hideLabel, label, ...rest }) => {
+const Input: FC<IInputProps> = ({
+  field,
+  hideLabel,
+  label,
+  startAdornment,
+  endAdornment,
+  ...rest
+}) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const isPasswordInput = rest.type === 'password';
 
@@ -65,13 +74,15 @@ const Input: FC<IInputProps> = ({ field, hideLabel, label, ...rest }) => {
         <Box alignItems="center" flexDirection="row">
           {renderInput()}
           {isPasswordInput && (
-            <Button
-              variant="icon"
-              icon={passwordVisible ? <Eye /> : <EyeOff />}
-              onClick={() => setPasswordVisible(!passwordVisible)}
-              minWidth="40px"
-              size="40px"
-            />
+            <Box position="absolute" right="6px">
+              <Button
+                variant="icon"
+                icon={passwordVisible ? <Eye /> : <EyeOff />}
+                onClick={() => setPasswordVisible(!passwordVisible)}
+                minWidth="40px"
+                size="40px"
+              />
+            </Box>
           )}
         </Box>
       </label>

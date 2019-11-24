@@ -26,6 +26,7 @@ const Controls: FC<IProps> = ({ minimal, onChange: handleChange }) => {
     <Flex alignItems="center" justifyContent="center">
       {!minimal && (
         <Button
+          ariaLabel="Fast Backward"
           className="-prev"
           onClick={() => handleChange('prev')}
           icon={<Icon icon="fastBackward" viewBox="0 0 21 13" />}
@@ -34,6 +35,7 @@ const Controls: FC<IProps> = ({ minimal, onChange: handleChange }) => {
         />
       )}
       <PlayPauseButton
+        ariaLabel={isPlaying ? 'Pause' : 'Play'}
         borderRadius={100}
         className={`-${isPlaying ? 'pause' : 'play'}`}
         onClick={() => handleChange(isPlaying ? 'pause' : 'play')}
@@ -51,6 +53,7 @@ const Controls: FC<IProps> = ({ minimal, onChange: handleChange }) => {
       />
       {!minimal && (
         <Button
+          ariaLabel="Fast Forward"
           className="-next"
           onClick={() => handleChange('next')}
           icon={<Icon icon="fastForward" viewBox="0 0 21 13" />}

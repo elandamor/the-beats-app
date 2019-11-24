@@ -1,19 +1,18 @@
-import React, { FC } from 'react';
-import { Link, Redirect, RouteComponentProps } from 'react-router-dom';
-import {
-  Formik,
-  Form,
-  Field,
-  FieldProps,
-  FormikValues,
-  FormikProps,
-} from 'formik';
-import * as Yup from 'yup';
-
 import { Button, Input } from '@app/components';
+import { PASSWORD_REGEX, PASSWORD_REGEX_MESSAGE } from '@app/constants';
 import { useAuthentication } from '@app/hooks';
 import { Text } from '@app/typography';
-import { PASSWORD_REGEX, PASSWORD_REGEX_MESSAGE } from '@app/constants';
+import {
+  Field,
+  FieldProps,
+  Form,
+  Formik,
+  FormikProps,
+  FormikValues,
+} from 'formik';
+import React, { FC } from 'react';
+import { Link, Redirect, RouteComponentProps } from 'react-router-dom';
+import * as Yup from 'yup';
 
 interface ILoginFormProps
   extends RouteComponentProps,
@@ -100,6 +99,7 @@ const LoginForm: FC<ILoginFormProps> = (props) => {
             text="Login"
             type="submit"
             disabled={formikProps.isSubmitting}
+            loading={formikProps.isSubmitting}
           />
           <Text>
             Don't have an account?{' '}

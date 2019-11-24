@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import { Box, Inner, Track } from '@app/components';
+import { Box, Inner, LoadingBar, Track } from '@app/components';
 import { IRouteProps } from '@app/components/Routes';
 import { OnDeckContext } from '@app/contexts/OnDeck.context';
 import { PlaylistContext } from '@app/contexts/Playlist.context';
@@ -7,7 +7,6 @@ import { GET_ALBUM } from '@app/graphql';
 import { H4 } from '@app/typography';
 import React, { FC, useContext } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import Placeholder from './placeholder';
 
 // const debug = makeDebugger('GetAlbum');
 
@@ -38,7 +37,7 @@ const GetAlbum: FC<IGetAlbumProps> = ({ match: { params } }) => {
   });
 
   if (loading) {
-    return <Placeholder />;
+    return <LoadingBar />;
   }
 
   const {
